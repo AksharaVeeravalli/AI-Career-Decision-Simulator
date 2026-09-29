@@ -1,586 +1,301 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hindsight Memory | CareerSim AI</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #222;
-        }
-
-        .navbar {
-            background: #111827;
-            color: white;
-            padding: 20px 8%;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 900px;
-            margin: 40px auto;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            margin-bottom: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        .description {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .memory-box {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .memory-item {
-            margin-bottom: 20px;
-        }
-
-        .memory-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .label {
-            font-weight: bold;
-            color: #4f46e5;
-            margin-bottom: 5px;
-        }
-
-        .value {
-            font-size: 17px;
-            line-height: 1.5;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: Arial, sans-serif;
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        button,
-        .dashboard-button {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 8px;
-            background: #4f46e5;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-        }
-
-        button:hover,
-        .dashboard-button:hover {
-            background: #3730a3;
-        }
-
-        button:disabled {
-            background: #999;
-            cursor: not-allowed;
-        }
-
-        #message {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        .steps {
-            margin-top: 15px;
-        }
-
-        .step {
-            padding: 18px;
-            background: #f8fafc;
-            border-radius: 10px;
-            margin-bottom: 12px;
-        }
-
-        .step-number {
-            color: #4f46e5;
-            font-weight: bold;
-            font-size: 20px;
-        }
-    </style>
+    <title>Hindsight Memory - CareerSim AI</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="navbar">
-    CareerSim AI
-</div>
+    <div class="container">
 
-<div class="container">
-
-    <!-- HEADER -->
-    <div class="card">
         <h1>🧠 Hindsight Memory</h1>
 
-        <p class="description">
-            Record your career decisions, outcomes and lessons so
-            CareerSim AI can use your past experience in future
-            career simulations.
-        </p>
-    </div>
-
-
-    <!-- PREVIOUS MEMORY -->
-    <div class="card">
-
-        <h2>🧠 Your Previous Decision</h2>
-
-        <div id="previousMemory">
-
-            <p>Loading previous decision...</p>
-
-        </div>
-
-    </div>
-
-
-    <!-- RECORD NEW MEMORY -->
-    <div class="card">
-
-        <h2>📝 Record Your Career Experience</h2>
-
-        <p class="description">
-            Tell us about a career decision you made and what you
-            learned from the outcome.
+        <p>
+            Record your career decisions, outcomes and lessons so CareerSim AI
+            can use your past experience in future career simulations.
         </p>
 
+        <section>
+            <h2>🧠 Your Previous Decision</h2>
 
-        <div class="form-group">
+            <div id="previousMemory">
+                Loading previous memory...
+            </div>
+        </section>
 
-            <label for="career">
-                Career
-            </label>
+        <section>
+            <h2>📝 Record Your Career Experience</h2>
 
-            <input
-                type="text"
-                id="career"
-                placeholder="Example: Data Analyst"
-            >
+            <p>
+                Tell us about a career decision you made and what you learned
+                from the outcome.
+            </p>
 
-        </div>
+            <form id="memoryForm">
 
+                <label for="career">Career</label>
+                <input
+                    type="text"
+                    id="career"
+                    placeholder="Example: Data Analyst"
+                    required
+                >
 
-        <div class="form-group">
+                <label for="decision">What decision did you make?</label>
+                <textarea
+                    id="decision"
+                    placeholder="Example: I decided to prepare for a Data Analyst internship."
+                    required
+                ></textarea>
 
-            <label for="decision">
-                What decision did you make?
-            </label>
+                <label for="outcome">What was the outcome?</label>
+                <textarea
+                    id="outcome"
+                    placeholder="Example: I was not selected because I needed stronger SQL skills."
+                    required
+                ></textarea>
 
-            <textarea
-                id="decision"
-                placeholder="Example: I decided to apply for a data analyst internship."
-            ></textarea>
+                <label for="lesson">What did you learn?</label>
+                <textarea
+                    id="lesson"
+                    placeholder="Example: I learned that I need to improve SQL and interview skills."
+                    required
+                ></textarea>
 
-        </div>
+                <button type="submit">
+                    Save Career Memory
+                </button>
 
+            </form>
 
-        <div class="form-group">
+            <p id="message"></p>
+        </section>
 
-            <label for="outcome">
-                What was the outcome?
-            </label>
+        <section>
+            <h2>🔄 How Hindsight Memory Works</h2>
 
-            <textarea
-                id="outcome"
-                placeholder="Example: I was not selected because I lacked SQL skills."
-            ></textarea>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="lesson">
-                What did you learn?
-            </label>
-
-            <textarea
-                id="lesson"
-                placeholder="Example: I need to improve SQL and interview skills."
-            ></textarea>
-
-        </div>
-
-
-        <button type="button" id="saveButton">
-            Save Career Memory
-        </button>
-
-        <p id="message"></p>
-
-    </div>
-
-
-    <!-- HOW IT WORKS -->
-    <div class="card">
-
-        <h2>🔄 How Hindsight Memory Works</h2>
-
-        <div class="steps">
-
-            <div class="step">
-                <div class="step-number">01</div>
+            <div>
+                <h3>01</h3>
                 <h3>Record Decision</h3>
-                <p>
-                    Store the career choice or decision you made.
-                </p>
+                <p>Store the career choice or decision you made.</p>
             </div>
 
-
-            <div class="step">
-                <div class="step-number">02</div>
+            <div>
+                <h3>02</h3>
                 <h3>Record Outcome</h3>
-                <p>
-                    Record what happened after your career decision.
-                </p>
+                <p>Record what happened after your career decision.</p>
             </div>
 
-
-            <div class="step">
-                <div class="step-number">03</div>
+            <div>
+                <h3>03</h3>
                 <h3>Learn From Experience</h3>
-                <p>
-                    Identify what worked and what needs improvement.
-                </p>
+                <p>Identify what worked and what needs improvement.</p>
             </div>
 
-
-            <div class="step">
-                <div class="step-number">04</div>
+            <div>
+                <h3>04</h3>
                 <h3>Improve Future Decisions</h3>
                 <p>
-                    Use previous experiences to make future career
-                    simulations more useful.
+                    Use previous experiences to make future career simulations
+                    more useful.
                 </p>
             </div>
+        </section>
 
-        </div>
+        <a href="dashboard.html">
+            <button type="button">View Career Dashboard →</button>
+        </a>
 
     </div>
 
+    <script>
+        const API_BASE_URL =
+            "https://ai-career-decision-simulator.onrender.com";
 
-    <!-- DASHBOARD -->
-    <a href="dashboard.html" class="dashboard-button">
-        View Career Dashboard →
-    </a>
+        const profileId = localStorage.getItem("profileId");
 
-</div>
+        const previousMemory =
+            document.getElementById("previousMemory");
 
+        const memoryForm =
+            document.getElementById("memoryForm");
 
-<script>
+        const message =
+            document.getElementById("message");
 
-const API_BASE_URL = "http://127.0.0.1:8000";
 
-const profileId = localStorage.getItem("profileId");
+        // Load previous memory
+        async function loadMemory() {
 
-const previousMemory =
-    document.getElementById("previousMemory");
-
-const saveButton =
-    document.getElementById("saveButton");
-
-const message =
-    document.getElementById("message");
-
-
-// ================================
-// LOAD PREVIOUS MEMORY
-// ================================
-
-async function loadMemory() {
-
-    if (!profileId) {
-
-        previousMemory.innerHTML =
-            "<p>Profile not found. Please complete your profile first.</p>";
-
-        return;
-    }
-
-    try {
-
-        const response = await fetch(
-            API_BASE_URL + "/api/memory/" + profileId
-        );
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Backend error: " + response.status
-            );
-
-        }
-
-        const data = await response.json();
-
-        console.log("Memory data:", data);
-
-
-        if (
-            !data.memories ||
-            data.memories.length === 0
-        ) {
-
-            previousMemory.innerHTML =
-                "<p>No previous career decisions recorded yet.</p>";
-
-            return;
-        }
-
-
-        // Show most recent memory
-
-        const memory = data.memories[0];
-
-        previousMemory.innerHTML = `
-
-            <div class="memory-box">
-
-                <div class="memory-item">
-                    <div class="label">
-                        01 — Career
-                    </div>
-
-                    <div class="value">
-                        ${memory.career || "Not available"}
-                    </div>
-                </div>
-
-
-                <div class="memory-item">
-                    <div class="label">
-                        02 — Decision
-                    </div>
-
-                    <div class="value">
-                        ${memory.decision || "Not available"}
-                    </div>
-                </div>
-
-
-                <div class="memory-item">
-                    <div class="label">
-                        03 — Outcome
-                    </div>
-
-                    <div class="value">
-                        ${memory.outcome || "Not available"}
-                    </div>
-                </div>
-
-
-                <div class="memory-item">
-                    <div class="label">
-                        04 — Lesson Learned
-                    </div>
-
-                    <div class="value">
-                        ${memory.lesson || "Not available"}
-                    </div>
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        previousMemory.innerHTML =
-            "<p>Unable to load previous memory. Make sure FastAPI is running.</p>";
-
-    }
-
-}
-
-
-// ================================
-// SAVE NEW MEMORY
-// ================================
-
-saveButton.onclick = async function () {
-
-    if (!profileId) {
-
-        message.textContent =
-            "Profile not found. Please complete your profile first.";
-
-        return;
-    }
-
-
-    const career =
-        document.getElementById("career").value.trim();
-
-    const decision =
-        document.getElementById("decision").value.trim();
-
-    const outcome =
-        document.getElementById("outcome").value.trim();
-
-    const lesson =
-        document.getElementById("lesson").value.trim();
-
-
-    if (!career || !decision || !outcome || !lesson) {
-
-        message.textContent =
-            "Please fill in all fields.";
-
-        return;
-    }
-
-
-    saveButton.disabled = true;
-
-    saveButton.textContent =
-        "Saving Memory...";
-
-
-    try {
-
-        const response = await fetch(
-            API_BASE_URL + "/api/memory",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-
-                    profile_id: Number(profileId),
-
-                    career: career,
-
-                    decision: decision,
-
-                    outcome: outcome,
-
-                    lesson: lesson
-
-                })
+            if (!profileId) {
+                previousMemory.innerHTML =
+                    "<p>No profile found. Please complete the profile first.</p>";
+                return;
             }
-        );
 
+            try {
 
-        if (!response.ok) {
+                const response = await fetch(
+                    `${API_BASE_URL}/api/memory/${profileId}`
+                );
 
-            throw new Error(
-                "Backend error: " + response.status
-            );
+                if (!response.ok) {
+                    throw new Error("Unable to load memory");
+                }
 
+                const data = await response.json();
+
+                if (!data || (Array.isArray(data) && data.length === 0)) {
+
+                    previousMemory.innerHTML =
+                        "<p>No previous career memory found.</p>";
+
+                    return;
+                }
+
+                let memory = data;
+
+                if (Array.isArray(data)) {
+                    memory = data[data.length - 1];
+                }
+
+                previousMemory.innerHTML = `
+                    <div class="memory-card">
+                        <h3>${escapeHtml(memory.career || "")}</h3>
+
+                        <p>
+                            <strong>Decision:</strong><br>
+                            ${escapeHtml(memory.decision || "")}
+                        </p>
+
+                        <p>
+                            <strong>Outcome:</strong><br>
+                            ${escapeHtml(memory.outcome || "")}
+                        </p>
+
+                        <p>
+                            <strong>Lesson:</strong><br>
+                            ${escapeHtml(memory.lesson || "")}
+                        </p>
+                    </div>
+                `;
+
+            } catch (error) {
+
+                console.error(error);
+
+                previousMemory.innerHTML = `
+                    <p>
+                        Unable to load previous memory.
+                        Please make sure the backend is available.
+                    </p>
+                `;
+            }
         }
 
 
-        const data = await response.json();
+        // Save new memory
+        memoryForm.addEventListener("submit", async function(event) {
 
-        console.log("Saved memory:", data);
+            event.preventDefault();
+
+            if (!profileId) {
+
+                message.textContent =
+                    "Please complete your profile first.";
+
+                return;
+            }
+
+            const memoryData = {
+                profile_id: parseInt(profileId, 10),
+
+                career:
+                    document.getElementById("career").value.trim(),
+
+                decision:
+                    document.getElementById("decision").value.trim(),
+
+                outcome:
+                    document.getElementById("outcome").value.trim(),
+
+                lesson:
+                    document.getElementById("lesson").value.trim()
+            };
+
+            try {
+
+                message.textContent =
+                    "Saving your career memory...";
+
+                const response = await fetch(
+                    `${API_BASE_URL}/api/memory`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+
+                        body: JSON.stringify(memoryData)
+                    }
+                );
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    throw new Error(
+                        `Server error: ${response.status} ${errorText}`
+                    );
+                }
+
+                const result =
+                    await response.json();
+
+                console.log("Memory saved:", result);
+
+                message.textContent =
+                    "✅ Career memory saved successfully!";
+
+                memoryForm.reset();
+
+                await loadMemory();
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "❌ Unable to save memory. Please try again.";
+            }
+
+        });
 
 
-        message.textContent =
-            "Career memory saved successfully!";
+        // Prevent HTML injection when displaying saved text
+        function escapeHtml(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
 
 
-        // Clear form
+        // Load page
+        loadMemory();
 
-        document.getElementById("career").value = "";
-
-        document.getElementById("decision").value = "";
-
-        document.getElementById("outcome").value = "";
-
-        document.getElementById("lesson").value = "";
-
-
-        // Reload memory
-
-        await loadMemory();
-
-
-        saveButton.textContent =
-            "Save Career Memory";
-
-        saveButton.disabled = false;
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-        message.textContent =
-            "Unable to save memory. Make sure FastAPI is running.";
-
-        saveButton.textContent =
-            "Save Career Memory";
-
-        saveButton.disabled = false;
-
-    }
-
-};
-
-
-// Load memory when page opens
-
-loadMemory();
-
-</script>
+    </script>
 
 </body>
 </html>
+```
