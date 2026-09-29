@@ -3,7 +3,6 @@
 // COMPLETE FRONTEND JAVASCRIPT
 // ======================================================
 
-
 // ======================================================
 // 1. API CONFIGURATION
 // ======================================================
@@ -11,517 +10,406 @@
 const API_BASE_URL = "https://ai-career-decision-simulator.onrender.com";
 
 // ======================================================
-// 2. HOME PAGE
+// 2. HELPER FUNCTIONS
 // ======================================================
 
-function startJourney() {
+async function apiRequest(endpoint, options = {}) {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            ...(options.headers || {})
+        }
+    });
 
-    window.location.href = "profile.html";
+    const text = await response.text();
 
+    let data;
+
+    try {
+        data = text ? JSON.parse(text) : {};
+    } catch {
+        data = text;
+    }
+
+    if (!response.ok) {
+        throw new Error(
+            `HTTP ${response.status}: ${
+                typeof data === "string"
+                    ? data
+                    : JSON.stringify(data)
+            }`
+        );
+    }
+
+    return data;
+}
+
+
+function getProfileId() {
+    const value = localStorage.getItem("profileId");
+
+    if (!value) {
+        return null;
+    }
+
+    const id = parseInt(value, 10);
+
+    return Number.isInteger(id) && id > 0 ? id : null;
+}
+
+
+function getSkillValue(id) {
+    const element = document.getElementById(id);
+
+    if (!element) {
+        throw new Error(`Skill field "${id}" was not found on the page.`);
+    }
+
+    const value = parseInt(element.value, 10);
+
+    if (!Number.isInteger(value) || value < 1 || value > 5) {
+        throw new Error(
+            `Invalid value for ${id}. Please select a skill level from 1 to 5.`
+        );
+    }
+
+    return value;
+}
+
+
+function formatCareerName(name) {
+    if (!name) {
+        return "Not available";
+    }
+
+    return String(name)
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, letter => letter.toUpperCase());
+}
+
+
+function showApiError(title, error) {
+    console.error(title, error);
+
+    alert(
+        `${title}\n\n${error.message}\n\n` +
+        "Please check the browser console if you need more details."
+    );
 }
 
 
 // ======================================================
-// 3. PAGE LOAD
+// 3. HOME PAGE
+// ======================================================
+
+function startJourney() {
+    window.location.href = "profile.html";
+}
+
+
+// ======================================================
+// 4. PAGE LOAD
 // ======================================================
 
 document.addEventListener("DOMContentLoaded", function () {
 
-
     // ==================================================
-    // 1. PROFILE CONNECTED TO FASTAPI
+    // PROFILE
     // ==================================================
 
-    const profileForm =
-        document.getElementById("profileForm");
+    const profileForm = document.getElementById("profileForm");
 
     if (profileForm) {
 
-        profileForm.addEventListener(
-            "submit",
-            async function (event) {
+        profileForm.addEventListener("submit", async function (event) {
 
-                event.preventDefault();
+            event.preventDefault();
 
-                const profile = {
+            const profile = {
+                name: document.getElementById("name")?.value.trim() || "",
+                education: document.getElementById("education")?.value.trim() || "",
+                branch: document.getElementById("branch")?.value.trim() || "",
+                year: document.getElementById("year")?.value.trim() || "",
+                goal: document.getElementById("goal")?.value.trim() || "",
+                interests: document.getElementById("interests")?.value.trim() || ""
+            };
 
-                    name:
-                        document.getElementById(
-                            "name"
-                        ).value,
+            if (!profile.name) {
+                alert("Please enter your name.");
+                return;
+            }
 
-                    education:
-                        document.getElementById(
-                            "education"
-                        ).value,
+            try {
 
-                    branch:
-                        document.getElementById(
-                            "branch"
-                        ).value,
+                console.log("Sending profile:", profile);
 
-                    year:
-                        document.getElementById(
-                            "year"
-                        ).value,
+                const data = await apiRequest("/api/profile", {
+                    method: "POST",
+                    body: JSON.stringify(profile)
+                });
 
-                    goal:
-                        document.getElementById(
-                            "goal"
-                        ).value,
+                console.log("Profile API response:", data);
 
-                    interests:
-                        document.getElementById(
-                            "interests"
-                        ).value
-                };
+                const profileId =
+                    data.profile_id ??
+                    data.id;
 
-
-                try {
-
-                    const response =
-                        await fetch(
-                            `${API_BASE_URL}/api/profile`,
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
-
-                                body:
-                                    JSON.stringify(profile)
-                            }
-                        );
-
-
-                    if (!response.ok) {
-
-                        const errorText =
-                            await response.text();
-
-                        throw new Error(
-                            `Profile save failed: ${response.status} ${errorText}`
-                        );
-                    }
-
-
-                    const data =
-                        await response.json();
-
-
-                    // Save profile information
-                    localStorage.setItem(
-                        "careerProfile",
-                        JSON.stringify(data)
-                    );
-
-
-                    // Save profile ID
-                    localStorage.setItem(
-                        "profileId",
-                        data.profile_id
-                    );
-
-
-                    console.log(
-                        "Profile saved:",
-                        data
-                    );
-
-
-                    window.location.href =
-                        "skills.html";
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Profile Error:",
-                        error
-                    );
-
-                    alert(
-                        "❌ Unable to save profile. Please make sure the backend is running."
+                if (!profileId) {
+                    throw new Error(
+                        "Backend saved the profile but did not return a profile ID."
                     );
                 }
+
+                localStorage.setItem(
+                    "careerProfile",
+                    JSON.stringify(data)
+                );
+
+                localStorage.setItem(
+                    "profileId",
+                    String(profileId)
+                );
+
+                console.log("Profile ID saved:", profileId);
+
+                window.location.href = "skills.html";
+
+            } catch (error) {
+
+                showApiError(
+                    "❌ Unable to save profile.",
+                    error
+                );
             }
-        );
+        });
     }
 
 
-
     // ==================================================
-    // 2. SKILLS CONNECTED TO FASTAPI
+    // SKILLS
     // ==================================================
 
-    const skillsForm =
-        document.getElementById("skillsForm");
-
+    const skillsForm = document.getElementById("skillsForm");
 
     if (skillsForm) {
 
-        skillsForm.addEventListener(
-            "submit",
-            async function (event) {
+        skillsForm.addEventListener("submit", async function (event) {
 
-                event.preventDefault();
+            event.preventDefault();
 
+            const profileId = getProfileId();
 
-                const profileId =
-                    localStorage.getItem(
-                        "profileId"
-                    );
+            if (!profileId) {
 
+                alert(
+                    "⚠️ Profile ID not found.\n\nPlease complete your profile first."
+                );
 
-                if (!profileId) {
+                window.location.href = "profile.html";
 
-                    alert(
-                        "⚠️ Profile ID not found. Please complete your profile first."
-                    );
+                return;
+            }
 
-                    window.location.href =
-                        "profile.html";
+            try {
 
-                    return;
-                }
-
+                // ------------------------------------------
+                // READ AND VALIDATE SKILLS
+                // ------------------------------------------
 
                 const skills = {
+                    profile_id: profileId,
 
-                    profile_id:
-                        parseInt(profileId),
-
-                    python:
-                        parseInt(
-                            document.getElementById(
-                                "python"
-                            ).value
-                        ),
-
-                    java:
-                        parseInt(
-                            document.getElementById(
-                                "java"
-                            ).value
-                        ),
-
-                    sql:
-                        parseInt(
-                            document.getElementById(
-                                "sql"
-                            ).value
-                        ),
-
-                    statistics:
-                        parseInt(
-                            document.getElementById(
-                                "statistics"
-                            ).value
-                        ),
-
-                    data_analysis:
-                        parseInt(
-                            document.getElementById(
-                                "data_analysis"
-                            ).value
-                        ),
-
-                    web_development:
-                        parseInt(
-                            document.getElementById(
-                                "web_development"
-                            ).value
-                        ),
-
-                    communication:
-                        parseInt(
-                            document.getElementById(
-                                "communication"
-                            ).value
-                        )
+                    python: getSkillValue("python"),
+                    java: getSkillValue("java"),
+                    sql: getSkillValue("sql"),
+                    statistics: getSkillValue("statistics"),
+                    data_analysis: getSkillValue("data_analysis"),
+                    web_development: getSkillValue("web_development"),
+                    communication: getSkillValue("communication")
                 };
 
+                console.log("Sending skills:", skills);
 
-                try {
+                // ------------------------------------------
+                // SEND TO FASTAPI
+                // ------------------------------------------
 
-                    const response =
-                        await fetch(
-                            `${API_BASE_URL}/api/skills`,
-                            {
-                                method: "POST",
+                const data = await apiRequest("/api/skills", {
+                    method: "POST",
+                    body: JSON.stringify(skills)
+                });
 
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
+                console.log("Skills API response:", data);
 
-                                body:
-                                    JSON.stringify(
-                                        skills
-                                    )
-                            }
-                        );
+                // ------------------------------------------
+                // SAVE LOCALLY
+                // ------------------------------------------
 
+                localStorage.setItem(
+                    "careerSkills",
+                    JSON.stringify(data)
+                );
 
-                    if (!response.ok) {
+                console.log("Skills saved successfully.");
 
-                        const errorText =
-                            await response.text();
+                // ------------------------------------------
+                // GO TO CAREER PAGE
+                // ------------------------------------------
 
-                        throw new Error(
-                            `Skills save failed: ${response.status} ${errorText}`
-                        );
-                    }
+                window.location.href = "career.html";
 
+            } catch (error) {
 
-                    const data =
-                        await response.json();
+                console.error("Skills Error:", error);
 
-
-                    localStorage.setItem(
-                        "careerSkills",
-                        JSON.stringify(
-                            data
-                        )
-                    );
-
-
-                    console.log(
-                        "Skills saved:",
-                        data
-                    );
-
-
-                    window.location.href =
-                        "career.html";
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Skills Error:",
-                        error
-                    );
-
-                    alert(
-                        "❌ Unable to save skills. Please make sure the backend is running."
-                    );
-                }
+                alert(
+                    "❌ Unable to save skills.\n\n" +
+                    error.message
+                );
             }
-        );
+        });
     }
 
 
-
     // ==================================================
-    // 3. CAREER SELECTION CONNECTED TO FASTAPI
+    // CAREER SELECTION
     // ==================================================
 
-    const careerForm =
-        document.getElementById("careerForm");
-
+    const careerForm = document.getElementById("careerForm");
 
     if (careerForm) {
 
-        careerForm.addEventListener(
-            "submit",
-            async function (event) {
+        careerForm.addEventListener("submit", async function (event) {
 
-                event.preventDefault();
+            event.preventDefault();
 
+            const profileId = getProfileId();
 
-                const profileId =
-                    localStorage.getItem(
-                        "profileId"
-                    );
+            if (!profileId) {
 
+                alert(
+                    "⚠️ Profile ID not found.\n\nPlease complete your profile first."
+                );
 
-                if (!profileId) {
+                window.location.href = "profile.html";
 
-                    alert(
-                        "⚠️ Profile ID not found. Please complete your profile first."
-                    );
+                return;
+            }
 
-                    window.location.href =
-                        "profile.html";
+            const careerElement =
+                document.getElementById("career");
 
-                    return;
-                }
+            const experienceElement =
+                document.getElementById("experience");
 
+            if (!careerElement || !experienceElement) {
 
-                const targetCareer =
-                    document.getElementById(
-                        "career"
-                    ).value;
+                alert(
+                    "Career form fields were not found."
+                );
 
+                return;
+            }
 
-                const experience =
-                    document.getElementById(
-                        "experience"
-                    ).value;
+            const targetCareer =
+                careerElement.value;
 
+            const experience =
+                experienceElement.value;
 
-                const career = {
+            if (!targetCareer) {
 
-                    profile_id:
-                        parseInt(profileId),
+                alert("Please select a career.");
 
-                    target_career:
-                        targetCareer,
+                return;
+            }
 
-                    experience:
-                        experience
-                };
+            if (!experience) {
 
+                alert("Please select your experience level.");
 
-                try {
+                return;
+            }
 
-                    const response =
-                        await fetch(
-                            `${API_BASE_URL}/api/career`,
-                            {
-                                method: "POST",
+            const career = {
+                profile_id: profileId,
+                target_career: targetCareer,
+                experience: experience
+            };
 
-                                headers: {
-                                    "Content-Type":
-                                        "application/json"
-                                },
+            try {
 
-                                body:
-                                    JSON.stringify(
-                                        career
-                                    )
-                            }
-                        );
+                console.log("Sending career:", career);
 
+                const data = await apiRequest("/api/career", {
+                    method: "POST",
+                    body: JSON.stringify(career)
+                });
 
-                    if (!response.ok) {
+                console.log("Career API response:", data);
 
-                        const errorText =
-                            await response.text();
+                localStorage.setItem(
+                    "careerChoice",
+                    JSON.stringify(career)
+                );
 
-                        throw new Error(
-                            `Career save failed: ${response.status} ${errorText}`
-                        );
-                    }
-
-
-                    const data =
-                        await response.json();
-
-
-                    localStorage.setItem(
-                        "careerChoice",
-                        JSON.stringify(
-                            career
-                        )
-                    );
-
+                if (data.career_id) {
 
                     localStorage.setItem(
                         "careerId",
-                        data.career_id
-                    );
-
-
-                    console.log(
-                        "Career saved:",
-                        data
-                    );
-
-
-                    window.location.href =
-                        "simulation.html";
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Career Error:",
-                        error
-                    );
-
-                    alert(
-                        "❌ Unable to save career choice. Please make sure the backend is running."
+                        String(data.career_id)
                     );
                 }
+
+                window.location.href =
+                    "simulation.html";
+
+            } catch (error) {
+
+                showApiError(
+                    "❌ Unable to save career choice.",
+                    error
+                );
             }
-        );
+        });
     }
 
 
-
     // ==================================================
-    // 4. SIMULATION PAGE
+    // SIMULATION PAGE
     // ==================================================
 
     const selectedCareer =
-        document.getElementById(
-            "selectedCareer"
-        );
+        document.getElementById("selectedCareer");
 
     const experienceLevel =
-        document.getElementById(
-            "experienceLevel"
-        );
+        document.getElementById("experienceLevel");
 
-
-    if (
-        selectedCareer ||
-        experienceLevel
-    ) {
+    if (selectedCareer || experienceLevel) {
 
         const savedCareer =
-            localStorage.getItem(
-                "careerChoice"
-            );
-
+            localStorage.getItem("careerChoice");
 
         if (savedCareer) {
 
             try {
 
                 const career =
-                    JSON.parse(
-                        savedCareer
+                    JSON.parse(savedCareer);
+
+                const careerName =
+                    formatCareerName(
+                        career.target_career ||
+                        career.targetCareer
                     );
 
+                if (selectedCareer) {
 
-                let careerName =
-                    career.target_career ||
-                    career.targetCareer;
-
-
-                if (careerName) {
-
-                    careerName =
-                        careerName.replace(
-                            /-/g,
-                            " "
-                        );
-
-
-                    careerName =
-                        careerName.replace(
-                            /\b\w/g,
-                            function (letter) {
-
-                                return letter.toUpperCase();
-
-                            }
-                        );
-
-
-                    if (selectedCareer) {
-
-                        selectedCareer.textContent =
-                            careerName;
-
-                    }
+                    selectedCareer.textContent =
+                        careerName;
                 }
-
 
                 if (
                     experienceLevel &&
@@ -531,9 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     experienceLevel.textContent =
                         "Experience Level: " +
                         career.experience;
-
                 }
-
 
             } catch (error) {
 
@@ -541,40 +427,26 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Simulation career loading error:",
                     error
                 );
-
             }
         }
     }
 
 
-
     // ==================================================
-    // 5. RESULTS PAGE
+    // RESULTS PAGE
     // ==================================================
 
     const resultCareer =
-        document.getElementById(
-            "resultCareer"
-        );
-
+        document.getElementById("resultCareer");
 
     const skillGapContainer =
-        document.getElementById(
-            "skillGapContainer"
-        );
-
+        document.getElementById("skillGapContainer");
 
     const roadmapContainer =
-        document.getElementById(
-            "roadmapContainer"
-        );
-
+        document.getElementById("roadmapContainer");
 
     const aiRecommendation =
-        document.getElementById(
-            "aiRecommendation"
-        );
-
+        document.getElementById("aiRecommendation");
 
     if (
         resultCareer ||
@@ -583,60 +455,21 @@ document.addEventListener("DOMContentLoaded", function () {
         aiRecommendation
     ) {
 
-
-        // ----------------------------------------------
-        // LOAD CAREER
-        // ----------------------------------------------
-
         const savedCareer =
-            localStorage.getItem(
-                "careerChoice"
-            );
+            localStorage.getItem("careerChoice");
 
-
-        if (
-            savedCareer &&
-            resultCareer
-        ) {
+        if (savedCareer && resultCareer) {
 
             try {
 
                 const career =
-                    JSON.parse(
-                        savedCareer
+                    JSON.parse(savedCareer);
+
+                resultCareer.textContent =
+                    formatCareerName(
+                        career.target_career ||
+                        career.targetCareer
                     );
-
-
-                let careerName =
-                    career.target_career ||
-                    career.targetCareer;
-
-
-                if (careerName) {
-
-                    careerName =
-                        careerName.replace(
-                            /-/g,
-                            " "
-                        );
-
-
-                    careerName =
-                        careerName.replace(
-                            /\b\w/g,
-                            function (letter) {
-
-                                return letter.toUpperCase();
-
-                            }
-                        );
-
-
-                    resultCareer.textContent =
-                        careerName;
-
-                }
-
 
             } catch (error) {
 
@@ -644,24 +477,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Career loading error:",
                     error
                 );
-
             }
         }
 
 
-
-        // ----------------------------------------------
-        // LOAD SIMULATION RESULT
-        // ----------------------------------------------
-
         const savedSimulation =
-            localStorage.getItem(
-                "simulationResult"
-            );
-
+            localStorage.getItem("simulationResult");
 
         if (!savedSimulation) {
-
 
             if (skillGapContainer) {
 
@@ -671,9 +494,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         Please complete the career simulation first.
                     </p>
                 `;
-
             }
-
 
             if (roadmapContainer) {
 
@@ -682,164 +503,128 @@ document.addEventListener("DOMContentLoaded", function () {
                         Please run the simulation first.
                     </p>
                 `;
-
             }
-
 
             if (aiRecommendation) {
 
                 aiRecommendation.textContent =
                     "Please complete the career simulation first.";
-
             }
-
 
         } else {
 
             try {
 
                 const simulation =
-                    JSON.parse(
-                        savedSimulation
-                    );
+                    JSON.parse(savedSimulation);
 
-
-                // --------------------------------------
+                // ------------------------------------------
                 // SKILL GAP
-                // --------------------------------------
+                // ------------------------------------------
 
                 if (skillGapContainer) {
 
-                    let skillGapHTML = `
+                    let html = `
                         <div class="readiness-score">
-
                             <h3>
                                 📊 Readiness Score:
-                                ${simulation.readiness_score}%
+                                ${simulation.readiness_score ?? 0}%
                             </h3>
-
                         </div>
                     `;
-
 
                     if (
                         simulation.skill_gaps &&
                         simulation.skill_gaps.length > 0
                     ) {
 
-                        simulation.skill_gaps.forEach(
-                            function (gap) {
+                        simulation.skill_gaps.forEach(gap => {
 
-                                skillGapHTML += `
-                                    <div class="gap-item">
+                            html += `
+                                <div class="gap-item">
+                                    <strong>
+                                        ${gap.skill}
+                                    </strong>
 
-                                        <strong>
-                                            ${gap.skill}
-                                        </strong>
-
-                                        <span>
-
-                                            ${gap.status}
-
-                                            <br>
-
-                                            Current:
-                                            ${gap.current}
-                                            /
-                                            Required:
-                                            ${gap.required}
-
-                                        </span>
-
-                                    </div>
-                                `;
-
-                            }
-                        );
-
+                                    <span>
+                                        ${gap.status}
+                                        <br>
+                                        Current:
+                                        ${gap.current}
+                                        /
+                                        Required:
+                                        ${gap.required}
+                                    </span>
+                                </div>
+                            `;
+                        });
 
                     } else {
 
-                        skillGapHTML += `
+                        html += `
                             <p>
                                 🎉 No major skill gaps found.
                             </p>
                         `;
-
                     }
 
-
                     skillGapContainer.innerHTML =
-                        skillGapHTML;
-
+                        html;
                 }
 
 
-
-                // --------------------------------------
+                // ------------------------------------------
                 // ROADMAP
-                // --------------------------------------
+                // ------------------------------------------
 
                 if (roadmapContainer) {
 
                     let roadmapHTML = "";
-
 
                     if (
                         simulation.roadmap &&
                         simulation.roadmap.length > 0
                     ) {
 
-                        simulation.roadmap.forEach(
-                            function (step) {
+                        simulation.roadmap.forEach(step => {
 
-                                roadmapHTML += `
-                                    <div class="roadmap-step">
+                            roadmapHTML += `
+                                <div class="roadmap-step">
 
-                                        <div class="journey-number">
-                                            ${step.month}
-                                        </div>
-
-                                        <div>
-
-                                            <h3>
-                                                ${step.title}
-                                            </h3>
-
-                                            <p>
-                                                ${step.description}
-                                            </p>
-
-                                        </div>
-
+                                    <div class="journey-number">
+                                        ${step.month}
                                     </div>
-                                `;
 
-                            }
-                        );
+                                    <div>
+                                        <h3>
+                                            ${step.title}
+                                        </h3>
 
+                                        <p>
+                                            ${step.description}
+                                        </p>
+                                    </div>
+
+                                </div>
+                            `;
+                        });
                     }
-
 
                     roadmapContainer.innerHTML =
                         roadmapHTML;
-
                 }
 
 
-
-                // --------------------------------------
+                // ------------------------------------------
                 // AI RECOMMENDATION
-                // --------------------------------------
+                // ------------------------------------------
 
                 if (aiRecommendation) {
 
                     aiRecommendation.textContent =
                         simulation.ai_recommendation ||
                         "Continue improving your skills and follow the personalized roadmap.";
-
                 }
-
 
             } catch (error) {
 
@@ -847,49 +632,30 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Simulation result loading error:",
                     error
                 );
-
             }
         }
-
     }
 
 
-
     // ==================================================
-    // 6. HINDSIGHT MEMORY
+    // HINDSIGHT MEMORY
     // ==================================================
 
     const memoryForm =
-        document.getElementById(
-            "memoryForm"
-        );
-
+        document.getElementById("memoryForm");
 
     const memoryDisplay =
-        document.getElementById(
-            "memoryDisplay"
-        );
+        document.getElementById("memoryDisplay");
 
-
-
-    // --------------------------------------------------
-    // LOAD MEMORY
-    // --------------------------------------------------
 
     async function loadMemory() {
 
         if (!memoryDisplay) {
-
             return;
-
         }
 
-
         const profileId =
-            localStorage.getItem(
-                "profileId"
-            );
-
+            getProfileId();
 
         if (!profileId) {
 
@@ -901,9 +667,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
 
             return;
-
         }
-
 
         try {
 
@@ -911,7 +675,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 await fetch(
                     `${API_BASE_URL}/api/memory/${profileId}`
                 );
-
 
             if (!response.ok) {
 
@@ -922,13 +685,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
 
                 return;
-
             }
-
 
             const data =
                 await response.json();
-
 
             if (
                 !data ||
@@ -945,115 +705,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
 
                 return;
-
             }
-
 
             const memory =
                 Array.isArray(data)
                     ? data[data.length - 1]
                     : data;
 
-
             localStorage.setItem(
                 "careerMemory",
-                JSON.stringify(
-                    memory
-                )
+                JSON.stringify(memory)
             );
 
-
-            memoryDisplay.innerHTML = `
-
-                <div class="journey">
-
-                    <div class="journey-step">
-
-                        <div class="journey-number">
-                            01
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Career
-                            </h3>
-
-                            <p>
-                                ${memory.career}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="journey-step">
-
-                        <div class="journey-number">
-                            02
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Decision
-                            </h3>
-
-                            <p>
-                                ${memory.decision}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="journey-step">
-
-                        <div class="journey-number">
-                            03
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Outcome
-                            </h3>
-
-                            <p>
-                                ${memory.outcome}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="journey-step">
-
-                        <div class="journey-number">
-                            04
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Lesson Learned
-                            </h3>
-
-                            <p>
-                                ${memory.lesson}
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            `;
-
+            displayMemory(memory);
 
         } catch (error) {
 
@@ -1062,18 +726,60 @@ document.addEventListener("DOMContentLoaded", function () {
                 error
             );
 
-
             memoryDisplay.innerHTML = `
                 <p>
                     ⚠️ Unable to load career memory.
-                    Please make sure the backend is running.
                 </p>
             `;
-
         }
-
     }
 
+
+    function displayMemory(memory) {
+
+        if (!memoryDisplay) {
+            return;
+        }
+
+        memoryDisplay.innerHTML = `
+
+            <div class="journey">
+
+                <div class="journey-step">
+                    <div class="journey-number">01</div>
+                    <div>
+                        <h3>Career</h3>
+                        <p>${memory.career || ""}</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="journey-number">02</div>
+                    <div>
+                        <h3>Decision</h3>
+                        <p>${memory.decision || ""}</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="journey-number">03</div>
+                    <div>
+                        <h3>Outcome</h3>
+                        <p>${memory.outcome || ""}</p>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <div class="journey-number">04</div>
+                    <div>
+                        <h3>Lesson Learned</h3>
+                        <p>${memory.lesson || ""}</p>
+                    </div>
+                </div>
+
+            </div>
+        `;
+    }
 
 
     // --------------------------------------------------
@@ -1088,12 +794,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 event.preventDefault();
 
-
                 const profileId =
-                    localStorage.getItem(
-                        "profileId"
-                    );
-
+                    getProfileId();
 
                 if (!profileId) {
 
@@ -1102,249 +804,89 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
                     return;
-
                 }
-
 
                 const memoryData = {
 
-                    profile_id:
-                        parseInt(
-                            profileId
-                        ),
+                    profile_id: profileId,
 
                     career:
                         document.getElementById(
                             "memoryCareer"
-                        ).value,
+                        )?.value || "",
 
                     decision:
                         document.getElementById(
                             "memoryDecision"
-                        ).value,
+                        )?.value || "",
 
                     outcome:
                         document.getElementById(
                             "memoryOutcome"
-                        ).value,
+                        )?.value || "",
 
                     lesson:
                         document.getElementById(
                             "memoryLesson"
-                        ).value
-
+                        )?.value || ""
                 };
-
 
                 try {
 
-                    const response =
-                        await fetch(
-                            `${API_BASE_URL}/api/memory`,
+                    const data =
+                        await apiRequest(
+                            "/api/memory",
                             {
-
-                                method:
-                                    "POST",
-
-                                headers: {
-
-                                    "Content-Type":
-                                        "application/json"
-
-                                },
-
-                                body:
-                                    JSON.stringify(
-                                        memoryData
-                                    )
-
+                                method: "POST",
+                                body: JSON.stringify(
+                                    memoryData
+                                )
                             }
                         );
 
-
-                    if (!response.ok) {
-
-                        const errorText =
-                            await response.text();
-
-
-                        throw new Error(
-                            `Memory save failed: ${response.status} ${errorText}`
-                        );
-
-                    }
-
-
-                    const data =
-                        await response.json();
-
-
-                    // Save memory locally
                     localStorage.setItem(
                         "careerMemory",
-                        JSON.stringify(
-                            data
-                        )
+                        JSON.stringify(data)
                     );
 
-
-                    // Display saved memory
-                    if (memoryDisplay) {
-
-                        memoryDisplay.innerHTML = `
-
-                            <div class="journey">
-
-                                <div class="journey-step">
-
-                                    <div class="journey-number">
-                                        01
-                                    </div>
-
-                                    <div>
-
-                                        <h3>
-                                            Career
-                                        </h3>
-
-                                        <p>
-                                            ${data.career}
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="journey-step">
-
-                                    <div class="journey-number">
-                                        02
-                                    </div>
-
-                                    <div>
-
-                                        <h3>
-                                            Decision
-                                        </h3>
-
-                                        <p>
-                                            ${data.decision}
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="journey-step">
-
-                                    <div class="journey-number">
-                                        03
-                                    </div>
-
-                                    <div>
-
-                                        <h3>
-                                            Outcome
-                                        </h3>
-
-                                        <p>
-                                            ${data.outcome}
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="journey-step">
-
-                                    <div class="journey-number">
-                                        04
-                                    </div>
-
-                                    <div>
-
-                                        <h3>
-                                            Lesson Learned
-                                        </h3>
-
-                                        <p>
-                                            ${data.lesson}
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        `;
-
-                    }
-
+                    displayMemory(data);
 
                     alert(
                         "✅ Career memory saved successfully!"
                     );
 
-
-                    // Clear form
                     memoryForm.reset();
-
 
                 } catch (error) {
 
-                    console.error(
-                        "Memory save error:",
+                    showApiError(
+                        "❌ Failed to save career memory.",
                         error
                     );
-
-
-                    alert(
-                        "❌ Failed to save career memory. Make sure the backend is running."
-                    );
-
                 }
-
             }
         );
-
     }
 
 
-    // Load memory when memory page opens
     loadMemory();
 
 
-
     // ==================================================
-    // 7. DASHBOARD
+    // DASHBOARD
     // ==================================================
 
     const dashboardProfile =
-        document.getElementById(
-            "dashboardProfile"
-        );
-
+        document.getElementById("dashboardProfile");
 
     const dashboardCareer =
-        document.getElementById(
-            "dashboardCareer"
-        );
-
+        document.getElementById("dashboardCareer");
 
     const dashboardSkills =
-        document.getElementById(
-            "dashboardSkills"
-        );
-
+        document.getElementById("dashboardSkills");
 
     const dashboardMemory =
-        document.getElementById(
-            "dashboardMemory"
-        );
+        document.getElementById("dashboardMemory");
 
 
     if (
@@ -1354,29 +896,19 @@ document.addEventListener("DOMContentLoaded", function () {
         dashboardMemory
     ) {
 
-
         // ----------------------------------------------
-        // PROFILE DATA
+        // PROFILE
         // ----------------------------------------------
 
         const savedProfile =
-            localStorage.getItem(
-                "careerProfile"
-            );
+            localStorage.getItem("careerProfile");
 
-
-        if (
-            savedProfile &&
-            dashboardProfile
-        ) {
+        if (savedProfile && dashboardProfile) {
 
             try {
 
                 const profile =
-                    JSON.parse(
-                        savedProfile
-                    );
-
+                    JSON.parse(savedProfile);
 
                 dashboardProfile.innerHTML = `
 
@@ -1404,7 +936,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         <strong>Career Goal:</strong>
                         ${profile.goal || "Not available"}
                     </p>
-
                 `;
 
             } catch (error) {
@@ -1413,59 +944,29 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Dashboard profile error:",
                     error
                 );
-
             }
-
         }
 
 
-
         // ----------------------------------------------
-        // CAREER DATA
+        // CAREER
         // ----------------------------------------------
 
         const savedCareer =
-            localStorage.getItem(
-                "careerChoice"
-            );
+            localStorage.getItem("careerChoice");
 
-
-        if (
-            savedCareer &&
-            dashboardCareer
-        ) {
+        if (savedCareer && dashboardCareer) {
 
             try {
 
                 const career =
-                    JSON.parse(
-                        savedCareer
+                    JSON.parse(savedCareer);
+
+                const careerName =
+                    formatCareerName(
+                        career.target_career ||
+                        career.targetCareer
                     );
-
-
-                let careerName =
-                    career.target_career ||
-                    career.targetCareer ||
-                    "Not available";
-
-
-                careerName =
-                    careerName.replace(
-                        /-/g,
-                        " "
-                    );
-
-
-                careerName =
-                    careerName.replace(
-                        /\b\w/g,
-                        function (letter) {
-
-                            return letter.toUpperCase();
-
-                        }
-                    );
-
 
                 dashboardCareer.innerHTML = `
 
@@ -1473,20 +974,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         <strong>
                             Target Career:
                         </strong>
-
                         ${careerName}
-
                     </p>
 
                     <p>
                         <strong>
                             Experience:
                         </strong>
-
                         ${career.experience || "Not available"}
-
                     </p>
-
                 `;
 
             } catch (error) {
@@ -1495,94 +991,33 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Dashboard career error:",
                     error
                 );
-
             }
-
         }
 
 
-
         // ----------------------------------------------
-        // SKILLS DATA
+        // SKILLS
         // ----------------------------------------------
 
         const savedSkills =
-            localStorage.getItem(
-                "careerSkills"
-            );
+            localStorage.getItem("careerSkills");
 
-
-        if (
-            savedSkills &&
-            dashboardSkills
-        ) {
+        if (savedSkills && dashboardSkills) {
 
             try {
 
                 const skills =
-                    JSON.parse(
-                        savedSkills
-                    );
-
+                    JSON.parse(savedSkills);
 
                 dashboardSkills.innerHTML = `
 
-                    <p>
-                        <strong>
-                            Python:
-                        </strong>
-
-                        ${skills.python || 0}/5
-                    </p>
-
-                    <p>
-                        <strong>
-                            Java:
-                        </strong>
-
-                        ${skills.java || 0}/5
-                    </p>
-
-                    <p>
-                        <strong>
-                            SQL:
-                        </strong>
-
-                        ${skills.sql || 0}/5
-                    </p>
-
-                    <p>
-                        <strong>
-                            Statistics:
-                        </strong>
-
-                        ${skills.statistics || 0}/5
-                    </p>
-
-                    <p>
-                        <strong>
-                            Data Analysis:
-                        </strong>
-
-                        ${skills.data_analysis || 0}/5
-                    </p>
-
-                    <p>
-                        <strong>
-                            Web Development:
-                        </strong>
-
-                        ${skills.web_development || 0}/5
-                    </p>
-
-                    <p>
-                        <strong>
-                            Communication:
-                        </strong>
-
-                        ${skills.communication || 0}/5
-                    </p>
-
+                    <p><strong>Python:</strong> ${skills.python || 0}/5</p>
+                    <p><strong>Java:</strong> ${skills.java || 0}/5</p>
+                    <p><strong>SQL:</strong> ${skills.sql || 0}/5</p>
+                    <p><strong>Statistics:</strong> ${skills.statistics || 0}/5</p>
+                    <p><strong>Data Analysis:</strong> ${skills.data_analysis || 0}/5</p>
+                    <p><strong>Web Development:</strong> ${skills.web_development || 0}/5</p>
+                    <p><strong>Communication:</strong> ${skills.communication || 0}/5</p>
                 `;
 
             } catch (error) {
@@ -1591,74 +1026,45 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Dashboard skills error:",
                     error
                 );
-
             }
-
         }
 
 
-
         // ----------------------------------------------
-        // MEMORY DATA
+        // MEMORY
         // ----------------------------------------------
 
         const savedMemory =
-            localStorage.getItem(
-                "careerMemory"
-            );
+            localStorage.getItem("careerMemory");
 
-
-        if (
-            savedMemory &&
-            dashboardMemory
-        ) {
+        if (savedMemory && dashboardMemory) {
 
             try {
 
                 const memory =
-                    JSON.parse(
-                        savedMemory
-                    );
-
+                    JSON.parse(savedMemory);
 
                 dashboardMemory.innerHTML = `
 
                     <p>
-                        <strong>
-                            Career:
-                        </strong>
-
+                        <strong>Career:</strong>
                         ${memory.career || "Not available"}
-
                     </p>
 
                     <p>
-                        <strong>
-                            Decision:
-                        </strong>
-
+                        <strong>Decision:</strong>
                         ${memory.decision || "Not available"}
-
                     </p>
 
                     <p>
-                        <strong>
-                            Outcome:
-                        </strong>
-
+                        <strong>Outcome:</strong>
                         ${memory.outcome || "Not available"}
-
                     </p>
 
                     <p>
-                        <strong>
-                            Lesson:
-                        </strong>
-
+                        <strong>Lesson:</strong>
                         ${memory.lesson || "Not available"}
-
                     </p>
-
                 `;
 
             } catch (error) {
@@ -1667,57 +1073,37 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Dashboard memory error:",
                     error
                 );
-
             }
-
         }
-
     }
 
 });
 
 
 // ======================================================
-// 8. SIMULATE 6-MONTH PROGRESS
+// 5. SIMULATE 6-MONTH PROGRESS
 // ======================================================
 
 async function showScenario() {
 
     const result =
-        document.getElementById(
-            "scenarioResult"
-        );
-
+        document.getElementById("scenarioResult");
 
     if (!result) {
-
         return;
-
     }
 
-
     const profileId =
-        localStorage.getItem(
-            "profileId"
-        );
-
+        getProfileId();
 
     const savedCareer =
-        localStorage.getItem(
-            "careerChoice"
-        );
-
+        localStorage.getItem("careerChoice");
 
     const savedSkills =
-        localStorage.getItem(
-            "careerSkills"
-        );
-
+        localStorage.getItem("careerSkills");
 
     const savedMemory =
-        localStorage.getItem(
-            "careerMemory"
-        );
+        localStorage.getItem("careerMemory");
 
 
     if (
@@ -1727,74 +1113,49 @@ async function showScenario() {
     ) {
 
         result.innerHTML = `
-
             <div class="simulation-card">
-
-                <h3>
-                    ⚠️ Missing Information
-                </h3>
+                <h3>⚠️ Missing Information</h3>
 
                 <p>
                     Please complete your profile,
                     skills and career selection
                     before running the simulation.
                 </p>
-
             </div>
-
         `;
 
         return;
-
     }
 
 
     try {
 
         const career =
-            JSON.parse(
-                savedCareer
-            );
-
+            JSON.parse(savedCareer);
 
         const skills =
-            JSON.parse(
-                savedSkills
-            );
+            JSON.parse(savedSkills);
 
 
-        // Default memory
         let memory = {
 
-            profile_id:
-                parseInt(
-                    profileId
-                ),
+            profile_id: profileId,
 
             career:
                 career.target_career ||
-                career.targetCareer,
-
-            decision:
+                career.targetCareer ||
                 "",
 
-            outcome:
-                "",
-
-            lesson:
-                ""
-
+            decision: "",
+            outcome: "",
+            lesson: ""
         };
 
 
-        // Use saved memory if available
         if (savedMemory) {
 
             memory =
-                JSON.parse(
-                    savedMemory
-                );
-
+                JSON.parse(savedMemory);
         }
 
 
@@ -1803,9 +1164,7 @@ async function showScenario() {
             career.targetCareer;
 
 
-        // Show loading message
         result.innerHTML = `
-
             <div class="simulation-card">
 
                 <h3>
@@ -1814,138 +1173,81 @@ async function showScenario() {
 
                 <p>
                     Analyzing your skills,
-                    career choice and
-                    previous decisions...
+                    career choice and previous decisions...
                 </p>
 
             </div>
-
         `;
 
 
-        // ----------------------------------------------
-        // SIMULATION REQUEST
-        // ----------------------------------------------
-
         const simulationData = {
 
-            profile_id:
-                parseInt(
-                    profileId
-                ),
+            profile_id: profileId,
 
-            target_career:
-                targetCareer,
+            target_career: targetCareer,
 
             experience:
                 career.experience,
 
             skills: {
 
-                profile_id:
-                    parseInt(
-                        profileId
-                    ),
+                profile_id: profileId,
 
                 python:
-                    parseInt(
-                        skills.python || 1
-                    ),
+                    parseInt(skills.python, 10),
 
                 java:
-                    parseInt(
-                        skills.java || 1
-                    ),
+                    parseInt(skills.java, 10),
 
                 sql:
-                    parseInt(
-                        skills.sql || 1
-                    ),
+                    parseInt(skills.sql, 10),
 
                 statistics:
-                    parseInt(
-                        skills.statistics || 1
-                    ),
+                    parseInt(skills.statistics, 10),
 
                 data_analysis:
-                    parseInt(
-                        skills.data_analysis || 1
-                    ),
+                    parseInt(skills.data_analysis, 10),
 
                 web_development:
-                    parseInt(
-                        skills.web_development || 1
-                    ),
+                    parseInt(skills.web_development, 10),
 
                 communication:
-                    parseInt(
-                        skills.communication || 1
-                    )
-
+                    parseInt(skills.communication, 10)
             },
 
-            memory:
-                memory
-
+            memory: memory
         };
 
 
-        const response =
-            await fetch(
-                `${API_BASE_URL}/api/simulation`,
+        console.log(
+            "Sending simulation:",
+            simulationData
+        );
+
+
+        const data =
+            await apiRequest(
+                "/api/simulation",
                 {
-
-                    method:
-                        "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json",
-
-                        "Accept":
-                            "*/*"
-
-                    },
-
-                    body:
-                        JSON.stringify(
-                            simulationData
-                        )
-
+                    method: "POST",
+                    body: JSON.stringify(
+                        simulationData
+                    )
                 }
             );
 
 
-        if (!response.ok) {
-
-            const errorText =
-                await response.text();
-
-
-            throw new Error(
-                `Simulation failed: ${response.status} ${errorText}`
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        // Save simulation result
-        localStorage.setItem(
-            "simulationResult",
-            JSON.stringify(
-                data
-            )
+        console.log(
+            "Simulation API response:",
+            data
         );
 
 
-        // ----------------------------------------------
-        // DISPLAY RESULT
-        // ----------------------------------------------
+        localStorage.setItem(
+            "simulationResult",
+            JSON.stringify(data)
+        );
+
 
         result.innerHTML = `
 
@@ -1956,7 +1258,10 @@ async function showScenario() {
                 </h3>
 
                 <p>
-                    ${data.simulation.six_month_summary}
+                    ${
+                        data.simulation?.six_month_summary ||
+                        "Simulation completed successfully."
+                    }
                 </p>
 
 
@@ -1965,11 +1270,9 @@ async function showScenario() {
                 </h3>
 
                 <p>
-
                     <strong>
-                        ${data.readiness_score}%
+                        ${data.readiness_score ?? 0}%
                     </strong>
-
                 </p>
 
 
@@ -1977,34 +1280,29 @@ async function showScenario() {
                     🚀 Career Journey
                 </h3>
 
-
                 <div class="journey">
 
-                    ${data.simulation.steps
-                        .map(
-                            (step, index) => `
+                    ${
+                        (data.simulation?.steps || [])
+                            .map(
+                                (step, index) => `
+                                    <div class="journey-step">
 
-                                <div class="journey-step">
+                                        <div class="journey-number">
+                                            ${String(index + 1).padStart(2, "0")}
+                                        </div>
 
-                                    <div class="journey-number">
-
-                                        0${index + 1}
-
-                                    </div>
-
-                                    <div>
-
-                                        <h3>
-                                            ${step}
-                                        </h3>
+                                        <div>
+                                            <h3>
+                                                ${step}
+                                            </h3>
+                                        </div>
 
                                     </div>
-
-                                </div>
-
-                            `
-                        )
-                        .join("")}
+                                `
+                            )
+                            .join("")
+                    }
 
                 </div>
 
@@ -2014,18 +1312,14 @@ async function showScenario() {
                 </h3>
 
                 <p>
-                    ${data.ai_recommendation}
+                    ${
+                        data.ai_recommendation ||
+                        "Continue improving your skills and follow the personalized roadmap."
+                    }
                 </p>
 
             </div>
-
         `;
-
-
-        console.log(
-            "Simulation API response:",
-            data
-        );
 
 
     } catch (error) {
@@ -2034,7 +1328,6 @@ async function showScenario() {
             "Simulation Error:",
             error
         );
-
 
         result.innerHTML = `
 
@@ -2048,29 +1341,20 @@ async function showScenario() {
                     ${error.message}
                 </p>
 
-                <p>
-                    Please make sure the
-                    FastAPI backend is running.
-                </p>
-
             </div>
-
         `;
-
     }
-
 }
 
 
 // ======================================================
-// 9. NAVIGATION
+// 6. NAVIGATION
 // ======================================================
 
 function goToResults() {
 
     window.location.href =
         "results.html";
-
 }
 
 
@@ -2078,7 +1362,6 @@ function goToMemory() {
 
     window.location.href =
         "memory.html";
-
 }
 
 
@@ -2086,7 +1369,6 @@ function goToDashboard() {
 
     window.location.href =
         "dashboard.html";
-
 }
 
 
@@ -2094,5 +1376,4 @@ function goToNewSimulation() {
 
     window.location.href =
         "career.html";
-
 }
