@@ -1,12 +1,15 @@
 /* =========================================
-   AI CAREER DECISION SIMULATOR
-   COMMON WEBSITE STYLES
+   CAREERSIM AI - FINAL CENTERED DESIGN
    ========================================= */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -16,250 +19,449 @@ body {
     line-height: 1.6;
 }
 
-/* =========================
-   CONTAINER
-   ========================= */
-
-.container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 40px auto;
-}
-
-/* =========================
-   HEADINGS
-   ========================= */
-
-h1 {
-    font-size: 34px;
-    margin-bottom: 12px;
-    color: #111827;
-}
-
-h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #111827;
-}
-
-h3 {
-    font-size: 19px;
-    margin-bottom: 10px;
-    color: #1f2937;
-}
-
-p {
-    color: #6b7280;
-}
-
-/* =========================
-   NAVIGATION
-   ========================= */
+/* =========================================
+   NAVBAR
+   ========================================= */
 
 .navbar {
+    width: 100%;
+    min-height: 70px;
+    padding: 0 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     background: #111827;
     color: white;
-    padding: 18px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .logo {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.navbar a {
+    font-size: 24px;
+    font-weight: 700;
     color: white;
-    text-decoration: none;
 }
 
-/* =========================
-   HERO SECTION
-   ========================= */
-
-.hero {
-    background: linear-gradient(135deg, #1d4ed8, #4f46e5);
-    color: white;
-    padding: 40px;
-    border-radius: 18px;
-    margin-bottom: 25px;
+.logo span {
+    color: #818cf8;
 }
 
-.hero h1 {
-    color: white;
-    font-size: 36px;
-}
-
-.hero p {
-    color: #e0e7ff;
-    font-size: 17px;
-}
-
-/* =========================
-   CARDS
-   ========================= */
-
-.card {
-    background: white;
-    border-radius: 16px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
-}
-
-.card h2 {
-    margin-bottom: 20px;
-}
-
-/* =========================
-   GRID
-   ========================= */
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-/* =========================
-   FORMS
-   ========================= */
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 7px;
-    color: #374151;
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-    background: white;
-    font-size: 15px;
-    outline: none;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
-}
-
-/* =========================
-   BUTTONS
-   ========================= */
-
-button,
-.primary-button,
-.secondary-button,
-.button {
-    display: inline-block;
-    padding: 13px 24px;
-    border-radius: 10px;
-    border: none;
-    background: #4f46e5;
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s ease;
-}
-
-button:hover,
-.primary-button:hover,
-.button:hover {
-    background: #3730a3;
-    transform: translateY(-1px);
-}
-
-.secondary-button {
-    background: #e5e7eb;
-    color: #1f2937;
-}
-
-.secondary-button:hover {
-    background: #d1d5db;
-}
-
-/* =========================
-   BUTTON AREA
-   ========================= */
-
-.button-area {
+.nav-links {
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 25px;
+    align-items: center;
+    gap: 30px;
 }
 
-/* =========================
-   SKILLS
-   ========================= */
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
 
-.skill {
+.nav-links a:hover,
+.nav-links a.active {
+    color: #a5b4fc;
+}
+
+/* =========================================
+   MAIN CONTAINER
+   THIS IS THE IMPORTANT PART
+   ========================================= */
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 60px 30px;
+}
+
+/* =========================================
+   HOME PAGE
+   ========================================= */
+
+.hero-section {
+    width: calc(100% - 60px);
+    max-width: 1150px;
+
+    margin: 60px auto 70px auto;
+
+    padding: 80px 60px;
+
+    min-height: 500px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background: linear-gradient(
+        135deg,
+        #eef2ff,
+        #ffffff,
+        #f5f3ff
+    );
+
+    border: 1px solid #e0e7ff;
+    border-radius: 25px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 850px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+}
+
+.tagline {
+    color: #4f46e5;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+
     margin-bottom: 18px;
 }
 
-.skill-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
+.hero-content h1 {
+    font-size: 50px;
+    line-height: 1.15;
+
+    color: #111827;
+
+    margin-bottom: 25px;
 }
 
-.skill-bar,
-.progress-bar,
-.bar {
-    width: 100%;
-    height: 9px;
-    background: #e5e7eb;
-    border-radius: 10px;
-    overflow: hidden;
+.hero-content h1 span {
+    display: block;
+    color: #4f46e5;
 }
 
-.skill-fill,
-.progress-fill,
-.fill {
-    height: 100%;
+.hero-description {
+    max-width: 750px;
+
+    margin: 0 auto 35px auto;
+
+    color: #6b7280;
+
+    font-size: 18px;
+    line-height: 1.8;
+
+    text-align: center;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.primary-button,
+.primary-btn,
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 14px 28px;
+
     background: #4f46e5;
+    color: white;
+
+    border: none;
     border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
-/* =========================
-   CAREER SELECTION
-   ========================= */
+.primary-button:hover,
+.primary-btn:hover,
+.button:hover {
+    background: #3730a3;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   HOW IT WORKS / PROFILE SECTION
+   ========================================= */
+
+.profile-section {
+    width: 100%;
+
+    padding: 70px 30px;
+}
+
+.profile-container {
+    width: 100%;
+    max-width: 1100px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-heading {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto 50px auto;
+
+    text-align: center;
+}
+
+.profile-heading h1,
+.profile-heading h2 {
+    font-size: 36px;
+    color: #111827;
+
+    margin-bottom: 15px;
+}
+
+.profile-heading p {
+    color: #6b7280;
+    font-size: 17px;
+}
+
+/* =========================================
+   JOURNEY CARDS
+   ========================================= */
+
+.journey {
+    width: 100%;
+    max-width: 1100px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 22px;
+}
+
+.journey-step {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+
+    padding: 28px 22px;
+
+    min-height: 220px;
+
+    text-align: center;
+
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.05);
+}
+
+.journey-step:hover {
+    transform: translateY(-4px);
+
+    border-color: #c7d2fe;
+
+    box-shadow: 0 12px 25px rgba(79, 70, 229, 0.10);
+}
+
+.step-number,
+.journey-number {
+    width: 45px;
+    height: 45px;
+
+    margin: 0 auto 18px auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef2ff;
+    color: #4f46e5;
+
+    font-weight: 700;
+}
+
+.journey-step h3 {
+    font-size: 19px;
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.journey-step p {
+    color: #6b7280;
+    font-size: 15px;
+}
+
+/* =========================================
+   SIMULATION CARD
+   ========================================= */
+
+.simulation-card {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 30px auto;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   PAGE HEADER
+   ========================================= */
+
+.page-header {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto 35px auto;
+
+    text-align: center;
+}
+
+.page-header h1 {
+    font-size: 36px;
+    color: #111827;
+
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #6b7280;
+}
+
+/* =========================================
+   FORM SECTIONS
+   ========================================= */
+
+.form-section {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto 25px auto;
+
+    padding: 40px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #374151;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: white;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #4f46e5;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 70, 229, 0.10);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* =========================================
+   FORM BUTTON AREA
+   ========================================= */
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 30px;
+}
+
+/* =========================================
+   CAREER OPTIONS
+   ========================================= */
 
 .career-options {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 25px auto;
+
     display: grid;
+
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+
+    gap: 20px;
 }
 
 .career-option {
-    border: 2px solid #e5e7eb;
+    padding: 25px;
+
     background: white;
-    padding: 20px;
-    border-radius: 12px;
+
+    border: 2px solid #e5e7eb;
+
+    border-radius: 14px;
+
     cursor: pointer;
-    transition: 0.2s ease;
+
+    transition: 0.2s;
 }
 
 .career-option:hover {
-    border-color: #4f46e5;
-    background: #eef2ff;
+    border-color: #818cf8;
+    background: #f8f8ff;
 }
 
 .career-option.selected {
@@ -267,168 +469,279 @@ button:hover,
     background: #eef2ff;
 }
 
-/* =========================
+/* =========================================
    RESULTS
-   ========================= */
+   ========================================= */
 
-.result-card {
+.card {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto 25px auto;
+
+    padding: 30px;
+
     background: white;
-    border-radius: 16px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
 }
 
-.readiness-score {
-    font-size: 42px;
-    font-weight: bold;
-    color: #4f46e5;
+.score {
     text-align: center;
-    margin: 15px 0;
+
+    font-size: 52px;
+    font-weight: 700;
+
+    color: #4f46e5;
+
+    margin: 25px 0;
 }
 
-/* =========================
-   ROADMAP
-   ========================= */
-
-.roadmap {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.career {
+    color: #4f46e5;
+    font-weight: 700;
 }
 
-.roadmap-step {
-    background: white;
-    border-left: 5px solid #4f46e5;
+.month {
     padding: 18px;
+
+    margin-bottom: 15px;
+
+    background: #eef2ff;
+
     border-radius: 10px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
 }
 
-.roadmap-step strong {
-    display: block;
-    margin-bottom: 5px;
+.roadmap-title {
+    color: #111827;
+
+    font-size: 20px;
+
+    margin-bottom: 18px;
 }
 
-/* =========================
+.recommendation {
+    padding: 20px;
+
+    background: #f8fafc;
+
+    border-left: 5px solid #4f46e5;
+
+    border-radius: 10px;
+}
+
+/* =========================================
    MEMORY
-   ========================= */
+   ========================================= */
+
+.memory-form {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto 30px auto;
+
+    padding: 40px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+}
+
+.memory-history {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 40px auto;
+}
+
+.history-card {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    margin-bottom: 18px;
+}
 
 .memory-card {
+    padding: 22px;
+
+    margin-bottom: 18px;
+
     background: #f8fafc;
+
     border-left: 5px solid #4f46e5;
-    padding: 20px;
+
     border-radius: 10px;
-    margin-bottom: 15px;
 }
 
-.memory-card strong {
-    display: block;
-    margin-bottom: 5px;
+/* =========================================
+   DASHBOARD
+   ========================================= */
+
+#dashboard {
+    width: 100%;
+    max-width: 1050px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 60px 30px;
 }
 
-.memory-card p {
-    color: #4b5563;
-}
+#dashboard section {
+    width: 100%;
 
-/* =========================
-   ALERTS
-   ========================= */
+    background: white;
 
-.success {
-    background: #ecfdf5;
-    color: #065f46;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
+    border: 1px solid #e5e7eb;
 
-.error {
-    background: #fef2f2;
-    color: #991b1b;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
+    border-radius: 18px;
 
-.info {
-    background: #eff6ff;
-    color: #1e40af;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-/* =========================
-   LOADING
-   ========================= */
-
-.loading {
-    text-align: center;
     padding: 30px;
-    color: #6b7280;
+
+    margin-bottom: 25px;
+
+    box-shadow: 0 7px 22px rgba(0, 0, 0, 0.05);
 }
 
-/* =========================
+#dashboard h1 {
+    text-align: center;
+
+    color: #111827;
+
+    margin-bottom: 30px;
+}
+
+#dashboard h2 {
+    color: #4f46e5;
+
+    margin-bottom: 18px;
+}
+
+/* =========================================
    FOOTER
-   ========================= */
+   ========================================= */
 
 footer {
+    width: 100%;
+
+    margin-top: 70px;
+
+    padding: 30px 20px;
+
+    background: #111827;
+
+    color: white;
+
     text-align: center;
-    padding: 25px;
-    margin-top: 40px;
-    color: #6b7280;
-    font-size: 14px;
 }
 
-/* =========================
-   MOBILE RESPONSIVE
-   ========================= */
+/* =========================================
+   TABLET
+   ========================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
 
-    .container {
-        width: 94%;
-        margin: 25px auto;
+    .navbar {
+        padding: 0 30px;
     }
 
-    .grid {
+    .hero-section {
+        width: calc(100% - 40px);
+        padding: 60px 35px;
+    }
+
+    .hero-content h1 {
+        font-size: 42px;
+    }
+
+    .journey {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 650px) {
+
+    .navbar {
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .nav-links {
+        gap: 18px;
+    }
+
+    .hero-section {
+        width: calc(100% - 25px);
+
+        margin: 30px auto;
+
+        padding: 50px 20px;
+
+        min-height: auto;
+    }
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 40px 15px;
+    }
+
+    .profile-section {
+        padding: 45px 15px;
+    }
+
+    .profile-heading h1,
+    .profile-heading h2 {
+        font-size: 29px;
+    }
+
+    .journey {
         grid-template-columns: 1fr;
+    }
+
+    .form-section,
+    .memory-form,
+    .card {
+        padding: 25px 20px;
     }
 
     .career-options {
         grid-template-columns: 1fr;
     }
 
-    .hero {
-        padding: 25px;
-    }
-
-    .hero h1 {
-        font-size: 28px;
-    }
-
-    h1 {
-        font-size: 28px;
-    }
-
-    .navbar {
-        padding: 15px 5%;
-    }
-
-    .logo {
-        font-size: 18px;
-    }
-
-    .button-area {
+    .form-actions {
         flex-direction: column;
     }
 
-    button,
     .primary-button,
-    .secondary-button,
+    .primary-btn,
     .button {
         width: 100%;
-        text-align: center;
     }
 }
