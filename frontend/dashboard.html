@@ -1,472 +1,905 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<meta charset="UTF-8">
+    <title>Career Dashboard | CareerSim</title>
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>Career Dashboard - CareerSim AI</title>
-
-<link rel="stylesheet" href="style.css">
-```
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">
+            Career<span>Sim</span>
+        </div>
 
-```
-<h1>📊 Career Dashboard</h1>
-
-<p>
-    Review your profile, skills, career choice and hindsight memory
-    in one place.
-</p>
-
-
-<div id="dashboard">
-
-    <p>
-        Loading your career dashboard...
-    </p>
-
-</div>
-```
-
-</div>
-
-<script>
-
-const API_BASE_URL =
-    "https://ai-career-decision-simulator.onrender.com";
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="skills.html">Skills</a>
+            <a href="career.html">Career</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+        </div>
+    </nav>
 
 
-const dashboard =
-    document.getElementById("dashboard");
+    <!-- DASHBOARD -->
+    <main class="dashboard-page">
+
+        <!-- HEADER -->
+        <section class="dashboard-header">
+            <div>
+                <p class="dashboard-label">YOUR CAREER JOURNEY</p>
+
+                <h1>📊 Career Dashboard</h1>
+
+                <p>
+                    Review your profile, skills, career choice and
+                    hindsight memory in one place.
+                </p>
+            </div>
+
+            <a href="career.html" class="dashboard-new-btn">
+                ✨ New Simulation
+            </a>
+        </section>
 
 
-async function loadDashboard() {
+        <!-- PROFILE + CAREER -->
+        <section class="dashboard-grid">
 
-    const profileId =
-        localStorage.getItem("profileId");
+            <!-- PROFILE CARD -->
+            <div class="dashboard-card">
 
+                <div class="card-title">
+                    <div class="card-icon">👤</div>
 
-    console.log(
-        "Dashboard profile ID:",
-        profileId
-    );
+                    <div>
+                        <h2>Profile</h2>
+                        <p>Your basic information</p>
+                    </div>
+                </div>
 
+                <div class="info-list">
 
-    if (!profileId) {
+                    <div class="info-row">
+                        <span>Name</span>
+                        <strong id="profileName">Loading...</strong>
+                    </div>
 
-        dashboard.innerHTML = `
+                    <div class="info-row">
+                        <span>Education</span>
+                        <strong id="education">Loading...</strong>
+                    </div>
 
-            <p>
-                No profile found.
-                Please complete your profile first.
-            </p>
+                    <div class="info-row">
+                        <span>Branch</span>
+                        <strong id="branch">Loading...</strong>
+                    </div>
 
-        `;
+                    <div class="info-row">
+                        <span>Year</span>
+                        <strong id="year">Loading...</strong>
+                    </div>
 
-        return;
-    }
+                    <div class="info-row">
+                        <span>Career Goal</span>
+                        <strong id="careerGoal">Loading...</strong>
+                    </div>
 
+                </div>
 
-    try {
-
-        const response =
-            await fetch(
-                `${API_BASE_URL}/api/dashboard/${profileId}`
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                `Server returned ${response.status}`
-            );
-
-        }
-
-
-        const data =
-            await response.json();
-
-
-        console.log(
-            "Dashboard data:",
-            data
-        );
+            </div>
 
 
-        const profile =
-            data.profile || {};
+            <!-- CAREER CHOICE CARD -->
+            <div class="dashboard-card">
+
+                <div class="card-title">
+                    <div class="card-icon">🎯</div>
+
+                    <div>
+                        <h2>Career Choice</h2>
+                        <p>Your selected career path</p>
+                    </div>
+                </div>
+
+                <div class="career-summary">
+
+                    <div class="career-main">
+                        <span>Target Career</span>
+
+                        <h3 id="targetCareer">
+                            Loading...
+                        </h3>
+                    </div>
+
+                    <div class="experience-badge">
+                        <span>Experience</span>
+                        <strong id="experience">
+                            Loading...
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
-        const skills =
-            data.skills || {};
+        <!-- SKILLS -->
+        <section class="dashboard-card skills-dashboard-card">
+
+            <div class="card-title">
+                <div class="card-icon">💻</div>
+
+                <div>
+                    <h2>Skills</h2>
+                    <p>Your current skill levels</p>
+                </div>
+            </div>
 
 
-        const career =
-            data.career || {};
+            <div class="skills-dashboard-grid">
+
+                <div class="skill-item">
+                    <div class="skill-top">
+                        <span>🐍 Python</span>
+                        <strong id="python">0/5</strong>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div id="pythonBar"></div>
+                    </div>
+                </div>
 
 
-        /*
-            Backend returns:
+                <div class="skill-item">
+                    <div class="skill-top">
+                        <span>☕ Java</span>
+                        <strong id="java">0/5</strong>
+                    </div>
 
-            {
-                memories: [...]
+                    <div class="skill-bar">
+                        <div id="javaBar"></div>
+                    </div>
+                </div>
+
+
+                <div class="skill-item">
+                    <div class="skill-top">
+                        <span>🗄️ SQL</span>
+                        <strong id="sql">0/5</strong>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div id="sqlBar"></div>
+                    </div>
+                </div>
+
+
+                <div class="skill-item">
+                    <div class="skill-top">
+                        <span>📐 Statistics</span>
+                        <strong id="statistics">0/5</strong>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div id="statisticsBar"></div>
+                    </div>
+                </div>
+
+
+                <div class="skill-item">
+                    <div class="skill-top">
+                        <span>📊 Data Analysis</span>
+                        <strong id="dataAnalysis">0/5</strong>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div id="dataAnalysisBar"></div>
+                    </div>
+                </div>
+
+
+                <div class="skill-item">
+                    <div class="skill-top">
+                        <span>🌐 Web Development</span>
+                        <strong id="webDevelopment">0/5</strong>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div id="webDevelopmentBar"></div>
+                    </div>
+                </div>
+
+
+                <div class="skill-item">
+                    <div class="skill-top">
+                        <span>💬 Communication</span>
+                        <strong id="communication">0/5</strong>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div id="communicationBar"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SIMULATION -->
+        <section class="dashboard-card simulation-dashboard-card">
+
+            <div class="card-title">
+                <div class="card-icon">📊</div>
+
+                <div>
+                    <h2>Simulation</h2>
+                    <p>Your latest career simulation result</p>
+                </div>
+            </div>
+
+
+            <div class="readiness-container">
+
+                <div class="readiness-score">
+
+                    <div class="score-circle">
+                        <span id="readinessScore">0</span>
+                        <small>/100</small>
+                    </div>
+
+                </div>
+
+
+                <div class="readiness-info">
+
+                    <h3>Career Readiness</h3>
+
+                    <p id="readinessMessage">
+                        Your simulation readiness score will appear here.
+                    </p>
+
+                    <a href="results.html" class="results-btn">
+                        📈 View Full Results →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HINDSIGHT MEMORY -->
+        <section class="dashboard-card memory-dashboard-card">
+
+            <div class="card-title">
+
+                <div class="card-icon">🧠</div>
+
+                <div>
+                    <h2>Hindsight Memory</h2>
+                    <p>Learn from your previous career decisions</p>
+                </div>
+
+            </div>
+
+
+            <div id="memoryContent">
+
+                <div class="memory-loading">
+                    Loading your career memory...
+                </div>
+
+            </div>
+
+
+            <a href="memory.html" class="memory-btn">
+                🧠 Manage Hindsight Memory →
+            </a>
+
+        </section>
+
+
+        <!-- BOTTOM ACTIONS -->
+        <section class="dashboard-actions">
+
+            <a href="simulation.html" class="action-primary">
+                ✨ Run New Simulation
+            </a>
+
+            <a href="index.html" class="action-secondary">
+                🏠 Back to Home
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="dashboard-footer">
+        <p>© 2026 CareerSim · AI Career Decision Simulator</p>
+    </footer>
+
+
+    <script>
+
+        const API_BASE_URL =
+            "https://ai-career-decision-simulator.onrender.com";
+
+
+        /* -------------------------------
+           PROFILE
+        -------------------------------- */
+
+        async function loadProfile() {
+
+            const profileId =
+                localStorage.getItem("profileId");
+
+            if (!profileId) {
+
+                document.getElementById("profileName").textContent =
+                    "No profile";
+
+                return;
             }
-
-            So we read data.memories.
-        */
-
-        const memories =
-            data.memories || [];
-
-
-        const memory =
-            memories.length > 0
-                ? memories[memories.length - 1]
-                : null;
-
-
-        /*
-            Simulation result may be stored
-            in localStorage by the simulation page.
-        */
-
-        let simulation = {};
-
-
-        const savedSimulation =
-            localStorage.getItem(
-                "simulationResult"
-            );
-
-
-        if (savedSimulation) {
 
             try {
 
-                simulation =
-                    JSON.parse(
-                        savedSimulation
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/api/profile/${profileId}`
                     );
 
-            }
+                if (!response.ok) {
+                    throw new Error("Profile not found");
+                }
 
-            catch (error) {
+                const profile =
+                    await response.json();
+
+
+                document.getElementById("profileName").textContent =
+                    profile.name || "Not provided";
+
+                document.getElementById("education").textContent =
+                    profile.education || "Not provided";
+
+                document.getElementById("branch").textContent =
+                    profile.branch || "Not provided";
+
+                document.getElementById("year").textContent =
+                    profile.year || "Not provided";
+
+                document.getElementById("careerGoal").textContent =
+                    profile.career_goal || "Not provided";
+
+
+            } catch (error) {
 
                 console.error(
-                    "Unable to read simulation result:",
+                    "Profile loading error:",
+                    error
+                );
+
+                /*
+                 * If the profile is already stored locally,
+                 * use it as a fallback.
+                 */
+
+                const savedProfile =
+                    localStorage.getItem("profileData");
+
+                if (savedProfile) {
+
+                    try {
+
+                        const profile =
+                            JSON.parse(savedProfile);
+
+                        document.getElementById("profileName").textContent =
+                            profile.name || "Not provided";
+
+                        document.getElementById("education").textContent =
+                            profile.education || "Not provided";
+
+                        document.getElementById("branch").textContent =
+                            profile.branch || "Not provided";
+
+                        document.getElementById("year").textContent =
+                            profile.year || "Not provided";
+
+                        document.getElementById("careerGoal").textContent =
+                            profile.career_goal || "Not provided";
+
+                    } catch (e) {
+
+                        console.error(e);
+
+                    }
+                }
+            }
+        }
+
+
+
+        /* -------------------------------
+           SKILLS
+        -------------------------------- */
+
+        function setSkill(
+            name,
+            value,
+            barId
+        ) {
+
+            const numericValue =
+                Number(value) || 0;
+
+            document.getElementById(name).textContent =
+                `${numericValue}/5`;
+
+            const bar =
+                document.getElementById(barId);
+
+            if (bar) {
+
+                bar.style.width =
+                    `${Math.min(numericValue, 5) * 20}%`;
+
+            }
+        }
+
+
+        function loadSkills() {
+
+            const savedSkills =
+                localStorage.getItem("careerSkills");
+
+            if (!savedSkills) {
+                return;
+            }
+
+            try {
+
+                const skills =
+                    JSON.parse(savedSkills);
+
+                setSkill(
+                    "python",
+                    skills.python,
+                    "pythonBar"
+                );
+
+                setSkill(
+                    "java",
+                    skills.java,
+                    "javaBar"
+                );
+
+                setSkill(
+                    "sql",
+                    skills.sql,
+                    "sqlBar"
+                );
+
+                setSkill(
+                    "statistics",
+                    skills.statistics,
+                    "statisticsBar"
+                );
+
+                setSkill(
+                    "dataAnalysis",
+                    skills.data_analysis ||
+                    skills.dataAnalysis,
+                    "dataAnalysisBar"
+                );
+
+                setSkill(
+                    "webDevelopment",
+                    skills.web_development ||
+                    skills.webDevelopment,
+                    "webDevelopmentBar"
+                );
+
+                setSkill(
+                    "communication",
+                    skills.communication,
+                    "communicationBar"
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Skills loading error:",
                     error
                 );
 
             }
-
         }
 
 
-        dashboard.innerHTML = `
 
-            <section>
+        /* -------------------------------
+           CAREER CHOICE
+        -------------------------------- */
 
-                <h2>👤 Profile</h2>
+        function loadCareerChoice() {
 
-                <p>
-                    <strong>Name:</strong>
-                    ${escapeHtml(
-                        profile.name ||
-                        "Not available"
-                    )}
-                </p>
+            const savedCareer =
+                localStorage.getItem("careerChoice");
 
-                <p>
-                    <strong>Education:</strong>
-                    ${escapeHtml(
-                        profile.education ||
-                        "Not available"
-                    )}
-                </p>
+            if (!savedCareer) {
 
-                <p>
-                    <strong>Branch:</strong>
-                    ${escapeHtml(
-                        profile.branch ||
-                        "Not available"
-                    )}
-                </p>
+                document.getElementById("targetCareer").textContent =
+                    "Not selected";
 
-                <p>
-                    <strong>Year:</strong>
-                    ${escapeHtml(
-                        profile.year ||
-                        "Not available"
-                    )}
-                </p>
+                document.getElementById("experience").textContent =
+                    "Not selected";
 
-                <p>
-                    <strong>Career Goal:</strong>
-                    ${escapeHtml(
-                        profile.goal ||
-                        "Not available"
-                    )}
-                </p>
+                return;
+            }
 
-            </section>
+            try {
+
+                const career =
+                    JSON.parse(savedCareer);
+
+                const targetCareer =
+                    career.targetCareer ||
+                    career.career ||
+                    "Not selected";
+
+                const experience =
+                    career.experience ||
+                    "Not selected";
 
 
-            <section>
+                document.getElementById("targetCareer").textContent =
+                    formatText(targetCareer);
 
-                <h2>💻 Skills</h2>
-
-                ${skillRow(
-                    "Python",
-                    skills.python
-                )}
-
-                ${skillRow(
-                    "Java",
-                    skills.java
-                )}
-
-                ${skillRow(
-                    "SQL",
-                    skills.sql
-                )}
-
-                ${skillRow(
-                    "Statistics",
-                    skills.statistics
-                )}
-
-                ${skillRow(
-                    "Data Analysis",
-                    skills.data_analysis
-                )}
-
-                ${skillRow(
-                    "Web Development",
-                    skills.web_development
-                )}
-
-                ${skillRow(
-                    "Communication",
-                    skills.communication
-                )}
-
-            </section>
+                document.getElementById("experience").textContent =
+                    formatText(experience);
 
 
-            <section>
+            } catch (error) {
 
-                <h2>🎯 Career Choice</h2>
+                console.error(
+                    "Career choice error:",
+                    error
+                );
 
-                <p>
-                    <strong>Target Career:</strong>
-                    ${escapeHtml(
-                        career.target_career ||
-                        "Not selected"
-                    )}
-                </p>
-
-                <p>
-                    <strong>Experience:</strong>
-                    ${escapeHtml(
-                        career.experience ||
-                        "Not selected"
-                    )}
-                </p>
-
-            </section>
+            }
+        }
 
 
-            <section>
 
-                <h2>📊 Simulation</h2>
+        /* -------------------------------
+           SIMULATION
+        -------------------------------- */
 
-                <p>
+        function loadSimulation() {
 
-                    <strong>
-                        Readiness Score:
-                    </strong>
+            const savedSimulation =
+                localStorage.getItem("simulationResult");
 
-                    ${
-                        simulation.readiness_score !== undefined
+            if (!savedSimulation) {
 
-                        ? simulation.readiness_score + "/100"
+                document.getElementById("readinessScore").textContent =
+                    "—";
 
-                        : "Not available"
-                    }
+                document.getElementById("readinessMessage").textContent =
+                    "Run a career simulation to see your readiness score.";
 
-                </p>
+                return;
+            }
 
-            </section>
+            try {
+
+                const simulation =
+                    JSON.parse(savedSimulation);
+
+                const score =
+                    simulation.readiness_score ??
+                    simulation.readinessScore ??
+                    simulation.score ??
+                    0;
 
 
-            <section>
+                document.getElementById("readinessScore").textContent =
+                    score;
 
-                <h2>🧠 Hindsight Memory</h2>
 
-                ${
-                    memory && memory.career
+                let message =
+                    "Keep improving your skills and continue practicing.";
 
-                    ? `
+                if (score >= 80) {
 
-                        <p>
-                            <strong>Career:</strong>
-                            ${escapeHtml(
-                                memory.career
-                            )}
-                        </p>
+                    message =
+                        "You are showing strong readiness. Continue building projects and preparing for interviews.";
 
-                        <p>
-                            <strong>Decision:</strong><br>
-                            ${escapeHtml(
-                                memory.decision || ""
-                            )}
-                        </p>
+                } else if (score >= 60) {
 
-                        <p>
-                            <strong>Outcome:</strong><br>
-                            ${escapeHtml(
-                                memory.outcome || ""
-                            )}
-                        </p>
+                    message =
+                        "You have a good foundation. Focus on your remaining skill gaps.";
 
-                        <p>
-                            <strong>Lesson:</strong><br>
-                            ${escapeHtml(
-                                memory.lesson || ""
-                            )}
-                        </p>
+                } else if (score >= 40) {
 
-                    `
+                    message =
+                        "You are making progress. Strengthen your core technical skills and gain practical experience.";
 
-                    :
+                } else {
 
-                    `
+                    message =
+                        "Start by strengthening your fundamentals and building small projects.";
 
-                        <p>
-                            No hindsight memory recorded yet.
-                        </p>
-
-                    `
                 }
 
-            </section>
+
+                document.getElementById("readinessMessage").textContent =
+                    message;
 
 
-            <section>
+            } catch (error) {
 
-                <a href="memory.html">
+                console.error(
+                    "Simulation loading error:",
+                    error
+                );
 
-                    <button type="button">
-                        Manage Hindsight Memory →
-                    </button>
-
-                </a>
-
-            </section>
-
-        `;
-
-    }
+            }
+        }
 
 
-    catch (error) {
 
-        console.error(
-            "Dashboard error:",
-            error
+        /* -------------------------------
+           HINDSIGHT MEMORY
+        -------------------------------- */
+
+        async function loadMemory() {
+
+            const container =
+                document.getElementById("memoryContent");
+
+            const profileId =
+                localStorage.getItem("profileId");
+
+
+            if (!profileId) {
+
+                container.innerHTML = `
+                    <div class="memory-empty">
+                        <div class="empty-icon">🧠</div>
+
+                        <h3>No profile found</h3>
+
+                        <p>
+                            Create your profile to start
+                            recording career decisions.
+                        </p>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/api/memory/${profileId}`
+                    );
+
+
+                if (!response.ok) {
+                    throw new Error("Memory request failed");
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                const memories =
+                    data.memories || [];
+
+
+                if (memories.length === 0) {
+
+                    container.innerHTML = `
+                        <div class="memory-empty">
+
+                            <div class="empty-icon">🧠</div>
+
+                            <h3>No hindsight memory yet</h3>
+
+                            <p>
+                                Save a past career decision,
+                                outcome and lesson to learn
+                                from your experience.
+                            </p>
+
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                /*
+                 * Show the most recent memory.
+                 */
+
+                const memory =
+                    memories[memories.length - 1];
+
+
+                container.innerHTML = `
+
+                    <div class="memory-box">
+
+                        <div class="memory-item">
+
+                            <span class="memory-label">
+                                💼 Career
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    memory.career ||
+                                    "Not provided"
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="memory-item">
+
+                            <span class="memory-label">
+                                📝 Decision
+                            </span>
+
+                            <p>
+                                ${escapeHTML(
+                                    memory.decision ||
+                                    "Not provided"
+                                )}
+                            </p>
+
+                        </div>
+
+
+                        <div class="memory-item">
+
+                            <span class="memory-label">
+                                📌 Outcome
+                            </span>
+
+                            <p>
+                                ${escapeHTML(
+                                    memory.outcome ||
+                                    "Not provided"
+                                )}
+                            </p>
+
+                        </div>
+
+
+                        <div class="memory-item">
+
+                            <span class="memory-label">
+                                💡 Lesson
+                            </span>
+
+                            <p>
+                                ${escapeHTML(
+                                    memory.lesson ||
+                                    "Not provided"
+                                )}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Memory loading error:",
+                    error
+                );
+
+
+                container.innerHTML = `
+
+                    <div class="memory-empty">
+
+                        <div class="empty-icon">⚠️</div>
+
+                        <h3>Unable to load memory</h3>
+
+                        <p>
+                            Please try refreshing the dashboard.
+                        </p>
+
+                    </div>
+
+                `;
+            }
+        }
+
+
+
+        /* -------------------------------
+           HELPERS
+        -------------------------------- */
+
+        function formatText(text) {
+
+            if (!text) {
+                return "Not selected";
+            }
+
+            return String(text)
+                .replace(/[-_]/g, " ")
+                .replace(/\b\w/g, char =>
+                    char.toUpperCase()
+                );
+        }
+
+
+        function escapeHTML(text) {
+
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+
+        /* -------------------------------
+           LOAD EVERYTHING
+        -------------------------------- */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadProfile();
+
+                loadSkills();
+
+                loadCareerChoice();
+
+                loadSimulation();
+
+                loadMemory();
+
+            }
         );
 
-
-        dashboard.innerHTML = `
-
-            <p>
-                ❌ Unable to load dashboard.
-                Please try again after the backend is available.
-            </p>
-
-        `;
-
-    }
-
-}
-
-
-function skillRow(name, value) {
-
-    const level =
-        value !== undefined &&
-        value !== null
-            ? value
-            : "Not available";
-
-
-    return `
-
-        <p>
-
-            <strong>
-                ${escapeHtml(name)}:
-            </strong>
-
-            ${level}/5
-
-        </p>
-
-    `;
-
-}
-
-
-function escapeHtml(value) {
-
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-loadDashboard();
-
-</script>
+    </script>
 
 </body>
-
 </html>
