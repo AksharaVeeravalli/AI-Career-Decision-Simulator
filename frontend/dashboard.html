@@ -1,27 +1,45 @@
-```html
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Dashboard - CareerSim AI</title>
-    <link rel="stylesheet" href="style.css">
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Career Dashboard - CareerSim AI</title>
+
+<link rel="stylesheet" href="style.css">
+```
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>📊 Career Dashboard</h1>
+```
+<h1>📊 Career Dashboard</h1>
+
+<p>
+    Review your profile, skills, career choice and hindsight memory
+    in one place.
+</p>
+
+
+<div id="dashboard">
 
     <p>
-        Review your profile, skills, career choice and hindsight memory
-        in one place.
+        Loading your career dashboard...
     </p>
 
-    <div id="dashboard">
-        <p>Loading your career dashboard...</p>
-    </div>
+</div>
+```
 
 </div>
 
@@ -30,8 +48,6 @@
 const API_BASE_URL =
     "https://ai-career-decision-simulator.onrender.com";
 
-const profileId =
-    localStorage.getItem("profileId");
 
 const dashboard =
     document.getElementById("dashboard");
@@ -39,47 +55,125 @@ const dashboard =
 
 async function loadDashboard() {
 
+    const profileId =
+        localStorage.getItem("profileId");
+
+
+    console.log(
+        "Dashboard profile ID:",
+        profileId
+    );
+
+
     if (!profileId) {
 
         dashboard.innerHTML = `
+
             <p>
-                No profile found. Please complete your profile first.
+                No profile found.
+                Please complete your profile first.
             </p>
+
         `;
 
         return;
     }
 
+
     try {
 
-        const response = await fetch(
-            `${API_BASE_URL}/api/dashboard/${profileId}`
-        );
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/dashboard/${profileId}`
+            );
+
 
         if (!response.ok) {
+
             throw new Error(
                 `Server returned ${response.status}`
             );
+
         }
 
-        const data = await response.json();
 
-        console.log("Dashboard data:", data);
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Dashboard data:",
+            data
+        );
+
 
         const profile =
             data.profile || {};
 
+
         const skills =
             data.skills || {};
+
 
         const career =
             data.career || {};
 
-        const memory =
-            data.memory || {};
 
-        const simulation =
-            data.simulation || {};
+        /*
+            Backend returns:
+
+            {
+                memories: [...]
+            }
+
+            So we read data.memories.
+        */
+
+        const memories =
+            data.memories || [];
+
+
+        const memory =
+            memories.length > 0
+                ? memories[memories.length - 1]
+                : null;
+
+
+        /*
+            Simulation result may be stored
+            in localStorage by the simulation page.
+        */
+
+        let simulation = {};
+
+
+        const savedSimulation =
+            localStorage.getItem(
+                "simulationResult"
+            );
+
+
+        if (savedSimulation) {
+
+            try {
+
+                simulation =
+                    JSON.parse(
+                        savedSimulation
+                    );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Unable to read simulation result:",
+                    error
+                );
+
+            }
+
+        }
 
 
         dashboard.innerHTML = `
@@ -90,27 +184,42 @@ async function loadDashboard() {
 
                 <p>
                     <strong>Name:</strong>
-                    ${escapeHtml(profile.name || "Not available")}
+                    ${escapeHtml(
+                        profile.name ||
+                        "Not available"
+                    )}
                 </p>
 
                 <p>
                     <strong>Education:</strong>
-                    ${escapeHtml(profile.education || "Not available")}
+                    ${escapeHtml(
+                        profile.education ||
+                        "Not available"
+                    )}
                 </p>
 
                 <p>
                     <strong>Branch:</strong>
-                    ${escapeHtml(profile.branch || "Not available")}
+                    ${escapeHtml(
+                        profile.branch ||
+                        "Not available"
+                    )}
                 </p>
 
                 <p>
                     <strong>Year:</strong>
-                    ${escapeHtml(profile.year || "Not available")}
+                    ${escapeHtml(
+                        profile.year ||
+                        "Not available"
+                    )}
                 </p>
 
                 <p>
                     <strong>Career Goal:</strong>
-                    ${escapeHtml(profile.goal || "Not available")}
+                    ${escapeHtml(
+                        profile.goal ||
+                        "Not available"
+                    )}
                 </p>
 
             </section>
@@ -120,13 +229,40 @@ async function loadDashboard() {
 
                 <h2>💻 Skills</h2>
 
-                ${skillRow("Python", skills.python)}
-                ${skillRow("Java", skills.java)}
-                ${skillRow("SQL", skills.sql)}
-                ${skillRow("Statistics", skills.statistics)}
-                ${skillRow("Data Analysis", skills.data_analysis)}
-                ${skillRow("Web Development", skills.web_development)}
-                ${skillRow("Communication", skills.communication)}
+                ${skillRow(
+                    "Python",
+                    skills.python
+                )}
+
+                ${skillRow(
+                    "Java",
+                    skills.java
+                )}
+
+                ${skillRow(
+                    "SQL",
+                    skills.sql
+                )}
+
+                ${skillRow(
+                    "Statistics",
+                    skills.statistics
+                )}
+
+                ${skillRow(
+                    "Data Analysis",
+                    skills.data_analysis
+                )}
+
+                ${skillRow(
+                    "Web Development",
+                    skills.web_development
+                )}
+
+                ${skillRow(
+                    "Communication",
+                    skills.communication
+                )}
 
             </section>
 
@@ -159,12 +295,19 @@ async function loadDashboard() {
                 <h2>📊 Simulation</h2>
 
                 <p>
-                    <strong>Readiness Score:</strong>
+
+                    <strong>
+                        Readiness Score:
+                    </strong>
+
                     ${
                         simulation.readiness_score !== undefined
+
                         ? simulation.readiness_score + "/100"
+
                         : "Not available"
                     }
+
                 </p>
 
             </section>
@@ -176,49 +319,89 @@ async function loadDashboard() {
 
                 ${
                     memory && memory.career
+
                     ? `
+
                         <p>
                             <strong>Career:</strong>
-                            ${escapeHtml(memory.career)}
+                            ${escapeHtml(
+                                memory.career
+                            )}
                         </p>
 
                         <p>
                             <strong>Decision:</strong><br>
-                            ${escapeHtml(memory.decision || "")}
+                            ${escapeHtml(
+                                memory.decision || ""
+                            )}
                         </p>
 
                         <p>
                             <strong>Outcome:</strong><br>
-                            ${escapeHtml(memory.outcome || "")}
+                            ${escapeHtml(
+                                memory.outcome || ""
+                            )}
                         </p>
 
                         <p>
                             <strong>Lesson:</strong><br>
-                            ${escapeHtml(memory.lesson || "")}
+                            ${escapeHtml(
+                                memory.lesson || ""
+                            )}
                         </p>
+
                     `
+
                     :
-                    `<p>No hindsight memory recorded yet.</p>`
+
+                    `
+
+                        <p>
+                            No hindsight memory recorded yet.
+                        </p>
+
+                    `
                 }
+
+            </section>
+
+
+            <section>
+
+                <a href="memory.html">
+
+                    <button type="button">
+                        Manage Hindsight Memory →
+                    </button>
+
+                </a>
 
             </section>
 
         `;
 
-    } catch (error) {
+    }
+
+
+    catch (error) {
 
         console.error(
             "Dashboard error:",
             error
         );
 
+
         dashboard.innerHTML = `
+
             <p>
                 ❌ Unable to load dashboard.
                 Please try again after the backend is available.
             </p>
+
         `;
+
     }
+
 }
 
 
@@ -227,26 +410,56 @@ function skillRow(name, value) {
     const level =
         value !== undefined &&
         value !== null
-        ? value
-        : "Not available";
+            ? value
+            : "Not available";
+
 
     return `
+
         <p>
-            <strong>${name}:</strong>
+
+            <strong>
+                ${escapeHtml(name)}:
+            </strong>
+
             ${level}/5
+
         </p>
+
     `;
+
 }
 
 
 function escapeHtml(value) {
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
 
 
@@ -255,5 +468,5 @@ loadDashboard();
 </script>
 
 </body>
+
 </html>
-```

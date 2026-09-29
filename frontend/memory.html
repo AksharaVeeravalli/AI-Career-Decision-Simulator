@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hindsight Memory - CareerSim AI</title>
-    <link rel="stylesheet" href="style.css">
 
 ```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Hindsight Memory - CareerSim AI</title>
+
+<link rel="stylesheet" href="style.css">
+
 <style>
+
     .memory-card {
         background: #f5f7ff;
         border: 1px solid #dfe4f5;
@@ -77,6 +84,7 @@
     .history-card h3 {
         margin-top: 0;
     }
+
 </style>
 ```
 
@@ -94,12 +102,15 @@
     can use your past experience in future career simulations.
 </p>
 
+
 <section>
+
     <h2>🧠 Your Previous Decision</h2>
 
     <div id="previousMemory">
         Loading previous memory...
     </div>
+
 </section>
 
 
@@ -112,9 +123,12 @@
         from the outcome.
     </p>
 
+
     <form id="memoryForm" class="memory-form">
 
-        <label for="career">Career</label>
+        <label for="career">
+            Career
+        </label>
 
         <input
             type="text"
@@ -163,6 +177,7 @@
 
     </form>
 
+
     <p id="message"></p>
 
 </section>
@@ -172,33 +187,49 @@
 
     <h2>🔄 How Hindsight Memory Works</h2>
 
+
     <div>
+
         <h3>01 — Record Decision</h3>
+
         <p>
             Store the career choice or decision you made.
         </p>
+
     </div>
 
+
     <div>
+
         <h3>02 — Record Outcome</h3>
+
         <p>
             Record what happened after your career decision.
         </p>
+
     </div>
 
+
     <div>
+
         <h3>03 — Learn From Experience</h3>
+
         <p>
             Identify what worked and what needs improvement.
         </p>
+
     </div>
 
+
     <div>
+
         <h3>04 — Improve Future Decisions</h3>
+
         <p>
             Use previous experiences to make future career simulations
             more useful.
         </p>
+
     </div>
 
 </section>
@@ -207,9 +238,11 @@
 <section>
 
     <a href="dashboard.html">
+
         <button type="button">
             View Career Dashboard →
         </button>
+
     </a>
 
 </section>
@@ -222,11 +255,14 @@
 const API_BASE_URL =
     "https://ai-career-decision-simulator.onrender.com";
 
+
 const previousMemory =
     document.getElementById("previousMemory");
 
+
 const memoryForm =
     document.getElementById("memoryForm");
+
 
 const message =
     document.getElementById("message");
@@ -237,7 +273,12 @@ async function loadMemory() {
     const profileId =
         localStorage.getItem("profileId");
 
-    console.log("Current profile ID:", profileId);
+
+    console.log(
+        "Current profile ID:",
+        profileId
+    );
+
 
     if (!profileId) {
 
@@ -250,9 +291,10 @@ async function loadMemory() {
 
     try {
 
-        const response = await fetch(
-            `${API_BASE_URL}/api/memory/${profileId}`
-        );
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/memory/${profileId}`
+            );
 
 
         if (!response.ok) {
@@ -369,6 +411,7 @@ async function loadMemory() {
                     </div>
 
                 `;
+
             }
 
 
@@ -384,6 +427,7 @@ async function loadMemory() {
 
     }
 
+
     catch (error) {
 
         console.error(
@@ -393,9 +437,11 @@ async function loadMemory() {
 
 
         previousMemory.innerHTML = `
+
             <p>
                 ❌ Unable to load previous memory.
             </p>
+
         `;
 
     }
@@ -465,18 +511,22 @@ memoryForm.addEventListener(
                 await fetch(
                     `${API_BASE_URL}/api/memory`,
                     {
+
                         method: "POST",
 
                         headers: {
+
                             "Content-Type":
                                 "application/json",
 
                             "Accept":
                                 "application/json"
+
                         },
 
                         body:
                             JSON.stringify(memoryData)
+
                     }
                 );
 
@@ -485,6 +535,7 @@ memoryForm.addEventListener(
 
                 const errorText =
                     await response.text();
+
 
                 throw new Error(
                     `Server error: ${response.status} ${errorText}`
@@ -535,10 +586,15 @@ memoryForm.addEventListener(
 function escapeHtml(value) {
 
     return String(value)
+
         .replace(/&/g, "&amp;")
+
         .replace(/</g, "&lt;")
+
         .replace(/>/g, "&gt;")
+
         .replace(/"/g, "&quot;")
+
         .replace(/'/g, "&#039;");
 
 }
@@ -549,4 +605,5 @@ loadMemory();
 </script>
 
 </body>
+
 </html>
