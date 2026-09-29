@@ -1,6 +1,6 @@
 /* =====================================================
    CAREERSIM AI
-   CLEAN CENTERED WEBSITE
+   COMPLETE WEBSITE STYLE
    ===================================================== */
 
 * {
@@ -27,7 +27,7 @@ body {
 
 .navbar {
     width: 100%;
-    height: 72px;
+    min-height: 72px;
 
     background: #111827;
 
@@ -35,14 +35,15 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 7%;
+    padding: 16px 7%;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 3px 15px rgba(0, 0, 0, 0.08);
 }
 
 .logo {
     color: white;
-    font-size: 24px;
+    font-size: 23px;
     font-weight: 700;
 }
 
@@ -53,23 +54,49 @@ body {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 30px;
+    gap: 26px;
 }
 
 .nav-links a {
-    color: white;
+    color: #d1d5db;
     text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
 }
 
-.nav-links a:hover {
-    color: #a5b4fc;
+.nav-links a:hover,
+.nav-links a.active {
+    color: white;
 }
 
 
 /* =====================================================
-   HERO
+   COMMON
+   ===================================================== */
+
+h1,
+h2,
+h3 {
+    color: #111827;
+}
+
+p {
+    color: #6b7280;
+}
+
+.tagline {
+    color: #4f46e5;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+/* =====================================================
+   HOMEPAGE
    ===================================================== */
 
 .hero-section {
@@ -88,12 +115,13 @@ body {
 
     text-align: center;
 
-    background: linear-gradient(
-        135deg,
-        #eef2ff,
-        #ffffff,
-        #f5f3ff
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #ffffff,
+            #f5f3ff
+        );
 
     border: 1px solid #e0e7ff;
 
@@ -106,84 +134,48 @@ body {
 .hero-content {
     width: 100%;
     max-width: 850px;
-
-    margin: 0 auto;
-}
-
-.tagline {
-    color: #4f46e5;
-
-    font-size: 13px;
-    font-weight: 700;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 18px;
+    margin: auto;
 }
 
 .hero-content h1 {
-    color: #111827;
-
     font-size: 50px;
-
     line-height: 1.15;
-
-    margin-bottom: 25px;
+    margin: 18px 0 25px;
 }
 
 .hero-content h1 span {
     display: block;
-
     color: #4f46e5;
 }
 
 .hero-description {
     max-width: 750px;
-
-    margin: 0 auto 35px auto;
-
-    color: #6b7280;
-
+    margin: auto auto 35px;
     font-size: 18px;
-
-    line-height: 1.8;
 }
-
-
-/* =====================================================
-   BUTTON
-   ===================================================== */
 
 .primary-button {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
 
     padding: 15px 30px;
 
     background: #4f46e5;
-
     color: white;
 
     text-decoration: none;
 
-    border-radius: 10px;
-
-    font-size: 16px;
+    border-radius: 12px;
 
     font-weight: 700;
 
-    transition: 0.2s ease;
+    transition: 0.2s;
 }
 
 .primary-button:hover {
     background: #3730a3;
-
     transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 20px rgba(79, 70, 229, 0.25);
 }
 
 
@@ -195,115 +187,30 @@ body {
     width: 92%;
     max-width: 1150px;
 
-    margin: 0 auto;
+    margin: auto;
 
-    padding: 65px 0;
+    padding: 60px 0;
 }
 
 .section-heading {
-    width: 100%;
+    text-align: center;
     max-width: 800px;
 
-    margin: 0 auto 45px auto;
-
-    text-align: center;
+    margin: 0 auto 40px;
 }
 
 .section-heading h2 {
-    color: #111827;
-
     font-size: 34px;
-
-    line-height: 1.3;
-
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 
 /* =====================================================
-   HOW IT WORKS CARDS
+   JOURNEY / FEATURES
    ===================================================== */
 
-.journey {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 22px;
-}
-
-.journey-card {
-    background: white;
-
-    border: 1px solid #e5e7eb;
-
-    border-radius: 18px;
-
-    padding: 30px 24px;
-
-    text-align: center;
-
-    min-height: 230px;
-
-    box-shadow:
-        0 8px 25px rgba(15, 23, 42, 0.05);
-
-    transition: 0.2s ease;
-}
-
-.journey-card:hover {
-    transform: translateY(-5px);
-
-    border-color: #c7d2fe;
-
-    box-shadow:
-        0 14px 30px rgba(79, 70, 229, 0.10);
-}
-
-.step-number {
-    width: 48px;
-    height: 48px;
-
-    margin: 0 auto 20px auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #eef2ff;
-
-    color: #4f46e5;
-
-    font-weight: 700;
-}
-
-.journey-card h3 {
-    color: #111827;
-
-    font-size: 19px;
-
-    margin-bottom: 10px;
-}
-
-.journey-card p {
-    color: #6b7280;
-
-    font-size: 15px;
-}
-
-
-/* =====================================================
-   FEATURES
-   ===================================================== */
-
+.journey,
 .features {
-    width: 100%;
-
     display: grid;
 
     grid-template-columns:
@@ -312,6 +219,7 @@ body {
     gap: 22px;
 }
 
+.journey-card,
 .feature-card {
     background: white;
 
@@ -323,30 +231,947 @@ body {
 
     text-align: center;
 
-    min-height: 220px;
-
     box-shadow:
         0 8px 25px rgba(15, 23, 42, 0.05);
+
+    transition: 0.2s;
 }
 
-.feature-icon {
-    font-size: 35px;
+.journey-card:hover,
+.feature-card:hover {
+    transform: translateY(-5px);
 
-    margin-bottom: 15px;
+    border-color: #c7d2fe;
+
+    box-shadow:
+        0 15px 30px rgba(79, 70, 229, 0.10);
 }
 
-.feature-card h3 {
-    color: #111827;
+.step-number {
+    width: 48px;
+    height: 48px;
 
-    font-size: 19px;
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef2ff;
+    color: #4f46e5;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   CAREER PAGE
+   ===================================================== */
+
+.career-page {
+    min-height: calc(100vh - 72px);
+
+    padding: 55px 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.career-container {
+    width: 100%;
+    max-width: 900px;
+
+    background: white;
+
+    padding: 45px;
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 15px 45px rgba(15, 23, 42, 0.08);
+}
+
+.career-header {
+    text-align: center;
+
+    margin-bottom: 45px;
+}
+
+.page-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef2ff;
+
+    border-radius: 20px;
+
+    font-size: 30px;
+}
+
+.career-header h1 {
+    font-size: 38px;
+
+    margin: 10px 0;
+}
+
+.career-subtitle {
+    max-width: 650px;
+
+    margin: auto;
+
+    font-size: 16px;
+}
+
+
+/* =====================================================
+   SELECTION
+   ===================================================== */
+
+.selection-section {
+    margin-bottom: 42px;
+}
+
+.selection-section h2 {
+    font-size: 22px;
+
+    margin-bottom: 5px;
+}
+
+.selection-description {
+    margin-bottom: 22px;
+}
+
+
+/* =====================================================
+   CAREER CHOICES
+   ===================================================== */
+
+.career-choice-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+}
+
+.career-choice {
+    min-height: 150px;
+
+    padding: 22px 15px;
+
+    border: 2px solid #e5e7eb;
+
+    background: white;
+
+    border-radius: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        border-color 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
+}
+
+.career-choice:hover {
+    transform: translateY(-4px);
+
+    border-color: #a5b4fc;
+
+    background: #fafaff;
+
+    box-shadow:
+        0 10px 25px rgba(79, 70, 229, 0.10);
+}
+
+.career-choice.selected {
+    border-color: #4f46e5;
+
+    background: #eef2ff;
+
+    box-shadow:
+        0 10px 25px rgba(79, 70, 229, 0.15);
+
+    transform: translateY(-3px);
+}
+
+.choice-icon {
+    font-size: 32px;
 
     margin-bottom: 10px;
 }
 
-.feature-card p {
+.choice-title {
+    color: #111827;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.choice-description {
     color: #6b7280;
 
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   EXPERIENCE LEVELS
+   ===================================================== */
+
+.level-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.level-card {
+    min-height: 175px;
+
+    padding: 25px 18px;
+
+    border: 2px solid #e5e7eb;
+
+    background: white;
+
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        border-color 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
+}
+
+.level-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #a5b4fc;
+
+    background: #fafaff;
+
+    box-shadow:
+        0 12px 25px rgba(79, 70, 229, 0.10);
+}
+
+.level-card.selected {
+    border-color: #4f46e5;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f5f3ff
+        );
+
+    box-shadow:
+        0 12px 30px rgba(79, 70, 229, 0.16);
+
+    transform: translateY(-4px);
+}
+
+.level-emoji {
+    font-size: 35px;
+
+    margin-bottom: 10px;
+}
+
+.level-title {
+    color: #111827;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+.level-description {
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* HIDDEN SELECT */
+
+.hidden-select {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   CAREER ACTIONS
+   ===================================================== */
+
+.career-actions {
+    border-top: 1px solid #e5e7eb;
+
+    padding-top: 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.continue-career-button {
+    width: 100%;
+    max-width: 500px;
+
+    padding: 17px 25px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #4f46e5;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.continue-career-button:hover {
+    background: #3730a3;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(79, 70, 229, 0.20);
+}
+
+.continue-career-button span {
+    margin-left: 10px;
+}
+
+.back-button {
+    color: #4f46e5;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   SIMULATION PAGE
+   ===================================================== */
+
+.simulation-container {
+    width: 92%;
+    max-width: 1050px;
+
+    margin: 45px auto 80px;
+}
+
+.simulation-header {
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+.simulation-icon {
+    width: 70px;
+    height: 70px;
+
+    margin: auto auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eef2ff;
+
+    border-radius: 22px;
+
+    font-size: 34px;
+}
+
+.simulation-header h1 {
+    font-size: 40px;
+
+    margin: 8px 0;
+}
+
+.simulation-header p:last-child {
+    max-width: 650px;
+
+    margin: auto;
+}
+
+
+/* =====================================================
+   SIMULATION CARDS
+   ===================================================== */
+
+.simulation-card {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 22px;
+
+    padding: 32px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.career-summary {
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #ffffff
+        );
+}
+
+.card-label {
+    color: #6366f1;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.career-summary h2 {
+    font-size: 30px;
+
+    margin-bottom: 14px;
+}
+
+.experience-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 8px 17px;
+
+    border-radius: 30px;
+
+    background: #e0e7ff;
+
+    color: #4338ca;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   SECTION TITLE
+   ===================================================== */
+
+.section-title-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 28px;
+}
+
+.section-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #eef2ff;
+
+    border-radius: 14px;
+
+    font-size: 23px;
+}
+
+.section-title-row h2 {
+    margin-bottom: 3px;
+}
+
+.section-title-row p {
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   SIMULATION JOURNEY
+   ===================================================== */
+
+.simulation-journey {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.simulation-step {
+    display: flex;
+
+    gap: 16px;
+
+    padding: 20px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 17px;
+
+    background: #fafafa;
+
+    transition: 0.2s;
+}
+
+.simulation-step:hover {
+    border-color: #c7d2fe;
+
+    background: #fafaff;
+
+    transform: translateY(-2px);
+}
+
+.step-circle {
+    min-width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eef2ff;
+
+    color: #4f46e5;
+
+    font-weight: 800;
+
+    font-size: 13px;
+}
+
+.simulation-step h3 {
+    font-size: 16px;
+
+    margin-bottom: 5px;
+}
+
+.simulation-step p {
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   SIMULATE BUTTON
+   ===================================================== */
+
+.scenario-card {
+    text-align: center;
+}
+
+.scenario-card .section-title-row {
+    text-align: left;
+}
+
+.simulate-button {
+    width: 100%;
+
+    max-width: 500px;
+
+    padding: 17px 25px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #6366f1
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(79, 70, 229, 0.20);
+
+    transition: 0.2s;
+}
+
+.simulate-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(79, 70, 229, 0.28);
+}
+
+.simulate-button:disabled {
+    opacity: 0.7;
+
+    cursor: wait;
+
+    transform: none;
+}
+
+
+/* =====================================================
+   LOADING
+   ===================================================== */
+
+.loading-box {
+    margin-top: 25px;
+
+    padding: 30px;
+
+    border-radius: 18px;
+
+    background: #f8faff;
+
+    text-align: center;
+}
+
+.loading-icon {
+    font-size: 40px;
+
+    margin-bottom: 10px;
+}
+
+.loading-box h3 {
+    margin-bottom: 5px;
+}
+
+
+/* =====================================================
+   SIMULATION RESULT
+   ===================================================== */
+
+.simulation-result-box {
+    margin-top: 30px;
+
+    padding-top: 30px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+.result-heading {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+.result-heading span {
+    font-size: 25px;
+}
+
+.result-heading h2 {
+    margin: 0;
+}
+
+.result-summary {
     font-size: 15px;
+
+    margin-bottom: 25px;
+}
+
+
+/* =====================================================
+   READINESS
+   ===================================================== */
+
+.readiness-box {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 25px;
+
+    margin-bottom: 30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f5f3ff
+        );
+
+    border-radius: 18px;
+}
+
+.readiness-box p {
+    margin-bottom: 2px;
+
+    font-size: 13px;
+}
+
+.readiness-box strong {
+    color: #4f46e5;
+
+    font-size: 42px;
+}
+
+.score-circle {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: white;
+
+    font-size: 28px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.result-section-title {
+    margin: 25px 0 18px;
+}
+
+
+/* =====================================================
+   AI RECOMMENDATION
+   ===================================================== */
+
+.recommendation-box {
+    margin-top: 25px;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    background: #f0fdf4;
+
+    border: 1px solid #bbf7d0;
+}
+
+.recommendation-box h3 {
+    color: #166534;
+
+    margin-bottom: 8px;
+}
+
+.recommendation-box p {
+    color: #365314;
+}
+
+
+/* =====================================================
+   FINAL BUTTONS
+   ===================================================== */
+
+.final-actions {
+    text-align: center;
+
+    margin-top: 30px;
+}
+
+.success-message {
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    margin-bottom: 20px;
+
+    border-radius: 30px;
+
+    background: #ecfdf5;
+
+    color: #047857;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.action-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.results-button,
+.secondary-action {
+    min-height: 50px;
+
+    padding: 13px 22px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.results-button {
+    border: none;
+
+    background: #4f46e5;
+
+    color: white;
+}
+
+.results-button:hover {
+    background: #3730a3;
+
+    transform: translateY(-2px);
+}
+
+.secondary-action {
+    border: 1px solid #d1d5db;
+
+    background: white;
+
+    color: #374151;
+}
+
+.secondary-action:hover {
+    border-color: #a5b4fc;
+
+    background: #eef2ff;
+
+    color: #4338ca;
+}
+
+
+/* =====================================================
+   ERROR
+   ===================================================== */
+
+.error-box {
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    background: #fef2f2;
+
+    border: 1px solid #fecaca;
+
+    color: #991b1b;
+}
+
+
+/* =====================================================
+   OLD COMMON CLASSES
+   Keeps other pages working
+   ===================================================== */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.form-section {
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 16px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+button,
+.primary-btn,
+.primary-button,
+.secondary-button,
+.button {
+    cursor: pointer;
 }
 
 
@@ -355,21 +1180,15 @@ body {
    ===================================================== */
 
 footer {
-    width: 100%;
+    text-align: center;
 
-    margin-top: 50px;
+    padding: 30px;
 
-    padding: 30px 20px;
+    margin-top: 40px;
 
     background: #111827;
 
-    text-align: center;
-}
-
-footer p {
     color: #cbd5e1;
-
-    font-size: 14px;
 }
 
 
@@ -379,8 +1198,8 @@ footer p {
 
 @media (max-width: 900px) {
 
-    .hero-content h1 {
-        font-size: 42px;
+    .career-choice-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .journey,
@@ -395,58 +1214,76 @@ footer p {
    MOBILE
    ===================================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
 
     .navbar {
-        height: auto;
-
-        padding: 18px 20px;
-
         flex-direction: column;
 
         gap: 12px;
+
+        padding: 18px 20px;
     }
 
     .nav-links {
-        gap: 20px;
+        gap: 15px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
     }
 
-    .hero-section {
-        width: 94%;
+    .hero-content h1 {
+        font-size: 34px;
+    }
 
-        min-height: auto;
-
-        margin: 30px auto;
-
-        padding: 55px 20px;
+    .career-container {
+        padding: 25px 18px;
 
         border-radius: 20px;
     }
 
-    .hero-content h1 {
-        font-size: 32px;
+    .career-header h1 {
+        font-size: 30px;
     }
 
-    .hero-description {
-        font-size: 16px;
-    }
-
-    .content-section {
-        width: 94%;
-
-        padding: 45px 0;
-    }
-
-    .section-heading h2 {
-        font-size: 28px;
-    }
-
-    .journey,
-    .features {
+    .career-choice-grid,
+    .level-grid,
+    .simulation-journey {
         grid-template-columns: 1fr;
     }
 
-    .primary-button {
+    .simulation-container {
+        width: 94%;
+
+        margin-top: 30px;
+    }
+
+    .simulation-card {
+        padding: 22px 18px;
+    }
+
+    .simulation-header h1 {
+        font-size: 32px;
+    }
+
+    .section-title-row {
+        align-items: flex-start;
+    }
+
+    .readiness-box {
+        padding: 20px;
+    }
+
+    .readiness-box strong {
+        font-size: 35px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .results-button,
+    .secondary-action {
         width: 100%;
     }
 

@@ -2,26 +2,31 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <title>Career Simulation | AI Career Decision Simulator</title>
+    <title>
+        Career Simulation | CareerSim AI
+    </title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
+
+    <!-- NAVBAR -->
 
     <nav class="navbar">
 
         <div class="logo">
-            AI Career Decision Simulator
+            CareerSim <span>AI</span>
         </div>
 
         <div class="nav-links">
@@ -42,7 +47,8 @@
                 Career
             </a>
 
-            <a href="simulation.html" class="active">
+            <a href="simulation.html"
+               class="active">
                 Simulation
             </a>
 
@@ -51,17 +57,21 @@
     </nav>
 
 
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
 
-    <main class="container">
+    <!-- MAIN -->
 
-        <!-- CAREER INFORMATION -->
+    <main class="simulation-container">
 
-        <section class="page-header">
 
-            <p>
+        <!-- HEADER -->
+
+        <section class="simulation-header">
+
+            <div class="simulation-icon">
+                🚀
+            </div>
+
+            <p class="tagline">
                 CAREER SIMULATION
             </p>
 
@@ -77,39 +87,62 @@
         </section>
 
 
+
         <!-- SELECTED CAREER -->
 
-        <section class="form-section">
+        <section class="simulation-card career-summary">
 
-            <h2>
-                Selected Career
+            <div class="card-label">
+                YOUR SELECTED CAREER
+            </div>
+
+            <h2 id="selectedCareer">
+                Loading...
             </h2>
 
-            <h3 id="selectedCareer">
-                Loading...
-            </h3>
+            <div
+                id="experienceLevel"
+                class="experience-badge">
 
-            <p id="experienceLevel">
-                Loading experience level...
-            </p>
+                Loading...
+
+            </div>
 
         </section>
 
 
+
         <!-- CAREER JOURNEY -->
 
-        <section class="form-section">
+        <section class="simulation-card">
 
-            <h2>
-                🚀 Possible Career Journey
-            </h2>
+            <div class="section-title-row">
+
+                <span class="section-icon">
+                    🛣️
+                </span>
+
+                <div>
+
+                    <h2>
+                        Possible Career Journey
+                    </h2>
+
+                    <p>
+                        A simple path you can follow over time.
+                    </p>
+
+                </div>
+
+            </div>
 
 
-            <div class="journey">
+            <div class="simulation-journey">
 
-                <div class="journey-step">
 
-                    <div class="journey-number">
+                <div class="simulation-step">
+
+                    <div class="step-circle">
                         01
                     </div>
 
@@ -129,9 +162,9 @@
                 </div>
 
 
-                <div class="journey-step">
+                <div class="simulation-step">
 
-                    <div class="journey-number">
+                    <div class="step-circle">
                         02
                     </div>
 
@@ -151,9 +184,9 @@
                 </div>
 
 
-                <div class="journey-step">
+                <div class="simulation-step">
 
-                    <div class="journey-number">
+                    <div class="step-circle">
                         03
                     </div>
 
@@ -173,9 +206,9 @@
                 </div>
 
 
-                <div class="journey-step">
+                <div class="simulation-step">
 
-                    <div class="journey-number">
+                    <div class="step-circle">
                         04
                     </div>
 
@@ -194,79 +227,123 @@
 
                 </div>
 
+
             </div>
 
         </section>
 
 
-        <!-- WHAT IF SCENARIO -->
 
-        <section class="form-section">
+        <!-- WHAT IF -->
 
-            <h2>
-                🔮 What-If Scenario
-            </h2>
+        <section class="simulation-card scenario-card">
 
-            <p>
-                What if you spend the next 6 months improving
-                your skills and building projects?
-            </p>
+            <div class="section-title-row">
+
+                <span class="section-icon">
+                    🔮
+                </span>
+
+                <div>
+
+                    <h2>
+                        What-If Scenario
+                    </h2>
+
+                    <p>
+                        What could happen if you consistently
+                        improve your skills for six months?
+                    </p>
+
+                </div>
+
+            </div>
 
 
             <button
                 type="button"
                 id="simulateButton"
-                class="primary-btn"
-            >
+                class="simulate-button">
+
+                <span>✨</span>
+
                 Simulate 6-Month Progress
+
             </button>
 
 
-            <!-- Simulation result -->
-
             <div
                 id="scenarioResult"
-                style="margin-top: 25px;"
-            >
+                class="scenario-result">
+
             </div>
 
         </section>
+
 
 
         <!-- RESULTS BUTTON -->
 
         <section
             id="resultsSection"
-            class="form-section"
-            style="display: none;"
-        >
+            class="final-actions"
+            style="display:none;">
 
-            <button
-                type="button"
-                id="resultsButton"
-                class="primary-btn"
-            >
-                View Simulation Results →
-            </button>
+            <div class="success-message">
+
+                🎉 Your simulation is ready!
+
+            </div>
+
+
+            <div class="action-buttons">
+
+                <button
+                    type="button"
+                    id="resultsButton"
+                    class="results-button">
+
+                    📊 View Simulation Results
+                    <span>→</span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary-action"
+                    onclick="window.location.href='career.html'">
+
+                    🔄 Choose Another Career
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="secondary-action"
+                    onclick="window.location.href='dashboard.html'">
+
+                    🏠 Go to Dashboard
+
+                </button>
+
+            </div>
 
         </section>
+
 
     </main>
 
 
-    <!-- ==================================================
-         SIMULATION JAVASCRIPT
-    ================================================== -->
+
+    <!-- JAVASCRIPT -->
 
     <script>
 
         const API_BASE_URL =
             "https://ai-career-decision-simulator.onrender.com";
 
-
-        /* ================================================
-           GET ELEMENTS
-        ================================================= */
 
         const selectedCareerElement =
             document.getElementById("selectedCareer");
@@ -287,39 +364,36 @@
             document.getElementById("resultsButton");
 
 
-        /* ================================================
-           FORMAT CAREER NAME
-        ================================================= */
+
+        /* FORMAT CAREER */
 
         function formatCareerName(career) {
 
             if (!career) {
+
                 return "Not selected";
+
             }
+
 
             return career
                 .replace(/-/g, " ")
                 .replace(/\b\w/g, function(letter) {
+
                     return letter.toUpperCase();
+
                 });
 
         }
 
 
-        /* ================================================
-           LOAD CAREER INFORMATION
-        ================================================= */
+
+        /* LOAD CAREER */
 
         function loadCareerInformation() {
 
             const savedCareer =
                 localStorage.getItem("careerChoice");
-
-
-            console.log(
-                "Saved career:",
-                savedCareer
-            );
 
 
             if (!savedCareer) {
@@ -339,12 +413,6 @@
 
                 const career =
                     JSON.parse(savedCareer);
-
-
-                console.log(
-                    "Career data:",
-                    career
-                );
 
 
                 const targetCareer =
@@ -364,47 +432,32 @@
 
                 experienceElement.textContent =
                     experience
-                        ? "Experience Level: " +
-                          formatCareerName(experience)
+                        ? "🌱 " + formatCareerName(experience)
                         : "Experience Level: Not selected";
 
 
             } catch (error) {
 
-                console.error(
-                    "Career loading error:",
-                    error
-                );
-
-
-                selectedCareerElement.textContent =
-                    "Not selected";
-
-                experienceElement.textContent =
-                    "Experience Level: Not selected";
+                console.error(error);
 
             }
 
         }
 
 
-        /* ================================================
-           RUN SIMULATION
-        ================================================= */
+
+        /* RUN SIMULATION */
 
         async function runSimulation() {
 
             const profileId =
                 localStorage.getItem("profileId");
 
-
             const savedCareer =
                 localStorage.getItem("careerChoice");
 
-
             const savedSkills =
                 localStorage.getItem("careerSkills");
-
 
             const savedMemory =
                 localStorage.getItem("careerMemory");
@@ -413,10 +466,10 @@
             if (!profileId) {
 
                 scenarioResult.innerHTML = `
-                    <p>
+                    <div class="error-box">
                         ❌ Profile information is missing.
                         Please complete your profile first.
-                    </p>
+                    </div>
                 `;
 
                 return;
@@ -427,10 +480,9 @@
             if (!savedCareer) {
 
                 scenarioResult.innerHTML = `
-                    <p>
-                        ❌ Career information is missing.
-                        Please select a career first.
-                    </p>
+                    <div class="error-box">
+                        ❌ Please select a career first.
+                    </div>
                 `;
 
                 return;
@@ -441,10 +493,9 @@
             if (!savedSkills) {
 
                 scenarioResult.innerHTML = `
-                    <p>
-                        ❌ Skills information is missing.
-                        Please complete the Skills Assessment first.
-                    </p>
+                    <div class="error-box">
+                        ❌ Please complete your Skills Assessment first.
+                    </div>
                 `;
 
                 return;
@@ -456,7 +507,6 @@
 
                 const career =
                     JSON.parse(savedCareer);
-
 
                 const skills =
                     JSON.parse(savedSkills);
@@ -490,19 +540,6 @@
                     career.experience;
 
 
-                if (!targetCareer) {
-
-                    throw new Error(
-                        "Target career was not selected."
-                    );
-
-                }
-
-
-                /* -----------------------------------------
-                   PREPARE SKILLS
-                ----------------------------------------- */
-
                 const simulationData = {
 
                     profile_id:
@@ -520,35 +557,39 @@
                             parseInt(profileId, 10),
 
                         python:
-                            parseInt(skills.python, 10),
+                            parseInt(skills.python || 0, 10),
 
                         java:
-                            parseInt(skills.java, 10),
+                            parseInt(skills.java || 0, 10),
 
                         sql:
-                            parseInt(skills.sql, 10),
+                            parseInt(skills.sql || 0, 10),
 
                         statistics:
                             parseInt(
-                                skills.statistics,
+                                skills.statistics || 0,
                                 10
                             ),
 
                         data_analysis:
                             parseInt(
-                                skills.data_analysis,
+                                skills.data_analysis ||
+                                skills.dataAnalysis ||
+                                0,
                                 10
                             ),
 
                         web_development:
                             parseInt(
-                                skills.web_development,
+                                skills.web_development ||
+                                skills.webDevelopment ||
+                                0,
                                 10
                             ),
 
                         communication:
                             parseInt(
-                                skills.communication,
+                                skills.communication || 0,
                                 10
                             )
 
@@ -560,42 +601,33 @@
                 };
 
 
-                console.log(
-                    "Sending simulation:",
-                    simulationData
-                );
+                simulateButton.disabled = true;
 
-
-                /* -----------------------------------------
-                   LOADING MESSAGE
-                ----------------------------------------- */
-
-                simulateButton.disabled =
-                    true;
-
-                simulateButton.textContent =
-                    "Running Simulation...";
+                simulateButton.innerHTML =
+                    "⏳ Running Simulation...";
 
 
                 scenarioResult.innerHTML = `
-                    <div class="simulation-card">
+
+                    <div class="loading-box">
+
+                        <div class="loading-icon">
+                            🤖
+                        </div>
 
                         <h3>
-                            ⏳ Running Career Simulation...
+                            AI is analyzing your career path...
                         </h3>
 
                         <p>
-                            Analyzing your skills,
-                            career choice and previous decisions...
+                            Checking your skills, experience
+                            and career goals.
                         </p>
 
                     </div>
+
                 `;
 
-
-                /* -----------------------------------------
-                   SEND TO FASTAPI
-                ----------------------------------------- */
 
                 const response =
                     await fetch(
@@ -645,38 +677,20 @@
                 }
 
 
-                console.log(
-                    "Simulation API response:",
-                    data
-                );
-
-
                 if (!response.ok) {
 
                     throw new Error(
-                        `HTTP ${response.status}: ${
-                            typeof data === "string"
-                                ? data
-                                : JSON.stringify(data)
-                        }`
+                        `HTTP ${response.status}`
                     );
 
                 }
 
-
-                /* -----------------------------------------
-                   SAVE RESULT
-                ----------------------------------------- */
 
                 localStorage.setItem(
                     "simulationResult",
                     JSON.stringify(data)
                 );
 
-
-                /* -----------------------------------------
-                   DISPLAY RESULT
-                ----------------------------------------- */
 
                 const summary =
                     data.simulation &&
@@ -686,8 +700,7 @@
 
 
                 const readiness =
-                    data.readiness_score ??
-                    0;
+                    data.readiness_score ?? 0;
 
 
                 let stepsHTML = "";
@@ -702,34 +715,29 @@
 
                     stepsHTML =
                         data.simulation.steps
-                            .map(
-                                function(step, index) {
+                            .map(function(step, index) {
 
-                                    return `
-                                        <div class="journey-step">
+                                return `
 
-                                            <div class="journey-number">
-                                                ${String(
-                                                    index + 1
-                                                ).padStart(
-                                                    2,
-                                                    "0"
-                                                )}
-                                            </div>
+                                    <div class="simulation-step">
 
-                                            <div>
+                                        <div class="step-circle">
+                                            ${String(index + 1).padStart(2, "0")}
+                                        </div>
 
-                                                <h3>
-                                                    ${step}
-                                                </h3>
+                                        <div>
 
-                                            </div>
+                                            <h3>
+                                                ${step}
+                                            </h3>
 
                                         </div>
-                                    `;
 
-                                }
-                            )
+                                    </div>
+
+                                `;
+
+                            })
                             .join("");
 
                 }
@@ -737,53 +745,73 @@
 
                 scenarioResult.innerHTML = `
 
-                    <div class="simulation-card">
+                    <div class="simulation-result-box">
 
-                        <h2>
-                            📈 6-Month Simulation
-                        </h2>
+                        <div class="result-heading">
 
-                        <p>
+                            <span>
+                                📈
+                            </span>
+
+                            <h2>
+                                6-Month Simulation
+                            </h2>
+
+                        </div>
+
+
+                        <p class="result-summary">
                             ${summary}
                         </p>
 
 
-                        <h2>
-                            📊 Readiness Score
-                        </h2>
+                        <div class="readiness-box">
 
-                        <p>
+                            <div>
 
-                            <strong>
-                                ${readiness}%
-                            </strong>
+                                <p>
+                                    Your simulated readiness
+                                </p>
 
-                        </p>
+                                <strong>
+                                    ${readiness}%
+                                </strong>
+
+                            </div>
+
+                            <div class="score-circle">
+                                🎯
+                            </div>
+
+                        </div>
 
 
-                        <h2>
+                        <h2 class="result-section-title">
                             🚀 Simulated Career Journey
                         </h2>
 
-                        <div class="journey">
+
+                        <div class="simulation-journey">
 
                             ${stepsHTML}
 
                         </div>
 
 
-                        <h2>
-                            💡 AI Recommendation
-                        </h2>
+                        <div class="recommendation-box">
 
-                        <p>
+                            <h3>
+                                💡 AI Recommendation
+                            </h3>
 
-                            ${
-                                data.ai_recommendation ||
-                                "Continue improving your skills and follow your personalized roadmap."
-                            }
+                            <p>
+                                ${
+                                    data.ai_recommendation ||
+                                    "Continue improving your skills and follow your personalized roadmap."
+                                }
+                            </p>
 
-                        </p>
+                        </div>
 
                     </div>
 
@@ -797,8 +825,14 @@
                 simulateButton.disabled =
                     false;
 
-                simulateButton.textContent =
-                    "Simulate Again";
+                simulateButton.innerHTML =
+                    "🔄 Simulate Again";
+
+
+                resultsSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
 
 
             } catch (error) {
@@ -811,15 +845,13 @@
 
                 scenarioResult.innerHTML = `
 
-                    <div class="simulation-card">
+                    <div class="error-box">
 
-                        <h3>
-                            ❌ Simulation Failed
-                        </h3>
+                        ❌ Simulation failed.
 
-                        <p>
-                            ${error.message}
-                        </p>
+                        <br><br>
+
+                        ${error.message}
 
                     </div>
 
@@ -829,17 +861,14 @@
                 simulateButton.disabled =
                     false;
 
-                simulateButton.textContent =
-                    "Simulate 6-Month Progress";
+                simulateButton.innerHTML =
+                    "✨ Simulate 6-Month Progress";
 
             }
 
         }
 
 
-        /* ================================================
-           BUTTON EVENTS
-        ================================================= */
 
         simulateButton.addEventListener(
             "click",
@@ -857,10 +886,6 @@
             }
         );
 
-
-        /* ================================================
-           LOAD PAGE
-        ================================================= */
 
         loadCareerInformation();
 

@@ -5,63 +5,196 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Choose Your Career | AI Career Decision Simulator</title>
+    <title>Choose Career | CareerSim AI</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- NAVIGATION -->
+    <!-- NAVBAR -->
+
     <nav class="navbar">
 
         <div class="logo">
-            AI Career Decision Simulator
+            CareerSim <span>AI</span>
         </div>
 
         <div class="nav-links">
+
             <a href="index.html">Home</a>
             <a href="profile.html">Profile</a>
             <a href="skills.html">Skills</a>
             <a href="career.html" class="active">Career</a>
+
         </div>
 
     </nav>
 
 
-    <!-- MAIN CONTENT -->
-    <main class="container">
+    <!-- MAIN -->
 
-        <section class="page-header">
+    <main class="career-page">
 
-            <p>STEP 3 OF 3</p>
+        <div class="career-container">
 
-            <h1>Choose Your Career Path</h1>
+            <div class="career-header">
 
-            <p>
-                Select a career you want to explore.
-                Our AI will simulate what your journey could look like.
-            </p>
+                <div class="page-icon">
+                    🎯
+                </div>
 
-        </section>
+                <p class="tagline">
+                    CAREER SELECTION
+                </p>
 
+                <h1>
+                    Choose Your Career Path
+                </h1>
 
-        <!-- CAREER FORM -->
-        <section class="form-section">
+                <p class="career-subtitle">
+                    Select a career and tell us your current
+                    experience level to create your personalized
+                    career simulation.
+                </p>
+
+            </div>
+
 
             <form id="careerForm">
 
+
                 <!-- CAREER -->
-                <div class="form-group">
 
-                    <label for="career">
-                        Select Your Target Career
-                    </label>
+                <div class="selection-section">
 
-                    <select id="career" name="career" required>
+                    <h2>
+                        💼 What career are you interested in?
+                    </h2>
+
+                    <p class="selection-description">
+                        Choose the career you want to explore.
+                    </p>
+
+
+                    <div class="career-choice-grid">
+
+                        <button
+                            type="button"
+                            class="career-choice"
+                            data-career="software-developer">
+
+                            <span class="choice-icon">💻</span>
+
+                            <span class="choice-title">
+                                Software Developer
+                            </span>
+
+                            <span class="choice-description">
+                                Build applications and software
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="career-choice"
+                            data-career="data-analyst">
+
+                            <span class="choice-icon">📊</span>
+
+                            <span class="choice-title">
+                                Data Analyst
+                            </span>
+
+                            <span class="choice-description">
+                                Analyze data and find insights
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="career-choice"
+                            data-career="data-scientist">
+
+                            <span class="choice-icon">🔬</span>
+
+                            <span class="choice-title">
+                                Data Scientist
+                            </span>
+
+                            <span class="choice-description">
+                                Work with data and AI models
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="career-choice"
+                            data-career="ai-ml-engineer">
+
+                            <span class="choice-icon">🤖</span>
+
+                            <span class="choice-title">
+                                AI / ML Engineer
+                            </span>
+
+                            <span class="choice-description">
+                                Build intelligent AI systems
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="career-choice"
+                            data-career="web-developer">
+
+                            <span class="choice-icon">🌐</span>
+
+                            <span class="choice-title">
+                                Web Developer
+                            </span>
+
+                            <span class="choice-description">
+                                Create modern websites
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="career-choice"
+                            data-career="cybersecurity-analyst">
+
+                            <span class="choice-icon">🔐</span>
+
+                            <span class="choice-title">
+                                Cybersecurity Analyst
+                            </span>
+
+                            <span class="choice-description">
+                                Protect systems and data
+                            </span>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- Hidden field used by existing JS -->
+
+                    <select id="career" class="hidden-select" required>
 
                         <option value="">
-                            Choose a career
+                            Select Career
                         </option>
 
                         <option value="software-developer">
@@ -84,42 +217,113 @@
                             Web Developer
                         </option>
 
-                        <option value="cloud-engineer">
-                            Cloud Engineer
+                        <option value="cybersecurity-analyst">
+                            Cybersecurity Analyst
                         </option>
 
                     </select>
 
                 </div>
+
 
 
                 <!-- EXPERIENCE -->
-                <div class="form-group">
 
-                    <label for="experience">
-                        Current Experience Level
-                    </label>
+                <div class="selection-section">
 
-                    <select id="experience" name="experience" required>
+                    <h2>
+                        🌱 What is your current level?
+                    </h2>
+
+                    <p class="selection-description">
+                        Choose the level that best describes you.
+                    </p>
+
+
+                    <div class="level-grid">
+
+
+                        <button
+                            type="button"
+                            class="level-card"
+                            data-level="Beginner">
+
+                            <span class="level-emoji">
+                                🌱
+                            </span>
+
+                            <span class="level-title">
+                                Beginner
+                            </span>
+
+                            <span class="level-description">
+                                I am starting from the basics.
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="level-card"
+                            data-level="Intermediate">
+
+                            <span class="level-emoji">
+                                🌿
+                            </span>
+
+                            <span class="level-title">
+                                Intermediate
+                            </span>
+
+                            <span class="level-description">
+                                I know the basics and have some practice.
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="level-card"
+                            data-level="Advanced">
+
+                            <span class="level-emoji">
+                                🚀
+                            </span>
+
+                            <span class="level-title">
+                                Advanced
+                            </span>
+
+                            <span class="level-description">
+                                I have strong knowledge and experience.
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+
+                    <!-- Hidden experience field -->
+
+                    <select id="experience" class="hidden-select" required>
 
                         <option value="">
-                            Select experience
+                            Select Level
                         </option>
 
-                        <option value="beginner">
+                        <option value="Beginner">
                             Beginner
                         </option>
 
-                        <option value="student-with-projects">
-                            Student with Projects
+                        <option value="Intermediate">
+                            Intermediate
                         </option>
 
-                        <option value="internship-experience">
-                            Internship Experience
-                        </option>
-
-                        <option value="working-professional">
-                            Working Professional
+                        <option value="Advanced">
+                            Advanced
                         </option>
 
                     </select>
@@ -127,45 +331,53 @@
                 </div>
 
 
-                <!-- ERROR / STATUS MESSAGE -->
-                <div id="careerMessage"
-                     style="margin: 15px 0; font-weight: 500;">
-                </div>
 
+                <!-- CONTINUE -->
 
-                <!-- SUBMIT -->
-                <div class="form-actions">
+                <div class="career-actions">
 
                     <button
                         type="submit"
-                        id="careerSubmit"
-                        class="primary-btn"
-                    >
-                        Start Career Simulation →
+                        id="continueCareerButton"
+                        class="continue-career-button">
+
+                        Continue to Simulation
+
+                        <span>→</span>
+
                     </button>
+
+                    <a
+                        href="skills.html"
+                        class="back-button">
+
+                        ← Back to Skills
+
+                    </a>
 
                 </div>
 
+
             </form>
 
-        </section>
+        </div>
 
     </main>
 
 
-    <!-- ==================================================
-         CAREER PAGE JAVASCRIPT
-         RENDER BACKEND
-    ================================================== -->
+    <script src="script.js"></script>
+
+
+    <!-- PAGE INTERACTION -->
 
     <script>
 
-        const API_BASE_URL =
-            "https://ai-career-decision-simulator.onrender.com";
+        const careerButtons =
+            document.querySelectorAll(".career-choice");
 
+        const levelButtons =
+            document.querySelectorAll(".level-card");
 
-        const careerForm =
-            document.getElementById("careerForm");
 
         const careerSelect =
             document.getElementById("career");
@@ -173,236 +385,112 @@
         const experienceSelect =
             document.getElementById("experience");
 
-        const careerMessage =
-            document.getElementById("careerMessage");
 
-        const careerSubmit =
-            document.getElementById("careerSubmit");
+        /* CAREER SELECTION */
 
+        careerButtons.forEach(function(button) {
 
-        careerForm.addEventListener("submit", async function(event) {
+            button.addEventListener("click", function() {
 
-            event.preventDefault();
+                careerButtons.forEach(function(item) {
 
+                    item.classList.remove("selected");
 
-            /* -----------------------------------------
-               GET PROFILE ID
-            ----------------------------------------- */
-
-            const profileId =
-                localStorage.getItem("profileId");
+                });
 
 
-            if (!profileId) {
-
-                careerMessage.textContent =
-                    "Profile information not found. Please complete your profile first.";
-
-                careerMessage.style.color = "red";
-
-                return;
-            }
+                button.classList.add("selected");
 
 
-            /* -----------------------------------------
-               GET FORM VALUES
-            ----------------------------------------- */
+                careerSelect.value =
+                    button.dataset.career;
 
-            const targetCareer =
-                careerSelect.value;
+            });
 
-            const experience =
-                experienceSelect.value;
+        });
 
 
-            if (!targetCareer) {
+        /* EXPERIENCE LEVEL */
 
-                careerMessage.textContent =
-                    "Please select a career.";
+        levelButtons.forEach(function(button) {
 
-                careerMessage.style.color = "red";
+            button.addEventListener("click", function() {
 
-                return;
-            }
+                levelButtons.forEach(function(item) {
 
+                    item.classList.remove("selected");
 
-            if (!experience) {
-
-                careerMessage.textContent =
-                    "Please select your experience level.";
-
-                careerMessage.style.color = "red";
-
-                return;
-            }
+                });
 
 
-            /* -----------------------------------------
-               REQUEST DATA
-            ----------------------------------------- */
-
-            const careerData = {
-
-                profile_id: parseInt(profileId, 10),
-
-                target_career: targetCareer,
-
-                experience: experience
-
-            };
+                button.classList.add("selected");
 
 
-            console.log(
-                "Sending career data:",
-                careerData
-            );
+                experienceSelect.value =
+                    button.dataset.level;
+
+            });
+
+        });
 
 
-            /* -----------------------------------------
-               SHOW LOADING
-            ----------------------------------------- */
+        /* SUBMIT */
 
-            careerSubmit.disabled = true;
+        document
+            .getElementById("careerForm")
+            .addEventListener("submit", function(event) {
 
-            careerSubmit.textContent =
-                "Saving Career Choice...";
-
-            careerMessage.textContent =
-                "Connecting to the AI Career Simulator...";
-
-            careerMessage.style.color = "";
+                event.preventDefault();
 
 
-            try {
+                const career =
+                    careerSelect.value;
 
-                /* -------------------------------------
-                   SEND TO DEPLOYED FASTAPI
-                ------------------------------------- */
-
-                const response = await fetch(
-                    `${API_BASE_URL}/api/career`,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json",
-
-                            "Accept":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify(careerData)
-                    }
-                );
+                const experience =
+                    experienceSelect.value;
 
 
-                /* -------------------------------------
-                   READ RESPONSE
-                ------------------------------------- */
+                if (!career) {
 
-                const responseText =
-                    await response.text();
-
-
-                let data;
-
-                try {
-
-                    data =
-                        responseText
-                            ? JSON.parse(responseText)
-                            : {};
-
-                } catch {
-
-                    data =
-                        responseText;
-                }
-
-
-                console.log(
-                    "Career API response:",
-                    data
-                );
-
-
-                /* -------------------------------------
-                   CHECK ERROR
-                ------------------------------------- */
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        `HTTP ${response.status}: ${
-                            typeof data === "string"
-                                ? data
-                                : JSON.stringify(data)
-                        }`
+                    alert(
+                        "Please choose a career first."
                     );
+
+                    return;
+
                 }
 
 
-                /* -------------------------------------
-                   SAVE CAREER LOCALLY
-                ------------------------------------- */
+                if (!experience) {
+
+                    alert(
+                        "Please choose your experience level."
+                    );
+
+                    return;
+
+                }
+
+
+                const careerChoice = {
+
+                    targetCareer: career,
+
+                    experience: experience
+
+                };
+
 
                 localStorage.setItem(
                     "careerChoice",
-                    JSON.stringify(careerData)
+                    JSON.stringify(careerChoice)
                 );
 
 
-                if (data.career_id) {
+                window.location.href =
+                    "simulation.html";
 
-                    localStorage.setItem(
-                        "careerId",
-                        String(data.career_id)
-                    );
-                }
-
-
-                /* -------------------------------------
-                   SUCCESS
-                ------------------------------------- */
-
-                careerMessage.textContent =
-                    "Career saved successfully! Starting simulation...";
-
-                careerMessage.style.color = "green";
-
-
-                setTimeout(function() {
-
-                    window.location.href =
-                        "simulation.html";
-
-                }, 500);
-
-
-            } catch (error) {
-
-                console.error(
-                    "Career submission error:",
-                    error
-                );
-
-
-                careerMessage.textContent =
-                    "Unable to save career: " +
-                    error.message;
-
-                careerMessage.style.color = "red";
-
-
-                careerSubmit.disabled = false;
-
-                careerSubmit.textContent =
-                    "Start Career Simulation →";
-            }
-
-        });
+            });
 
     </script>
 
