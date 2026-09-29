@@ -7,12 +7,574 @@
     <title>Career Dashboard | CareerSim</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================
+           DASHBOARD PAGE
+        ========================= */
+
+        .dashboard-page {
+            width: min(1100px, 92%);
+            margin: 0 auto;
+            padding: 50px 0 70px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .dashboard-label {
+            color: #7c3aed;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-header h1 {
+            margin: 0 0 10px;
+            font-size: 38px;
+            color: #172033;
+        }
+
+        .dashboard-header p:not(.dashboard-label) {
+            margin: 0;
+            color: #667085;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .dashboard-new-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 20px;
+            border-radius: 12px;
+            background: #7c3aed;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .dashboard-new-btn:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+            margin-bottom: 22px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border: 1px solid #e7e9f2;
+            border-radius: 20px;
+            padding: 26px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 25px rgba(30, 41, 59, 0.06);
+        }
+
+        .dashboard-grid .dashboard-card {
+            margin-bottom: 0;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: #f3efff;
+            font-size: 23px;
+            flex-shrink: 0;
+        }
+
+        .card-title h2 {
+            margin: 0 0 4px;
+            color: #172033;
+            font-size: 21px;
+        }
+
+        .card-title p {
+            margin: 0;
+            color: #8a91a3;
+            font-size: 13px;
+        }
+
+        /* =========================
+           PROFILE
+        ========================= */
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 13px 0;
+            border-bottom: 1px solid #eef0f5;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row span {
+            color: #737b8f;
+            font-size: 14px;
+        }
+
+        .info-row strong {
+            color: #202637;
+            font-size: 14px;
+            text-align: right;
+            text-transform: capitalize;
+        }
+
+        /* =========================
+           CAREER
+        ========================= */
+
+        .career-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 18px;
+            background: #faf9ff;
+            border: 1px solid #eee9ff;
+            border-radius: 15px;
+        }
+
+        .career-main span,
+        .experience-badge span {
+            display: block;
+            color: #858ca0;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .career-main h3 {
+            margin: 0;
+            color: #6d28d9;
+            font-size: 22px;
+        }
+
+        .experience-badge {
+            padding: 11px 15px;
+            border-radius: 12px;
+            background: white;
+            border: 1px solid #e8e3ff;
+            min-width: 120px;
+        }
+
+        .experience-badge strong {
+            color: #303747;
+            font-size: 14px;
+            text-transform: capitalize;
+        }
+
+        /* =========================
+           SKILLS
+        ========================= */
+
+        .skills-dashboard-card {
+            margin-bottom: 22px;
+        }
+
+        .skills-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 30px;
+        }
+
+        .skill-item {
+            min-width: 0;
+        }
+
+        .skill-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 9px;
+        }
+
+        .skill-top span {
+            color: #394052;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .skill-top strong {
+            color: #6d28d9;
+            font-size: 13px;
+        }
+
+        .skill-bar {
+            height: 9px;
+            width: 100%;
+            background: #eceef4;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .skill-bar div {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(
+                90deg,
+                #7c3aed,
+                #a855f7
+            );
+            border-radius: 20px;
+            transition: width 0.6s ease;
+        }
+
+        /* =========================
+           SIMULATION
+        ========================= */
+
+        .readiness-container {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            padding: 10px;
+        }
+
+        .readiness-score {
+            flex-shrink: 0;
+        }
+
+        .score-circle {
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            background: #f3efff;
+            border: 9px solid #ddd2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #6d28d9;
+        }
+
+        .score-circle span {
+            font-size: 38px;
+            line-height: 1;
+            font-weight: 800;
+        }
+
+        .score-circle small {
+            margin-top: 5px;
+            color: #8a91a3;
+            font-size: 13px;
+        }
+
+        .readiness-info h3 {
+            margin: 0 0 10px;
+            font-size: 22px;
+            color: #202637;
+        }
+
+        .readiness-info p {
+            color: #697185;
+            line-height: 1.6;
+            margin: 0 0 18px;
+        }
+
+        .results-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 11px 17px;
+            background: #7c3aed;
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .results-btn:hover {
+            background: #6d28d9;
+        }
+
+        /* =========================
+           MEMORY
+        ========================= */
+
+        .memory-box {
+            background: #faf9ff;
+            border: 1px solid #ebe6ff;
+            border-radius: 16px;
+            padding: 22px;
+        }
+
+        .memory-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #e9e7f2;
+        }
+
+        .memory-item:first-child {
+            padding-top: 0;
+        }
+
+        .memory-item:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .memory-label {
+            display: block;
+            color: #7c3aed;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .memory-item strong {
+            color: #252b3b;
+            font-size: 16px;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .memory-item p {
+            color: #555e72;
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.7;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        .memory-btn {
+            display: inline-flex;
+            margin-top: 18px;
+            padding: 12px 17px;
+            border: 1px solid #ddd5ff;
+            background: #f8f6ff;
+            color: #6d28d9;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .memory-btn:hover {
+            background: #eee9ff;
+        }
+
+        .memory-empty {
+            text-align: center;
+            padding: 30px 15px;
+            background: #fafafa;
+            border-radius: 15px;
+            border: 1px dashed #d8dbe4;
+        }
+
+        .empty-icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .memory-empty h3 {
+            margin: 0 0 8px;
+            color: #303747;
+        }
+
+        .memory-empty p {
+            margin: 0;
+            color: #777f91;
+            line-height: 1.6;
+        }
+
+        .memory-loading {
+            padding: 25px;
+            text-align: center;
+            color: #777f91;
+        }
+
+        /* =========================
+           BOTTOM ACTIONS
+        ========================= */
+
+        .dashboard-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .action-primary,
+        .action-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .action-primary {
+            color: white;
+            background: #7c3aed;
+        }
+
+        .action-primary:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+        }
+
+        .action-secondary {
+            color: #4b5565;
+            background: white;
+            border: 1px solid #dfe2e9;
+        }
+
+        .action-secondary:hover {
+            background: #f7f7fa;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .dashboard-footer {
+            text-align: center;
+            padding: 25px;
+            color: #8a91a3;
+            font-size: 13px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .dashboard-page {
+                width: 92%;
+                padding-top: 35px;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .dashboard-header h1 {
+                font-size: 30px;
+            }
+
+            .dashboard-new-btn {
+                width: 100%;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .readiness-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .career-summary {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .experience-badge {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .results-btn {
+                width: 100%;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .dashboard-card {
+                padding: 20px;
+                border-radius: 16px;
+            }
+
+            .dashboard-header h1 {
+                font-size: 26px;
+            }
+
+            .info-row {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .info-row strong {
+                text-align: left;
+            }
+
+            .score-circle {
+                width: 125px;
+                height: 125px;
+            }
+
+            .score-circle span {
+                font-size: 32px;
+            }
+
+            .action-primary,
+            .action-secondary {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <!-- NAVBAR -->
     <nav class="navbar">
+
         <div class="logo">
             Career<span>Sim</span>
         </div>
@@ -24,71 +586,98 @@
             <a href="career.html">Career</a>
             <a href="dashboard.html" class="active">Dashboard</a>
         </div>
+
     </nav>
 
 
-    <!-- DASHBOARD -->
+    <!-- MAIN DASHBOARD -->
     <main class="dashboard-page">
 
         <!-- HEADER -->
         <section class="dashboard-header">
-            <div>
-                <p class="dashboard-label">YOUR CAREER JOURNEY</p>
 
-                <h1>📊 Career Dashboard</h1>
+            <div>
+
+                <div class="dashboard-label">
+                    YOUR CAREER JOURNEY
+                </div>
+
+                <h1>
+                    📊 Career Dashboard
+                </h1>
 
                 <p>
-                    Review your profile, skills, career choice and
-                    hindsight memory in one place.
+                    Review your profile, skills, career choice
+                    and hindsight memory in one place.
                 </p>
+
             </div>
 
-            <a href="career.html" class="dashboard-new-btn">
+            <a
+                href="career.html"
+                class="dashboard-new-btn"
+            >
                 ✨ New Simulation
             </a>
+
         </section>
 
 
         <!-- PROFILE + CAREER -->
         <section class="dashboard-grid">
 
-            <!-- PROFILE CARD -->
+            <!-- PROFILE -->
             <div class="dashboard-card">
 
                 <div class="card-title">
-                    <div class="card-icon">👤</div>
+
+                    <div class="card-icon">
+                        👤
+                    </div>
 
                     <div>
                         <h2>Profile</h2>
                         <p>Your basic information</p>
                     </div>
+
                 </div>
+
 
                 <div class="info-list">
 
                     <div class="info-row">
                         <span>Name</span>
-                        <strong id="profileName">Loading...</strong>
+                        <strong id="profileName">
+                            Loading...
+                        </strong>
                     </div>
 
                     <div class="info-row">
                         <span>Education</span>
-                        <strong id="education">Loading...</strong>
+                        <strong id="education">
+                            Loading...
+                        </strong>
                     </div>
 
                     <div class="info-row">
                         <span>Branch</span>
-                        <strong id="branch">Loading...</strong>
+                        <strong id="branch">
+                            Loading...
+                        </strong>
                     </div>
 
                     <div class="info-row">
                         <span>Year</span>
-                        <strong id="year">Loading...</strong>
+                        <strong id="year">
+                            Loading...
+                        </strong>
                     </div>
 
                     <div class="info-row">
                         <span>Career Goal</span>
-                        <strong id="careerGoal">Loading...</strong>
+                        <strong id="careerGoal">
+                            Loading...
+                        </strong>
                     </div>
 
                 </div>
@@ -96,33 +685,48 @@
             </div>
 
 
-            <!-- CAREER CHOICE CARD -->
+            <!-- CAREER CHOICE -->
             <div class="dashboard-card">
 
                 <div class="card-title">
-                    <div class="card-icon">🎯</div>
+
+                    <div class="card-icon">
+                        🎯
+                    </div>
 
                     <div>
                         <h2>Career Choice</h2>
                         <p>Your selected career path</p>
                     </div>
+
                 </div>
+
 
                 <div class="career-summary">
 
                     <div class="career-main">
-                        <span>Target Career</span>
+
+                        <span>
+                            Target Career
+                        </span>
 
                         <h3 id="targetCareer">
                             Loading...
                         </h3>
+
                     </div>
 
+
                     <div class="experience-badge">
-                        <span>Experience</span>
+
+                        <span>
+                            Experience
+                        </span>
+
                         <strong id="experience">
                             Loading...
                         </strong>
+
                     </div>
 
                 </div>
@@ -136,18 +740,23 @@
         <section class="dashboard-card skills-dashboard-card">
 
             <div class="card-title">
-                <div class="card-icon">💻</div>
+
+                <div class="card-icon">
+                    💻
+                </div>
 
                 <div>
                     <h2>Skills</h2>
                     <p>Your current skill levels</p>
                 </div>
+
             </div>
 
 
             <div class="skills-dashboard-grid">
 
                 <div class="skill-item">
+
                     <div class="skill-top">
                         <span>🐍 Python</span>
                         <strong id="python">0/5</strong>
@@ -156,10 +765,12 @@
                     <div class="skill-bar">
                         <div id="pythonBar"></div>
                     </div>
+
                 </div>
 
 
                 <div class="skill-item">
+
                     <div class="skill-top">
                         <span>☕ Java</span>
                         <strong id="java">0/5</strong>
@@ -168,10 +779,12 @@
                     <div class="skill-bar">
                         <div id="javaBar"></div>
                     </div>
+
                 </div>
 
 
                 <div class="skill-item">
+
                     <div class="skill-top">
                         <span>🗄️ SQL</span>
                         <strong id="sql">0/5</strong>
@@ -180,10 +793,12 @@
                     <div class="skill-bar">
                         <div id="sqlBar"></div>
                     </div>
+
                 </div>
 
 
                 <div class="skill-item">
+
                     <div class="skill-top">
                         <span>📐 Statistics</span>
                         <strong id="statistics">0/5</strong>
@@ -192,10 +807,12 @@
                     <div class="skill-bar">
                         <div id="statisticsBar"></div>
                     </div>
+
                 </div>
 
 
                 <div class="skill-item">
+
                     <div class="skill-top">
                         <span>📊 Data Analysis</span>
                         <strong id="dataAnalysis">0/5</strong>
@@ -204,10 +821,12 @@
                     <div class="skill-bar">
                         <div id="dataAnalysisBar"></div>
                     </div>
+
                 </div>
 
 
                 <div class="skill-item">
+
                     <div class="skill-top">
                         <span>🌐 Web Development</span>
                         <strong id="webDevelopment">0/5</strong>
@@ -216,10 +835,12 @@
                     <div class="skill-bar">
                         <div id="webDevelopmentBar"></div>
                     </div>
+
                 </div>
 
 
                 <div class="skill-item">
+
                     <div class="skill-top">
                         <span>💬 Communication</span>
                         <strong id="communication">0/5</strong>
@@ -228,6 +849,7 @@
                     <div class="skill-bar">
                         <div id="communicationBar"></div>
                     </div>
+
                 </div>
 
             </div>
@@ -236,15 +858,19 @@
 
 
         <!-- SIMULATION -->
-        <section class="dashboard-card simulation-dashboard-card">
+        <section class="dashboard-card">
 
             <div class="card-title">
-                <div class="card-icon">📊</div>
+
+                <div class="card-icon">
+                    📊
+                </div>
 
                 <div>
                     <h2>Simulation</h2>
                     <p>Your latest career simulation result</p>
                 </div>
+
             </div>
 
 
@@ -253,8 +879,15 @@
                 <div class="readiness-score">
 
                     <div class="score-circle">
-                        <span id="readinessScore">0</span>
-                        <small>/100</small>
+
+                        <span id="readinessScore">
+                            0
+                        </span>
+
+                        <small>
+                            /100
+                        </small>
+
                     </div>
 
                 </div>
@@ -262,13 +895,19 @@
 
                 <div class="readiness-info">
 
-                    <h3>Career Readiness</h3>
+                    <h3>
+                        Career Readiness
+                    </h3>
 
                     <p id="readinessMessage">
-                        Your simulation readiness score will appear here.
+                        Your simulation readiness score
+                        will appear here.
                     </p>
 
-                    <a href="results.html" class="results-btn">
+                    <a
+                        href="results.html"
+                        class="results-btn"
+                    >
                         📈 View Full Results →
                     </a>
 
@@ -280,15 +919,19 @@
 
 
         <!-- HINDSIGHT MEMORY -->
-        <section class="dashboard-card memory-dashboard-card">
+        <section class="dashboard-card">
 
             <div class="card-title">
 
-                <div class="card-icon">🧠</div>
+                <div class="card-icon">
+                    🧠
+                </div>
 
                 <div>
                     <h2>Hindsight Memory</h2>
-                    <p>Learn from your previous career decisions</p>
+                    <p>
+                        Learn from your previous career decisions
+                    </p>
                 </div>
 
             </div>
@@ -303,21 +946,30 @@
             </div>
 
 
-            <a href="memory.html" class="memory-btn">
+            <a
+                href="memory.html"
+                class="memory-btn"
+            >
                 🧠 Manage Hindsight Memory →
             </a>
 
         </section>
 
 
-        <!-- BOTTOM ACTIONS -->
+        <!-- ACTIONS -->
         <section class="dashboard-actions">
 
-            <a href="simulation.html" class="action-primary">
+            <a
+                href="simulation.html"
+                class="action-primary"
+            >
                 ✨ Run New Simulation
             </a>
 
-            <a href="index.html" class="action-secondary">
+            <a
+                href="index.html"
+                class="action-secondary"
+            >
                 🏠 Back to Home
             </a>
 
@@ -328,7 +980,9 @@
 
     <!-- FOOTER -->
     <footer class="dashboard-footer">
-        <p>© 2026 CareerSim · AI Career Decision Simulator</p>
+
+        © 2026 CareerSim · AI Career Decision Simulator
+
     </footer>
 
 
@@ -338,22 +992,90 @@
             "https://ai-career-decision-simulator.onrender.com";
 
 
-        /* -------------------------------
+        /* =========================================
+           HELPER
+        ========================================= */
+
+        function formatText(value) {
+
+            if (
+                value === null ||
+                value === undefined ||
+                value === ""
+            ) {
+                return "Not provided";
+            }
+
+            return String(value)
+                .replace(/[-_]/g, " ")
+                .replace(/\b\w/g, function(char) {
+                    return char.toUpperCase();
+                });
+        }
+
+
+        function escapeHTML(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "";
+            }
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+        /* =========================================
            PROFILE
-        -------------------------------- */
+        ========================================= */
 
         async function loadProfile() {
 
             const profileId =
                 localStorage.getItem("profileId");
 
+
+            /*
+             * First try localStorage.
+             * This makes the dashboard work even if
+             * the backend request takes some time.
+             */
+
+            const savedProfile =
+                localStorage.getItem("profileData");
+
+
+            if (savedProfile) {
+
+                try {
+
+                    const profile =
+                        JSON.parse(savedProfile);
+
+                    displayProfile(profile);
+
+                } catch (error) {
+
+                    console.error(
+                        "Local profile error:",
+                        error
+                    );
+
+                }
+            }
+
+
             if (!profileId) {
-
-                document.getElementById("profileName").textContent =
-                    "No profile";
-
                 return;
             }
+
 
             try {
 
@@ -362,103 +1084,105 @@
                         `${API_BASE_URL}/api/profile/${profileId}`
                     );
 
+
                 if (!response.ok) {
-                    throw new Error("Profile not found");
+                    return;
                 }
+
 
                 const profile =
                     await response.json();
 
 
-                document.getElementById("profileName").textContent =
-                    profile.name || "Not provided";
-
-                document.getElementById("education").textContent =
-                    profile.education || "Not provided";
-
-                document.getElementById("branch").textContent =
-                    profile.branch || "Not provided";
-
-                document.getElementById("year").textContent =
-                    profile.year || "Not provided";
-
-                document.getElementById("careerGoal").textContent =
-                    profile.career_goal || "Not provided";
+                displayProfile(profile);
 
 
             } catch (error) {
 
                 console.error(
-                    "Profile loading error:",
+                    "Profile API error:",
                     error
                 );
 
-                /*
-                 * If the profile is already stored locally,
-                 * use it as a fallback.
-                 */
-
-                const savedProfile =
-                    localStorage.getItem("profileData");
-
-                if (savedProfile) {
-
-                    try {
-
-                        const profile =
-                            JSON.parse(savedProfile);
-
-                        document.getElementById("profileName").textContent =
-                            profile.name || "Not provided";
-
-                        document.getElementById("education").textContent =
-                            profile.education || "Not provided";
-
-                        document.getElementById("branch").textContent =
-                            profile.branch || "Not provided";
-
-                        document.getElementById("year").textContent =
-                            profile.year || "Not provided";
-
-                        document.getElementById("careerGoal").textContent =
-                            profile.career_goal || "Not provided";
-
-                    } catch (e) {
-
-                        console.error(e);
-
-                    }
-                }
             }
         }
 
 
+        function displayProfile(profile) {
 
-        /* -------------------------------
+            document.getElementById(
+                "profileName"
+            ).textContent =
+                profile.name ||
+                "Not provided";
+
+
+            document.getElementById(
+                "education"
+            ).textContent =
+                profile.education ||
+                "Not provided";
+
+
+            document.getElementById(
+                "branch"
+            ).textContent =
+                profile.branch ||
+                "Not provided";
+
+
+            document.getElementById(
+                "year"
+            ).textContent =
+                profile.year ||
+                "Not provided";
+
+
+            document.getElementById(
+                "careerGoal"
+            ).textContent =
+                profile.career_goal ||
+                profile.careerGoal ||
+                "Not provided";
+        }
+
+
+        /* =========================================
            SKILLS
-        -------------------------------- */
+        ========================================= */
 
         function setSkill(
-            name,
-            value,
-            barId
+            id,
+            barId,
+            value
         ) {
 
-            const numericValue =
-                Number(value) || 0;
+            let number =
+                Number(value);
 
-            document.getElementById(name).textContent =
-                `${numericValue}/5`;
 
-            const bar =
-                document.getElementById(barId);
-
-            if (bar) {
-
-                bar.style.width =
-                    `${Math.min(numericValue, 5) * 20}%`;
-
+            if (!Number.isFinite(number)) {
+                number = 0;
             }
+
+
+            number =
+                Math.max(
+                    0,
+                    Math.min(5, number)
+                );
+
+
+            document.getElementById(
+                id
+            ).textContent =
+                `${number}/5`;
+
+
+            document.getElementById(
+                barId
+            ).style.width =
+                `${number * 20}%`;
         }
 
 
@@ -467,64 +1191,73 @@
             const savedSkills =
                 localStorage.getItem("careerSkills");
 
+
             if (!savedSkills) {
                 return;
             }
+
 
             try {
 
                 const skills =
                     JSON.parse(savedSkills);
 
+
                 setSkill(
                     "python",
-                    skills.python,
-                    "pythonBar"
+                    "pythonBar",
+                    skills.python
                 );
+
 
                 setSkill(
                     "java",
-                    skills.java,
-                    "javaBar"
+                    "javaBar",
+                    skills.java
                 );
+
 
                 setSkill(
                     "sql",
-                    skills.sql,
-                    "sqlBar"
+                    "sqlBar",
+                    skills.sql
                 );
+
 
                 setSkill(
                     "statistics",
-                    skills.statistics,
-                    "statisticsBar"
+                    "statisticsBar",
+                    skills.statistics
                 );
+
 
                 setSkill(
                     "dataAnalysis",
-                    skills.data_analysis ||
-                    skills.dataAnalysis,
-                    "dataAnalysisBar"
+                    "dataAnalysisBar",
+                    skills.data_analysis ??
+                    skills.dataAnalysis
                 );
+
 
                 setSkill(
                     "webDevelopment",
-                    skills.web_development ||
-                    skills.webDevelopment,
-                    "webDevelopmentBar"
+                    "webDevelopmentBar",
+                    skills.web_development ??
+                    skills.webDevelopment
                 );
+
 
                 setSkill(
                     "communication",
-                    skills.communication,
-                    "communicationBar"
+                    "communicationBar",
+                    skills.communication
                 );
 
 
             } catch (error) {
 
                 console.error(
-                    "Skills loading error:",
+                    "Skills error:",
                     error
                 );
 
@@ -532,47 +1265,54 @@
         }
 
 
-
-        /* -------------------------------
+        /* =========================================
            CAREER CHOICE
-        -------------------------------- */
+        ========================================= */
 
         function loadCareerChoice() {
 
             const savedCareer =
                 localStorage.getItem("careerChoice");
 
+
             if (!savedCareer) {
 
-                document.getElementById("targetCareer").textContent =
+                document.getElementById(
+                    "targetCareer"
+                ).textContent =
                     "Not selected";
 
-                document.getElementById("experience").textContent =
+
+                document.getElementById(
+                    "experience"
+                ).textContent =
                     "Not selected";
 
                 return;
             }
+
 
             try {
 
                 const career =
                     JSON.parse(savedCareer);
 
-                const targetCareer =
-                    career.targetCareer ||
-                    career.career ||
-                    "Not selected";
 
-                const experience =
-                    career.experience ||
-                    "Not selected";
+                document.getElementById(
+                    "targetCareer"
+                ).textContent =
+                    formatText(
+                        career.targetCareer ||
+                        career.career
+                    );
 
 
-                document.getElementById("targetCareer").textContent =
-                    formatText(targetCareer);
-
-                document.getElementById("experience").textContent =
-                    formatText(experience);
+                document.getElementById(
+                    "experience"
+                ).textContent =
+                    formatText(
+                        career.experience
+                    );
 
 
             } catch (error) {
@@ -586,31 +1326,42 @@
         }
 
 
-
-        /* -------------------------------
+        /* =========================================
            SIMULATION
-        -------------------------------- */
+        ========================================= */
 
         function loadSimulation() {
 
             const savedSimulation =
-                localStorage.getItem("simulationResult");
+                localStorage.getItem(
+                    "simulationResult"
+                );
+
 
             if (!savedSimulation) {
 
-                document.getElementById("readinessScore").textContent =
+                document.getElementById(
+                    "readinessScore"
+                ).textContent =
                     "—";
 
-                document.getElementById("readinessMessage").textContent =
+
+                document.getElementById(
+                    "readinessMessage"
+                ).textContent =
                     "Run a career simulation to see your readiness score.";
 
                 return;
             }
 
+
             try {
 
                 const simulation =
-                    JSON.parse(savedSimulation);
+                    JSON.parse(
+                        savedSimulation
+                    );
+
 
                 const score =
                     simulation.readiness_score ??
@@ -619,12 +1370,14 @@
                     0;
 
 
-                document.getElementById("readinessScore").textContent =
+                document.getElementById(
+                    "readinessScore"
+                ).textContent =
                     score;
 
 
-                let message =
-                    "Keep improving your skills and continue practicing.";
+                let message;
+
 
                 if (score >= 80) {
 
@@ -649,14 +1402,16 @@
                 }
 
 
-                document.getElementById("readinessMessage").textContent =
+                document.getElementById(
+                    "readinessMessage"
+                ).textContent =
                     message;
 
 
             } catch (error) {
 
                 console.error(
-                    "Simulation loading error:",
+                    "Simulation error:",
                     error
                 );
 
@@ -664,34 +1419,31 @@
         }
 
 
-
-        /* -------------------------------
+        /* =========================================
            HINDSIGHT MEMORY
-        -------------------------------- */
+        ========================================= */
 
         async function loadMemory() {
 
             const container =
-                document.getElementById("memoryContent");
+                document.getElementById(
+                    "memoryContent"
+                );
+
 
             const profileId =
-                localStorage.getItem("profileId");
+                localStorage.getItem(
+                    "profileId"
+                );
 
 
             if (!profileId) {
 
-                container.innerHTML = `
-                    <div class="memory-empty">
-                        <div class="empty-icon">🧠</div>
-
-                        <h3>No profile found</h3>
-
-                        <p>
-                            Create your profile to start
-                            recording career decisions.
-                        </p>
-                    </div>
-                `;
+                showEmptyMemory(
+                    container,
+                    "No profile found",
+                    "Create your profile to start recording career decisions."
+                );
 
                 return;
             }
@@ -706,7 +1458,9 @@
 
 
                 if (!response.ok) {
-                    throw new Error("Memory request failed");
+                    throw new Error(
+                        "Memory request failed"
+                    );
                 }
 
 
@@ -718,34 +1472,29 @@
                     data.memories || [];
 
 
-                if (memories.length === 0) {
+                if (
+                    !Array.isArray(memories) ||
+                    memories.length === 0
+                ) {
 
-                    container.innerHTML = `
-                        <div class="memory-empty">
-
-                            <div class="empty-icon">🧠</div>
-
-                            <h3>No hindsight memory yet</h3>
-
-                            <p>
-                                Save a past career decision,
-                                outcome and lesson to learn
-                                from your experience.
-                            </p>
-
-                        </div>
-                    `;
+                    showEmptyMemory(
+                        container,
+                        "No hindsight memory yet",
+                        "Save a past career decision, outcome and lesson to learn from your experience."
+                    );
 
                     return;
                 }
 
 
                 /*
-                 * Show the most recent memory.
+                 * Show the latest memory.
                  */
 
                 const memory =
-                    memories[memories.length - 1];
+                    memories[
+                        memories.length - 1
+                    ];
 
 
                 container.innerHTML = `
@@ -823,81 +1572,62 @@
             } catch (error) {
 
                 console.error(
-                    "Memory loading error:",
+                    "Memory error:",
                     error
                 );
 
 
-                container.innerHTML = `
+                showEmptyMemory(
+                    container,
+                    "Unable to load memory",
+                    "Please refresh the page and try again."
+                );
 
-                    <div class="memory-empty">
+            }
+        }
 
-                        <div class="empty-icon">⚠️</div>
 
-                        <h3>Unable to load memory</h3>
+        function showEmptyMemory(
+            container,
+            title,
+            message
+        ) {
 
-                        <p>
-                            Please try refreshing the dashboard.
-                        </p>
+            container.innerHTML = `
 
+                <div class="memory-empty">
+
+                    <div class="empty-icon">
+                        🧠
                     </div>
 
-                `;
-            }
+                    <h3>
+                        ${escapeHTML(title)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(message)}
+                    </p>
+
+                </div>
+
+            `;
         }
 
 
+        /* =========================================
+           START
+        ========================================= */
 
-        /* -------------------------------
-           HELPERS
-        -------------------------------- */
+        loadProfile();
 
-        function formatText(text) {
+        loadSkills();
 
-            if (!text) {
-                return "Not selected";
-            }
+        loadCareerChoice();
 
-            return String(text)
-                .replace(/[-_]/g, " ")
-                .replace(/\b\w/g, char =>
-                    char.toUpperCase()
-                );
-        }
+        loadSimulation();
 
-
-        function escapeHTML(text) {
-
-            return String(text)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-
-
-
-        /* -------------------------------
-           LOAD EVERYTHING
-        -------------------------------- */
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
-
-                loadProfile();
-
-                loadSkills();
-
-                loadCareerChoice();
-
-                loadSimulation();
-
-                loadMemory();
-
-            }
-        );
+        loadMemory();
 
     </script>
 
