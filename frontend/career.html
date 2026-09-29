@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Choose Your Career | AI Career Decision Simulator</title>
 
@@ -14,10 +12,7 @@
 
 <body>
 
-    <!-- =========================
-         NAVIGATION
-    ========================== -->
-
+    <!-- NAVIGATION -->
     <nav class="navbar">
 
         <div class="logo">
@@ -34,21 +29,14 @@
     </nav>
 
 
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
+    <!-- MAIN CONTENT -->
     <main class="container">
 
         <section class="page-header">
 
-            <p>
-                STEP 3 OF 3
-            </p>
+            <p>STEP 3 OF 3</p>
 
-            <h1>
-                Choose Your Career Path
-            </h1>
+            <h1>Choose Your Career Path</h1>
 
             <p>
                 Select a career you want to explore.
@@ -58,27 +46,19 @@
         </section>
 
 
-        <!-- =========================
-             CAREER FORM
-        ========================== -->
-
+        <!-- CAREER FORM -->
         <section class="form-section">
 
             <form id="careerForm">
 
-                <!-- Target Career -->
-
+                <!-- CAREER -->
                 <div class="form-group">
 
                     <label for="career">
                         Select Your Target Career
                     </label>
 
-                    <select
-                        id="career"
-                        name="career"
-                        required
-                    >
+                    <select id="career" name="career" required>
 
                         <option value="">
                             Choose a career
@@ -113,19 +93,14 @@
                 </div>
 
 
-                <!-- Experience Level -->
-
+                <!-- EXPERIENCE -->
                 <div class="form-group">
 
                     <label for="experience">
                         Current Experience Level
                     </label>
 
-                    <select
-                        id="experience"
-                        name="experience"
-                        required
-                    >
+                    <select id="experience" name="experience" required>
 
                         <option value="">
                             Select experience
@@ -152,12 +127,18 @@
                 </div>
 
 
-                <!-- Submit Button -->
+                <!-- ERROR / STATUS MESSAGE -->
+                <div id="careerMessage"
+                     style="margin: 15px 0; font-weight: 500;">
+                </div>
 
+
+                <!-- SUBMIT -->
                 <div class="form-actions">
 
                     <button
                         type="submit"
+                        id="careerSubmit"
                         class="primary-btn"
                     >
                         Start Career Simulation →
@@ -172,12 +153,258 @@
     </main>
 
 
-    <!-- =========================
-         JAVASCRIPT
-         ONLY script.js
-    ========================== -->
+    <!-- ==================================================
+         CAREER PAGE JAVASCRIPT
+         RENDER BACKEND
+    ================================================== -->
 
-    <script src="script.js"></script>
+    <script>
+
+        const API_BASE_URL =
+            "https://ai-career-decision-simulator.onrender.com";
+
+
+        const careerForm =
+            document.getElementById("careerForm");
+
+        const careerSelect =
+            document.getElementById("career");
+
+        const experienceSelect =
+            document.getElementById("experience");
+
+        const careerMessage =
+            document.getElementById("careerMessage");
+
+        const careerSubmit =
+            document.getElementById("careerSubmit");
+
+
+        careerForm.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+
+            /* -----------------------------------------
+               GET PROFILE ID
+            ----------------------------------------- */
+
+            const profileId =
+                localStorage.getItem("profileId");
+
+
+            if (!profileId) {
+
+                careerMessage.textContent =
+                    "Profile information not found. Please complete your profile first.";
+
+                careerMessage.style.color = "red";
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               GET FORM VALUES
+            ----------------------------------------- */
+
+            const targetCareer =
+                careerSelect.value;
+
+            const experience =
+                experienceSelect.value;
+
+
+            if (!targetCareer) {
+
+                careerMessage.textContent =
+                    "Please select a career.";
+
+                careerMessage.style.color = "red";
+
+                return;
+            }
+
+
+            if (!experience) {
+
+                careerMessage.textContent =
+                    "Please select your experience level.";
+
+                careerMessage.style.color = "red";
+
+                return;
+            }
+
+
+            /* -----------------------------------------
+               REQUEST DATA
+            ----------------------------------------- */
+
+            const careerData = {
+
+                profile_id: parseInt(profileId, 10),
+
+                target_career: targetCareer,
+
+                experience: experience
+
+            };
+
+
+            console.log(
+                "Sending career data:",
+                careerData
+            );
+
+
+            /* -----------------------------------------
+               SHOW LOADING
+            ----------------------------------------- */
+
+            careerSubmit.disabled = true;
+
+            careerSubmit.textContent =
+                "Saving Career Choice...";
+
+            careerMessage.textContent =
+                "Connecting to the AI Career Simulator...";
+
+            careerMessage.style.color = "";
+
+
+            try {
+
+                /* -------------------------------------
+                   SEND TO DEPLOYED FASTAPI
+                ------------------------------------- */
+
+                const response = await fetch(
+                    `${API_BASE_URL}/api/career`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                            "Accept":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(careerData)
+                    }
+                );
+
+
+                /* -------------------------------------
+                   READ RESPONSE
+                ------------------------------------- */
+
+                const responseText =
+                    await response.text();
+
+
+                let data;
+
+                try {
+
+                    data =
+                        responseText
+                            ? JSON.parse(responseText)
+                            : {};
+
+                } catch {
+
+                    data =
+                        responseText;
+                }
+
+
+                console.log(
+                    "Career API response:",
+                    data
+                );
+
+
+                /* -------------------------------------
+                   CHECK ERROR
+                ------------------------------------- */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `HTTP ${response.status}: ${
+                            typeof data === "string"
+                                ? data
+                                : JSON.stringify(data)
+                        }`
+                    );
+                }
+
+
+                /* -------------------------------------
+                   SAVE CAREER LOCALLY
+                ------------------------------------- */
+
+                localStorage.setItem(
+                    "careerChoice",
+                    JSON.stringify(careerData)
+                );
+
+
+                if (data.career_id) {
+
+                    localStorage.setItem(
+                        "careerId",
+                        String(data.career_id)
+                    );
+                }
+
+
+                /* -------------------------------------
+                   SUCCESS
+                ------------------------------------- */
+
+                careerMessage.textContent =
+                    "Career saved successfully! Starting simulation...";
+
+                careerMessage.style.color = "green";
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "simulation.html";
+
+                }, 500);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Career submission error:",
+                    error
+                );
+
+
+                careerMessage.textContent =
+                    "Unable to save career: " +
+                    error.message;
+
+                careerMessage.style.color = "red";
+
+
+                careerSubmit.disabled = false;
+
+                careerSubmit.textContent =
+                    "Start Career Simulation →";
+            }
+
+        });
+
+    </script>
 
 </body>
 
