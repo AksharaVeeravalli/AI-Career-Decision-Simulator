@@ -1,338 +1,346 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Assess Your Skills | CareerSim AI</title>
+    <title>Skills Assessment | AI Career Decision Simulator</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #222;
-        }
-
-        .navbar {
-            background: #111827;
-            color: white;
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 700px;
-            margin: 50px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        .description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .skill {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        select {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 16px;
-            background: white;
-            cursor: pointer;
-        }
-
-        button {
-            width: 100%;
-            padding: 16px;
-            margin-top: 20px;
-            background: #4f46e5;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #3730a3;
-        }
-
-        #message {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- Navigation -->
     <nav class="navbar">
-        <div class="logo">CareerSim AI</div>
+        <div class="logo">
+            AI Career Decision Simulator
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="skills.html" class="active">Skills</a>
+        </div>
     </nav>
 
 
-    <div class="container">
-
-        <h1>Assess Your Skills</h1>
-
-        <p class="description">
-            Rate your current skill level so we can identify your
-            skill gaps and create a personalized career roadmap.
-        </p>
-
-
-        <div class="skill">
-            <label>Python</label>
-            <select id="python">
-                <option value="">Select your level</option>
-                <option value="1">1 - Beginner</option>
-                <option value="2">2 - Basic</option>
-                <option value="3">3 - Intermediate</option>
-                <option value="4">4 - Advanced</option>
-                <option value="5">5 - Expert</option>
-            </select>
-        </div>
-
-
-        <div class="skill">
-            <label>Java</label>
-            <select id="java">
-                <option value="">Select your level</option>
-                <option value="1">1 - Beginner</option>
-                <option value="2">2 - Basic</option>
-                <option value="3">3 - Intermediate</option>
-                <option value="4">4 - Advanced</option>
-                <option value="5">5 - Expert</option>
-            </select>
-        </div>
-
-
-        <div class="skill">
-            <label>SQL</label>
-            <select id="sql">
-                <option value="">Select your level</option>
-                <option value="1">1 - Beginner</option>
-                <option value="2">2 - Basic</option>
-                <option value="3">3 - Intermediate</option>
-                <option value="4">4 - Advanced</option>
-                <option value="5">5 - Expert</option>
-            </select>
-        </div>
-
-
-        <div class="skill">
-            <label>Statistics</label>
-            <select id="statistics">
-                <option value="">Select your level</option>
-                <option value="1">1 - Beginner</option>
-                <option value="2">2 - Basic</option>
-                <option value="3">3 - Intermediate</option>
-                <option value="4">4 - Advanced</option>
-                <option value="5">5 - Expert</option>
-            </select>
-        </div>
-
-
-        <div class="skill">
-            <label>Data Analysis</label>
-            <select id="data_analysis">
-                <option value="">Select your level</option>
-                <option value="1">1 - Beginner</option>
-                <option value="2">2 - Basic</option>
-                <option value="3">3 - Intermediate</option>
-                <option value="4">4 - Advanced</option>
-                <option value="5">5 - Expert</option>
-            </select>
-        </div>
-
-
-        <div class="skill">
-            <label>Web Development</label>
-            <select id="web_development">
-                <option value="">Select your level</option>
-                <option value="1">1 - Beginner</option>
-                <option value="2">2 - Basic</option>
-                <option value="3">3 - Intermediate</option>
-                <option value="4">4 - Advanced</option>
-                <option value="5">5 - Expert</option>
-            </select>
-        </div>
+    <!-- Main Content -->
+    <main class="container">
 
+        <section class="page-header">
 
-        <div class="skill">
-            <label>Communication</label>
-            <select id="communication">
-                <option value="">Select your level</option>
-                <option value="1">1 - Beginner</option>
-                <option value="2">2 - Basic</option>
-                <option value="3">3 - Intermediate</option>
-                <option value="4">4 - Advanced</option>
-                <option value="5">5 - Expert</option>
-            </select>
-        </div>
+            <h1>Skills Assessment</h1>
 
+            <p>
+                Rate your current skill level from 1 to 5.
+                This information will be used to identify your
+                career skill gaps.
+            </p>
 
-        <button type="button" id="continueButton">
-            Continue to Career Selection →
-        </button>
+        </section>
 
-        <p id="message"></p>
 
-    </div>
+        <!-- Skills Form -->
+        <section class="form-section">
 
+            <form id="skillsForm">
 
-    <script>
+                <!-- Python -->
+                <div class="form-group">
 
-        const API_BASE_URL = "http://127.0.0.1:8000";
+                    <label for="python">
+                        Python
+                    </label>
 
-        document.getElementById("continueButton").onclick = async function () {
+                    <select id="python" name="python" required>
 
-            const profileId = localStorage.getItem("profileId");
+                        <option value="">
+                            Select your level
+                        </option>
 
-            const message = document.getElementById("message");
+                        <option value="1">
+                            1 - Beginner
+                        </option>
 
-            if (!profileId) {
-                message.textContent =
-                    "Profile not found. Please complete your profile first.";
-                return;
-            }
+                        <option value="2">
+                            2 - Basic
+                        </option>
 
+                        <option value="3">
+                            3 - Intermediate
+                        </option>
 
-            const python = document.getElementById("python").value;
-            const java = document.getElementById("java").value;
-            const sql = document.getElementById("sql").value;
-            const statistics = document.getElementById("statistics").value;
-            const data_analysis = document.getElementById("data_analysis").value;
-            const web_development = document.getElementById("web_development").value;
-            const communication = document.getElementById("communication").value;
+                        <option value="4">
+                            4 - Advanced
+                        </option>
 
+                        <option value="5">
+                            5 - Expert
+                        </option>
 
-            if (
-                !python ||
-                !java ||
-                !sql ||
-                !statistics ||
-                !data_analysis ||
-                !web_development ||
-                !communication
-            ) {
-                message.textContent =
-                    "Please select a level for every skill.";
-                return;
-            }
+                    </select>
 
+                </div>
 
-            const button = document.getElementById("continueButton");
 
-            button.disabled = true;
-            button.textContent = "Saving Skills...";
+                <!-- Java -->
+                <div class="form-group">
 
+                    <label for="java">
+                        Java
+                    </label>
 
-            try {
+                    <select id="java" name="java" required>
 
-                const response = await fetch(
-                    API_BASE_URL + "/api/skills",
-                    {
-                        method: "POST",
+                        <option value="">
+                            Select your level
+                        </option>
 
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
+                        <option value="1">
+                            1 - Beginner
+                        </option>
 
-                        body: JSON.stringify({
+                        <option value="2">
+                            2 - Basic
+                        </option>
 
-                            profile_id: Number(profileId),
+                        <option value="3">
+                            3 - Intermediate
+                        </option>
 
-                            python: Number(python),
+                        <option value="4">
+                            4 - Advanced
+                        </option>
 
-                            java: Number(java),
+                        <option value="5">
+                            5 - Expert
+                        </option>
 
-                            sql: Number(sql),
+                    </select>
 
-                            statistics: Number(statistics),
+                </div>
 
-                            data_analysis: Number(data_analysis),
 
-                            web_development: Number(web_development),
+                <!-- SQL -->
+                <div class="form-group">
 
-                            communication: Number(communication)
+                    <label for="sql">
+                        SQL
+                    </label>
 
-                        })
-                    }
-                );
+                    <select id="sql" name="sql" required>
 
+                        <option value="">
+                            Select your level
+                        </option>
 
-                if (!response.ok) {
-                    throw new Error(
-                        "Backend error: " + response.status
-                    );
-                }
+                        <option value="1">
+                            1 - Beginner
+                        </option>
 
+                        <option value="2">
+                            2 - Basic
+                        </option>
 
-                const data = await response.json();
+                        <option value="3">
+                            3 - Intermediate
+                        </option>
 
+                        <option value="4">
+                            4 - Advanced
+                        </option>
 
-                localStorage.setItem(
-                    "careerSkills",
-                    JSON.stringify(data)
-                );
+                        <option value="5">
+                            5 - Expert
+                        </option>
 
+                    </select>
 
-                window.location.href = "career.html";
+                </div>
 
 
-            } catch (error) {
+                <!-- Statistics -->
+                <div class="form-group">
 
-                console.error(error);
+                    <label for="statistics">
+                        Statistics
+                    </label>
 
-                message.textContent =
-                    "Unable to save skills. Make sure FastAPI is running.";
+                    <select id="statistics" name="statistics" required>
 
-                button.disabled = false;
+                        <option value="">
+                            Select your level
+                        </option>
 
-                button.textContent =
-                    "Continue to Career Selection →";
-            }
+                        <option value="1">
+                            1 - Beginner
+                        </option>
 
-        };
+                        <option value="2">
+                            2 - Basic
+                        </option>
 
-    </script>
+                        <option value="3">
+                            3 - Intermediate
+                        </option>
+
+                        <option value="4">
+                            4 - Advanced
+                        </option>
+
+                        <option value="5">
+                            5 - Expert
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Data Analysis -->
+                <div class="form-group">
+
+                    <label for="data_analysis">
+                        Data Analysis
+                    </label>
+
+                    <select id="data_analysis" name="data_analysis" required>
+
+                        <option value="">
+                            Select your level
+                        </option>
+
+                        <option value="1">
+                            1 - Beginner
+                        </option>
+
+                        <option value="2">
+                            2 - Basic
+                        </option>
+
+                        <option value="3">
+                            3 - Intermediate
+                        </option>
+
+                        <option value="4">
+                            4 - Advanced
+                        </option>
+
+                        <option value="5">
+                            5 - Expert
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Web Development -->
+                <div class="form-group">
+
+                    <label for="web_development">
+                        Web Development
+                    </label>
+
+                    <select
+                        id="web_development"
+                        name="web_development"
+                        required
+                    >
+
+                        <option value="">
+                            Select your level
+                        </option>
+
+                        <option value="1">
+                            1 - Beginner
+                        </option>
+
+                        <option value="2">
+                            2 - Basic
+                        </option>
+
+                        <option value="3">
+                            3 - Intermediate
+                        </option>
+
+                        <option value="4">
+                            4 - Advanced
+                        </option>
+
+                        <option value="5">
+                            5 - Expert
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Communication -->
+                <div class="form-group">
+
+                    <label for="communication">
+                        Communication
+                    </label>
+
+                    <select
+                        id="communication"
+                        name="communication"
+                        required
+                    >
+
+                        <option value="">
+                            Select your level
+                        </option>
+
+                        <option value="1">
+                            1 - Beginner
+                        </option>
+
+                        <option value="2">
+                            2 - Basic
+                        </option>
+
+                        <option value="3">
+                            3 - Intermediate
+                        </option>
+
+                        <option value="4">
+                            4 - Advanced
+                        </option>
+
+                        <option value="5">
+                            5 - Expert
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Submit -->
+                <div class="form-actions">
+
+                    <button type="submit" class="primary-btn">
+                        Continue to Career Selection →
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <!-- IMPORTANT:
+         Only script.js handles the Skills API.
+         There is NO old onclick/fetch code here.
+    -->
+    <script src="script.js"></script>
 
 </body>
-
 </html>
-```
