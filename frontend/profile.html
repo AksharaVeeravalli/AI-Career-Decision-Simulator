@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Profile | CareerSim AI</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            CareerSim AI
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Profile Section -->
+
+    <section class="profile-section">
+
+        <div class="profile-container">
+
+            <div class="profile-heading">
+
+                <p class="tagline">
+                    STEP 1 OF 3
+                </p>
+
+                <h1>
+                    Build Your Career Profile
+                </h1>
+
+                <p>
+                    Tell us about yourself so we can create
+                    a personalized career simulation.
+                </p>
+
+            </div>
+
+
+            <!-- Profile Form -->
+
+            <form id="profileForm">
+
+
+                <!-- Name -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Education -->
+
+                <div class="form-group">
+
+                    <label for="education">
+                        Education
+                    </label>
+
+                    <input
+                        type="text"
+                        id="education"
+                        placeholder="Example: B.Tech"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Branch -->
+
+                <div class="form-group">
+
+                    <label for="branch">
+                        Branch / Course
+                    </label>
+
+                    <input
+                        type="text"
+                        id="branch"
+                        placeholder="Example: CSM"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Year -->
+
+                <div class="form-group">
+
+                    <label for="year">
+                        Current Year
+                    </label>
+
+                    <select id="year" required>
+
+                        <option value="">
+                            Select your year
+                        </option>
+
+                        <option value="1">
+                            1st Year
+                        </option>
+
+                        <option value="2">
+                            2nd Year
+                        </option>
+
+                        <option value="3">
+                            3rd Year
+                        </option>
+
+                        <option value="4">
+                            4th Year
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Career Goal -->
+
+                <div class="form-group">
+
+                    <label for="goal">
+                        Career Goal
+                    </label>
+
+                    <select id="goal" required>
+
+                        <option value="">
+                            Select your goal
+                        </option>
+
+                        <option value="internship">
+                            Get an Internship
+                        </option>
+
+                        <option value="placement">
+                            Get a Job / Placement
+                        </option>
+
+                        <option value="higher-studies">
+                            Higher Studies
+                        </option>
+
+                        <option value="career-exploration">
+                            Explore Career Options
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Interests -->
+
+                <div class="form-group">
+
+                    <label for="interests">
+                        Career Interests
+                    </label>
+
+                    <input
+                        type="text"
+                        id="interests"
+                        placeholder="Example: AI, Web Development, Data Science"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+
+                    Continue to Skills →
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

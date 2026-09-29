@@ -1,0 +1,812 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Career Simulation | CareerSim AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 20px 8%;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .career-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4f46e5;
+            margin: 10px 0;
+            text-transform: capitalize;
+        }
+
+        .experience {
+            color: #555;
+            font-size: 17px;
+        }
+
+        .journey-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #4f46e5;
+            min-width: 45px;
+        }
+
+        .journey-title {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .journey-description {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .scenario {
+            background: #eef2ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        .button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #4f46e5;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background: #3730a3;
+        }
+
+        .button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .roadmap-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .roadmap-button:hover {
+            background: #374151;
+        }
+
+        #result {
+            display: none;
+        }
+
+        .score {
+            font-size: 40px;
+            font-weight: bold;
+            color: #4f46e5;
+            margin: 15px 0;
+        }
+
+        .recommendation {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        .error {
+            color: #dc2626;
+            background: #fee2e2;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    CareerSim AI
+</div>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>🔮 Your Career Simulation</h1>
+
+        <p>
+            Explore what your career journey could look like based
+            on your current skills and goals.
+        </p>
+
+    </div>
+
+
+    <!-- SELECTED CAREER -->
+
+    <div class="card">
+
+        <h2>🎯 Selected Career</h2>
+
+        <div class="career-name" id="careerName">
+            Loading...
+        </div>
+
+        <div class="experience">
+            Experience Level:
+            <strong id="experienceLevel">Loading...</strong>
+        </div>
+
+    </div>
+
+
+    <!-- CAREER JOURNEY -->
+
+    <div class="card">
+
+        <h2>🚀 Possible Career Journey</h2>
+
+
+        <div class="journey-item">
+
+            <div class="number">01</div>
+
+            <div>
+                <div class="journey-title">
+                    Build Required Skills
+                </div>
+
+                <div class="journey-description">
+                    Improve the technical skills required for your
+                    selected career.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="journey-item">
+
+            <div class="number">02</div>
+
+            <div>
+                <div class="journey-title">
+                    Build Practical Projects
+                </div>
+
+                <div class="journey-description">
+                    Create practical projects to demonstrate your skills.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="journey-item">
+
+            <div class="number">03</div>
+
+            <div>
+                <div class="journey-title">
+                    Apply for Internships
+                </div>
+
+                <div class="journey-description">
+                    Gain real-world experience through internships
+                    and practical opportunities.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="journey-item">
+
+            <div class="number">04</div>
+
+            <div>
+                <div class="journey-title">
+                    Prepare for Placement
+                </div>
+
+                <div class="journey-description">
+                    Prepare for technical interviews, coding rounds
+                    and aptitude tests.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- WHAT IF -->
+
+    <div class="card">
+
+        <h2>🔮 What-If Scenario</h2>
+
+        <div class="scenario">
+
+            What if you spend the next 6 months improving your
+            skills and building projects?
+
+        </div>
+
+
+        <button
+            type="button"
+            class="button"
+            id="simulateButton">
+
+            Simulate 6-Month Progress
+
+        </button>
+
+
+        <div
+            class="error"
+            id="errorMessage">
+        </div>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div class="card" id="result">
+
+        <h2>📈 Simulated 6-Month Progress</h2>
+
+        <p id="summary"></p>
+
+
+        <h2>📊 Readiness Score</h2>
+
+        <div class="score">
+            <span id="readinessScore">0</span>%
+        </div>
+
+
+        <h2>🚀 Career Journey</h2>
+
+        <div id="resultJourney"></div>
+
+
+        <h2>💡 AI Recommendation</h2>
+
+        <div
+            class="recommendation"
+            id="recommendation">
+        </div>
+
+
+        <a
+            href="results.html"
+            class="roadmap-button">
+
+            View Skill Gap & Roadmap →
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const API_BASE_URL = "http://127.0.0.1:8000";
+
+
+// ==========================================
+// GET DATA FROM LOCAL STORAGE
+// ==========================================
+
+const profileId =
+    localStorage.getItem("profileId");
+
+const selectedCareer =
+    localStorage.getItem("selectedCareer");
+
+const experienceLevel =
+    localStorage.getItem("experienceLevel");
+
+
+// ==========================================
+// SHOW SELECTED CAREER
+// ==========================================
+
+document.getElementById("careerName").textContent =
+    selectedCareer || "Not selected";
+
+document.getElementById("experienceLevel").textContent =
+    experienceLevel || "Not selected";
+
+
+// ==========================================
+// GET SKILLS
+// ==========================================
+
+let savedSkills = null;
+
+try {
+
+    savedSkills =
+        JSON.parse(
+            localStorage.getItem("careerSkills")
+        );
+
+} catch (error) {
+
+    savedSkills = null;
+
+}
+
+
+// ==========================================
+// SIMULATION BUTTON
+// ==========================================
+
+document.getElementById("simulateButton").onclick =
+async function () {
+
+    const button =
+        document.getElementById("simulateButton");
+
+    const errorMessage =
+        document.getElementById("errorMessage");
+
+
+    errorMessage.style.display = "none";
+
+
+    // -----------------------------
+    // VALIDATE PROFILE
+    // -----------------------------
+
+    if (!profileId) {
+
+        errorMessage.textContent =
+            "Profile not found. Please complete your profile first.";
+
+        errorMessage.style.display = "block";
+
+        return;
+    }
+
+
+    // -----------------------------
+    // VALIDATE CAREER
+    // -----------------------------
+
+    if (!selectedCareer) {
+
+        errorMessage.textContent =
+            "Career selection not found. Please select a career first.";
+
+        errorMessage.style.display = "block";
+
+        return;
+    }
+
+
+    // -----------------------------
+    // VALIDATE SKILLS
+    // -----------------------------
+
+    if (!savedSkills) {
+
+        errorMessage.textContent =
+            "Skill information not found. Please complete the skill assessment first.";
+
+        errorMessage.style.display = "block";
+
+        return;
+    }
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "Simulating...";
+
+
+    // ==========================================
+    // BUILD SKILLS OBJECT
+    // ==========================================
+
+    const skills = {
+
+        python:
+            Number(savedSkills.python || 0),
+
+        java:
+            Number(savedSkills.java || 0),
+
+        sql:
+            Number(savedSkills.sql || 0),
+
+        statistics:
+            Number(savedSkills.statistics || 0),
+
+        data_analysis:
+            Number(savedSkills.data_analysis || 0),
+
+        web_development:
+            Number(savedSkills.web_development || 0),
+
+        communication:
+            Number(savedSkills.communication || 0)
+
+    };
+
+
+    // ==========================================
+    // MEMORY
+    // ==========================================
+    //
+    // IMPORTANT:
+    // The backend expects ONE memory object,
+    // not { memories: [] }.
+    //
+    // For a new simulation, empty values are valid.
+    //
+
+    const memory = {
+
+        career: "",
+
+        decision: "",
+
+        outcome: "",
+
+        lesson: ""
+
+    };
+
+
+    // ==========================================
+    // REQUEST DATA
+    // ==========================================
+
+    const requestData = {
+
+        target_career:
+            selectedCareer,
+
+        experience:
+            experienceLevel || "beginner",
+
+        skills:
+            skills,
+
+        memory:
+            memory
+
+    };
+
+
+    console.log(
+        "Simulation request:",
+        requestData
+    );
+
+
+    // ==========================================
+    // CALL FASTAPI
+    // ==========================================
+
+    try {
+
+        const response = await fetch(
+            API_BASE_URL + "/api/simulation",
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body:
+                    JSON.stringify(requestData)
+
+            }
+        );
+
+
+        // ======================================
+        // HANDLE ERROR
+        // ======================================
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            throw new Error(
+                "Simulation failed: " +
+                response.status +
+                " " +
+                errorText
+            );
+
+        }
+
+
+        // ======================================
+        // GET RESULT
+        // ======================================
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Simulation response:",
+            data
+        );
+
+
+        // ======================================
+        // SAVE RESULT
+        // ======================================
+
+        localStorage.setItem(
+            "simulationResult",
+            JSON.stringify(data)
+        );
+
+
+        // ======================================
+        // SHOW SUMMARY
+        // ======================================
+
+        document.getElementById("summary").textContent =
+            data.simulation &&
+            data.simulation.six_month_summary
+                ? data.simulation.six_month_summary
+                : "With consistent learning, projects and interview preparation, you can improve your career readiness over the next six months.";
+
+
+        // ======================================
+        // SHOW SCORE
+        // ======================================
+
+        document.getElementById("readinessScore").textContent =
+            data.readiness_score ?? 0;
+
+
+        // ======================================
+        // SHOW CAREER JOURNEY
+        // ======================================
+
+        const journeyContainer =
+            document.getElementById("resultJourney");
+
+        journeyContainer.innerHTML = "";
+
+
+        if (
+            data.simulation &&
+            data.simulation.steps &&
+            data.simulation.steps.length > 0
+        ) {
+
+            data.simulation.steps.forEach(
+                function(step, index) {
+
+                    const div =
+                        document.createElement("div");
+
+                    div.className =
+                        "journey-item";
+
+                    div.innerHTML = `
+
+                        <div class="number">
+                            ${String(index + 1).padStart(2, "0")}
+                        </div>
+
+                        <div>
+                            <div class="journey-title">
+                                ${step}
+                            </div>
+                        </div>
+
+                    `;
+
+                    journeyContainer.appendChild(div);
+
+                }
+            );
+
+        } else {
+
+            journeyContainer.innerHTML = `
+
+                <div class="journey-item">
+                    <div class="number">01</div>
+                    <div>
+                        <div class="journey-title">
+                            Build required skills
+                        </div>
+                    </div>
+                </div>
+
+                <div class="journey-item">
+                    <div class="number">02</div>
+                    <div>
+                        <div class="journey-title">
+                            Build practical projects
+                        </div>
+                    </div>
+                </div>
+
+                <div class="journey-item">
+                    <div class="number">03</div>
+                    <div>
+                        <div class="journey-title">
+                            Apply for internships
+                        </div>
+                    </div>
+                </div>
+
+                <div class="journey-item">
+                    <div class="number">04</div>
+                    <div>
+                        <div class="journey-title">
+                            Prepare for placements
+                        </div>
+                    </div>
+                </div>
+
+            `;
+
+        }
+
+
+        // ======================================
+        // AI RECOMMENDATION
+        // ======================================
+
+        document.getElementById(
+            "recommendation"
+        ).textContent =
+            data.ai_recommendation ||
+            "Continue improving your weakest skills and follow the personalized roadmap.";
+
+
+        // ======================================
+        // SHOW RESULT
+        // ======================================
+
+        document.getElementById(
+            "result"
+        ).style.display = "block";
+
+
+        // Scroll to result
+
+        document.getElementById(
+            "result"
+        ).scrollIntoView({
+            behavior: "smooth"
+        });
+
+
+        // ======================================
+        // RESTORE BUTTON
+        // ======================================
+
+        button.disabled = false;
+
+        button.textContent =
+            "Simulate Again";
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        errorMessage.textContent =
+            error.message;
+
+
+        errorMessage.style.display =
+            "block";
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "Simulate 6-Month Progress";
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
+```

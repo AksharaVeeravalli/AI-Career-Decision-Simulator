@@ -1,0 +1,338 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assess Your Skills | CareerSim AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .skill {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            margin-top: 20px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3730a3;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">CareerSim AI</div>
+    </nav>
+
+
+    <div class="container">
+
+        <h1>Assess Your Skills</h1>
+
+        <p class="description">
+            Rate your current skill level so we can identify your
+            skill gaps and create a personalized career roadmap.
+        </p>
+
+
+        <div class="skill">
+            <label>Python</label>
+            <select id="python">
+                <option value="">Select your level</option>
+                <option value="1">1 - Beginner</option>
+                <option value="2">2 - Basic</option>
+                <option value="3">3 - Intermediate</option>
+                <option value="4">4 - Advanced</option>
+                <option value="5">5 - Expert</option>
+            </select>
+        </div>
+
+
+        <div class="skill">
+            <label>Java</label>
+            <select id="java">
+                <option value="">Select your level</option>
+                <option value="1">1 - Beginner</option>
+                <option value="2">2 - Basic</option>
+                <option value="3">3 - Intermediate</option>
+                <option value="4">4 - Advanced</option>
+                <option value="5">5 - Expert</option>
+            </select>
+        </div>
+
+
+        <div class="skill">
+            <label>SQL</label>
+            <select id="sql">
+                <option value="">Select your level</option>
+                <option value="1">1 - Beginner</option>
+                <option value="2">2 - Basic</option>
+                <option value="3">3 - Intermediate</option>
+                <option value="4">4 - Advanced</option>
+                <option value="5">5 - Expert</option>
+            </select>
+        </div>
+
+
+        <div class="skill">
+            <label>Statistics</label>
+            <select id="statistics">
+                <option value="">Select your level</option>
+                <option value="1">1 - Beginner</option>
+                <option value="2">2 - Basic</option>
+                <option value="3">3 - Intermediate</option>
+                <option value="4">4 - Advanced</option>
+                <option value="5">5 - Expert</option>
+            </select>
+        </div>
+
+
+        <div class="skill">
+            <label>Data Analysis</label>
+            <select id="data_analysis">
+                <option value="">Select your level</option>
+                <option value="1">1 - Beginner</option>
+                <option value="2">2 - Basic</option>
+                <option value="3">3 - Intermediate</option>
+                <option value="4">4 - Advanced</option>
+                <option value="5">5 - Expert</option>
+            </select>
+        </div>
+
+
+        <div class="skill">
+            <label>Web Development</label>
+            <select id="web_development">
+                <option value="">Select your level</option>
+                <option value="1">1 - Beginner</option>
+                <option value="2">2 - Basic</option>
+                <option value="3">3 - Intermediate</option>
+                <option value="4">4 - Advanced</option>
+                <option value="5">5 - Expert</option>
+            </select>
+        </div>
+
+
+        <div class="skill">
+            <label>Communication</label>
+            <select id="communication">
+                <option value="">Select your level</option>
+                <option value="1">1 - Beginner</option>
+                <option value="2">2 - Basic</option>
+                <option value="3">3 - Intermediate</option>
+                <option value="4">4 - Advanced</option>
+                <option value="5">5 - Expert</option>
+            </select>
+        </div>
+
+
+        <button type="button" id="continueButton">
+            Continue to Career Selection →
+        </button>
+
+        <p id="message"></p>
+
+    </div>
+
+
+    <script>
+
+        const API_BASE_URL = "http://127.0.0.1:8000";
+
+        document.getElementById("continueButton").onclick = async function () {
+
+            const profileId = localStorage.getItem("profileId");
+
+            const message = document.getElementById("message");
+
+            if (!profileId) {
+                message.textContent =
+                    "Profile not found. Please complete your profile first.";
+                return;
+            }
+
+
+            const python = document.getElementById("python").value;
+            const java = document.getElementById("java").value;
+            const sql = document.getElementById("sql").value;
+            const statistics = document.getElementById("statistics").value;
+            const data_analysis = document.getElementById("data_analysis").value;
+            const web_development = document.getElementById("web_development").value;
+            const communication = document.getElementById("communication").value;
+
+
+            if (
+                !python ||
+                !java ||
+                !sql ||
+                !statistics ||
+                !data_analysis ||
+                !web_development ||
+                !communication
+            ) {
+                message.textContent =
+                    "Please select a level for every skill.";
+                return;
+            }
+
+
+            const button = document.getElementById("continueButton");
+
+            button.disabled = true;
+            button.textContent = "Saving Skills...";
+
+
+            try {
+
+                const response = await fetch(
+                    API_BASE_URL + "/api/skills",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            profile_id: Number(profileId),
+
+                            python: Number(python),
+
+                            java: Number(java),
+
+                            sql: Number(sql),
+
+                            statistics: Number(statistics),
+
+                            data_analysis: Number(data_analysis),
+
+                            web_development: Number(web_development),
+
+                            communication: Number(communication)
+
+                        })
+                    }
+                );
+
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Backend error: " + response.status
+                    );
+                }
+
+
+                const data = await response.json();
+
+
+                localStorage.setItem(
+                    "careerSkills",
+                    JSON.stringify(data)
+                );
+
+
+                window.location.href = "career.html";
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                message.textContent =
+                    "Unable to save skills. Make sure FastAPI is running.";
+
+                button.disabled = false;
+
+                button.textContent =
+                    "Continue to Career Selection →";
+            }
+
+        };
+
+    </script>
+
+</body>
+
+</html>
+```

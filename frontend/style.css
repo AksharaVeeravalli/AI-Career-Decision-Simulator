@@ -1,0 +1,434 @@
+/* =========================================
+   AI CAREER DECISION SIMULATOR
+   COMMON WEBSITE STYLES
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #172033;
+    line-height: 1.6;
+}
+
+/* =========================
+   CONTAINER
+   ========================= */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+/* =========================
+   HEADINGS
+   ========================= */
+
+h1 {
+    font-size: 34px;
+    margin-bottom: 12px;
+    color: #111827;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #111827;
+}
+
+h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+    color: #1f2937;
+}
+
+p {
+    color: #6b7280;
+}
+
+/* =========================
+   NAVIGATION
+   ========================= */
+
+.navbar {
+    background: #111827;
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+}
+
+/* =========================
+   HERO SECTION
+   ========================= */
+
+.hero {
+    background: linear-gradient(135deg, #1d4ed8, #4f46e5);
+    color: white;
+    padding: 40px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    color: white;
+    font-size: 36px;
+}
+
+.hero p {
+    color: #e0e7ff;
+    font-size: 17px;
+}
+
+/* =========================
+   CARDS
+   ========================= */
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+}
+
+.card h2 {
+    margin-bottom: 20px;
+}
+
+/* =========================
+   GRID
+   ========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+/* =========================
+   FORMS
+   ========================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 7px;
+    color: #374151;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    background: white;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+button,
+.primary-button,
+.secondary-button,
+.button {
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 10px;
+    border: none;
+    background: #4f46e5;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover,
+.primary-button:hover,
+.button:hover {
+    background: #3730a3;
+    transform: translateY(-1px);
+}
+
+.secondary-button {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.secondary-button:hover {
+    background: #d1d5db;
+}
+
+/* =========================
+   BUTTON AREA
+   ========================= */
+
+.button-area {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+/* =========================
+   SKILLS
+   ========================= */
+
+.skill {
+    margin-bottom: 18px;
+}
+
+.skill-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.skill-bar,
+.progress-bar,
+.bar {
+    width: 100%;
+    height: 9px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.skill-fill,
+.progress-fill,
+.fill {
+    height: 100%;
+    background: #4f46e5;
+    border-radius: 10px;
+}
+
+/* =========================
+   CAREER SELECTION
+   ========================= */
+
+.career-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.career-option {
+    border: 2px solid #e5e7eb;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.career-option:hover {
+    border-color: #4f46e5;
+    background: #eef2ff;
+}
+
+.career-option.selected {
+    border-color: #4f46e5;
+    background: #eef2ff;
+}
+
+/* =========================
+   RESULTS
+   ========================= */
+
+.result-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+}
+
+.readiness-score {
+    font-size: 42px;
+    font-weight: bold;
+    color: #4f46e5;
+    text-align: center;
+    margin: 15px 0;
+}
+
+/* =========================
+   ROADMAP
+   ========================= */
+
+.roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.roadmap-step {
+    background: white;
+    border-left: 5px solid #4f46e5;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.roadmap-step strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* =========================
+   MEMORY
+   ========================= */
+
+.memory-card {
+    background: #f8fafc;
+    border-left: 5px solid #4f46e5;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.memory-card strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.memory-card p {
+    color: #4b5563;
+}
+
+/* =========================
+   ALERTS
+   ========================= */
+
+.success {
+    background: #ecfdf5;
+    color: #065f46;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.error {
+    background: #fef2f2;
+    color: #991b1b;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.info {
+    background: #eff6ff;
+    color: #1e40af;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* =========================
+   LOADING
+   ========================= */
+
+.loading {
+    text-align: center;
+    padding: 30px;
+    color: #6b7280;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+   ========================= */
+
+@media (max-width: 700px) {
+
+    .container {
+        width: 94%;
+        margin: 25px auto;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .career-options {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 25px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .navbar {
+        padding: 15px 5%;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .button-area {
+        flex-direction: column;
+    }
+
+    button,
+    .primary-button,
+    .secondary-button,
+    .button {
+        width: 100%;
+        text-align: center;
+    }
+}
