@@ -18,8 +18,7 @@
     }
 
     .memory-card h3 {
-        margin-top: 0;
-        margin-bottom: 15px;
+        margin: 0 0 15px 0;
     }
 
     .memory-card p {
@@ -33,19 +32,20 @@
 
     .memory-form label {
         display: block;
-        margin-top: 15px;
-        margin-bottom: 6px;
+        margin-top: 18px;
+        margin-bottom: 7px;
         font-weight: 600;
     }
 
     .memory-form input,
     .memory-form textarea {
+        display: block;
         width: 100%;
+        box-sizing: border-box;
         padding: 12px;
         border: 1px solid #ccc;
         border-radius: 8px;
         font-size: 15px;
-        box-sizing: border-box;
     }
 
     .memory-form textarea {
@@ -94,7 +94,6 @@
     can use your past experience in future career simulations.
 </p>
 
-<!-- PREVIOUS MEMORY -->
 <section>
     <h2>🧠 Your Previous Decision</h2>
 
@@ -104,8 +103,8 @@
 </section>
 
 
-<!-- RECORD NEW MEMORY -->
 <section>
+
     <h2>📝 Record Your Career Experience</h2>
 
     <p>
@@ -115,9 +114,7 @@
 
     <form id="memoryForm" class="memory-form">
 
-        <label for="career">
-            Career
-        </label>
+        <label for="career">Career</label>
 
         <input
             type="text"
@@ -171,7 +168,6 @@
 </section>
 
 
-<!-- MEMORY PROCESS -->
 <section>
 
     <h2>🔄 How Hindsight Memory Works</h2>
@@ -208,7 +204,6 @@
 </section>
 
 
-<!-- DASHBOARD BUTTON -->
 <section>
 
     <a href="dashboard.html">
@@ -227,29 +222,22 @@
 const API_BASE_URL =
     "https://ai-career-decision-simulator.onrender.com";
 
-
-const profileId =
-    localStorage.getItem("profileId");
-
-
 const previousMemory =
     document.getElementById("previousMemory");
 
-
 const memoryForm =
     document.getElementById("memoryForm");
-
 
 const message =
     document.getElementById("message");
 
 
-
-/* ================================
-   LOAD PREVIOUS MEMORY
-================================ */
-
 async function loadMemory() {
+
+    const profileId =
+        localStorage.getItem("profileId");
+
+    console.log("Current profile ID:", profileId);
 
     if (!profileId) {
 
@@ -280,25 +268,20 @@ async function loadMemory() {
             await response.json();
 
 
-        console.log("Memory API response:", data);
+        console.log(
+            "Memory API response:",
+            data
+        );
 
-
-        /*
-            IMPORTANT:
-
-            Backend returns:
-
-            {
-                memories: [...]
-            }
-
-            Therefore we need to read:
-
-            data.memories
-        */
 
         const memories =
             data.memories || [];
+
+
+        console.log(
+            "Number of memories:",
+            memories.length
+        );
 
 
         if (memories.length === 0) {
@@ -309,10 +292,6 @@ async function loadMemory() {
             return;
         }
 
-
-        /*
-            Show the latest memory
-        */
 
         const memory =
             memories[memories.length - 1];
@@ -346,11 +325,6 @@ async function loadMemory() {
         `;
 
 
-        /*
-            If there are multiple memories,
-            show the older ones too.
-        */
-
         if (memories.length > 1) {
 
             let historyHTML = `
@@ -358,11 +332,6 @@ async function loadMemory() {
                     <h3>📚 Previous Career Memories</h3>
             `;
 
-
-            /*
-                Display older memories
-                from newest to oldest.
-            */
 
             for (
                 let i = memories.length - 2;
@@ -424,12 +393,9 @@ async function loadMemory() {
 
 
         previousMemory.innerHTML = `
-
             <p>
                 ❌ Unable to load previous memory.
-                Please make sure the backend is available.
             </p>
-
         `;
 
     }
@@ -437,16 +403,15 @@ async function loadMemory() {
 }
 
 
-
-/* ================================
-   SAVE NEW MEMORY
-================================ */
-
 memoryForm.addEventListener(
     "submit",
     async function(event) {
 
         event.preventDefault();
+
+
+        const profileId =
+            localStorage.getItem("profileId");
 
 
         if (!profileId) {
@@ -500,22 +465,18 @@ memoryForm.addEventListener(
                 await fetch(
                     `${API_BASE_URL}/api/memory`,
                     {
-
                         method: "POST",
 
                         headers: {
-
                             "Content-Type":
                                 "application/json",
 
                             "Accept":
                                 "application/json"
-
                         },
 
                         body:
                             JSON.stringify(memoryData)
-
                     }
                 );
 
@@ -524,7 +485,6 @@ memoryForm.addEventListener(
 
                 const errorText =
                     await response.text();
-
 
                 throw new Error(
                     `Server error: ${response.status} ${errorText}`
@@ -547,17 +507,8 @@ memoryForm.addEventListener(
                 "✅ Career memory saved successfully!";
 
 
-            /*
-                Clear the form
-            */
-
             memoryForm.reset();
 
-
-            /*
-                Reload memories immediately
-                so the new memory appears.
-            */
 
             await loadMemory();
 
@@ -581,47 +532,17 @@ memoryForm.addEventListener(
 );
 
 
-
-/* ================================
-   SECURITY / HTML ESCAPING
-================================ */
-
 function escapeHtml(value) {
 
     return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
-
-
-/* ================================
-   START PAGE
-================================ */
 
 loadMemory();
 
