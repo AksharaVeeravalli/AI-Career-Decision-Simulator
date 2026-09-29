@@ -1,430 +1,259 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Dashboard</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #172033;
-        }
-
-        .navbar {
-            background: #111827;
-            color: white;
-            padding: 18px 7%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .nav-title {
-            color: #cbd5e1;
-            font-size: 14px;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 35px auto;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, #1d4ed8, #4f46e5);
-            color: white;
-            padding: 32px;
-            border-radius: 18px;
-            margin-bottom: 25px;
-        }
-
-        .hero h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .hero p {
-            color: #e0e7ff;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
-        }
-
-        .card h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #111827;
-        }
-
-        .info {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .info:last-child {
-            border-bottom: none;
-        }
-
-        .label {
-            color: #6b7280;
-        }
-
-        .value {
-            font-weight: 600;
-            text-align: right;
-        }
-
-        .career {
-            background: #eef2ff;
-            padding: 18px;
-            border-radius: 12px;
-        }
-
-        .career-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #3730a3;
-            margin-bottom: 8px;
-        }
-
-        .skill {
-            margin-bottom: 15px;
-        }
-
-        .skill-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-        }
-
-        .bar {
-            height: 9px;
-            background: #e5e7eb;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .fill {
-            height: 100%;
-            background: #4f46e5;
-            border-radius: 10px;
-        }
-
-        .memory {
-            background: #f8fafc;
-            border-left: 5px solid #4f46e5;
-            padding: 18px;
-            border-radius: 10px;
-        }
-
-        .memory-item {
-            margin-bottom: 15px;
-        }
-
-        .memory-item strong {
-            display: block;
-            margin-bottom: 5px;
-            color: #374151;
-        }
-
-        .memory-item p {
-            color: #4b5563;
-            line-height: 1.5;
-        }
-
-        .button-area {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 14px 25px;
-            background: #4f46e5;
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        .button:hover {
-            background: #3730a3;
-        }
-
-        .loading,
-        .error {
-            text-align: center;
-            padding: 30px;
-        }
-
-        @media (max-width: 700px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero h1 {
-                font-size: 26px;
-            }
-
-            .navbar {
-                padding: 15px 5%;
-            }
-
-            .container {
-                width: 94%;
-            }
-        }
-    </style>
+    <title>Career Dashboard - CareerSim AI</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<nav class="navbar">
-    <div class="logo">AI Career Decision Simulator</div>
-    <div class="nav-title">Career Dashboard</div>
-</nav>
-
 <div class="container">
 
-    <section class="hero">
-        <h1>Your Career Journey</h1>
-        <p>Review your profile, skills, career choice and hindsight memory in one place.</p>
-    </section>
+    <h1>📊 Career Dashboard</h1>
 
-    <div id="loading" class="loading">
-        Loading your career dashboard...
+    <p>
+        Review your profile, skills, career choice and hindsight memory
+        in one place.
+    </p>
+
+    <div id="dashboard">
+        <p>Loading your career dashboard...</p>
     </div>
-
-    <div id="dashboard" style="display:none;">
-
-        <div class="grid">
-
-            <div class="card">
-                <h2>👤 Student Profile</h2>
-
-                <div class="info">
-                    <span class="label">Name</span>
-                    <span class="value" id="name">-</span>
-                </div>
-
-                <div class="info">
-                    <span class="label">Education</span>
-                    <span class="value" id="education">-</span>
-                </div>
-
-                <div class="info">
-                    <span class="label">Branch</span>
-                    <span class="value" id="branch">-</span>
-                </div>
-
-                <div class="info">
-                    <span class="label">Year</span>
-                    <span class="value" id="year">-</span>
-                </div>
-
-                <div class="info">
-                    <span class="label">Career Goal</span>
-                    <span class="value" id="goal">-</span>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>🎯 Selected Career</h2>
-
-                <div class="career">
-                    <div class="career-name" id="career">-</div>
-                    <div>Experience Level: <strong id="experience">-</strong></div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="card" style="margin-bottom:20px;">
-            <h2>💻 Your Skills</h2>
-
-            <div id="skills"></div>
-        </div>
-
-        <div class="card">
-            <h2>🧠 Hindsight Memory</h2>
-
-            <div id="memory" class="memory"></div>
-        </div>
-
-        <div class="button-area">
-            <a href="career.html" class="button">
-                🔄 Run New Career Simulation
-            </a>
-        </div>
-
-    </div>
-
-    <div id="error" class="error" style="display:none;"></div>
 
 </div>
 
 <script>
-    const profileId = localStorage.getItem("profileId");
 
-    const loading = document.getElementById("loading");
-    const dashboard = document.getElementById("dashboard");
-    const errorBox = document.getElementById("error");
+const API_BASE_URL =
+    "https://ai-career-decision-simulator.onrender.com";
 
-    async function loadDashboard() {
+const profileId =
+    localStorage.getItem("profileId");
 
-        if (!profileId) {
-            loading.style.display = "none";
-            errorBox.style.display = "block";
-            errorBox.innerHTML = "Profile not found. Please complete your profile first.";
-            return;
-        }
+const dashboard =
+    document.getElementById("dashboard");
 
-        try {
-            const response = await fetch(
-                `http://127.0.0.1:8000/api/dashboard/${profileId}`
-            );
 
-            if (!response.ok) {
-                throw new Error("Unable to load dashboard.");
-            }
+async function loadDashboard() {
 
-            const data = await response.json();
+    if (!profileId) {
 
-            const profile = data.profile || {};
-            const career = data.career || {};
-            const skills = data.skills || {};
-            const memories = data.memories || [];
+        dashboard.innerHTML = `
+            <p>
+                No profile found. Please complete your profile first.
+            </p>
+        `;
 
-            document.getElementById("name").textContent =
-                profile.name || "-";
-
-            document.getElementById("education").textContent =
-                profile.education || "-";
-
-            document.getElementById("branch").textContent =
-                profile.branch || "-";
-
-            document.getElementById("year").textContent =
-                profile.year || "-";
-
-            document.getElementById("goal").textContent =
-                profile.goal || "-";
-
-            document.getElementById("career").textContent =
-                career.target_career || "-";
-
-            document.getElementById("experience").textContent =
-                career.experience || "-";
-
-            const skillNames = {
-                python: "Python",
-                java: "Java",
-                sql: "SQL",
-                statistics: "Statistics",
-                data_analysis: "Data Analysis",
-                web_development: "Web Development",
-                communication: "Communication"
-            };
-
-            let skillsHTML = "";
-
-            Object.entries(skillNames).forEach(([key, name]) => {
-
-                const value = Number(skills[key] || 0);
-                const percentage = Math.min(value, 5) * 20;
-
-                skillsHTML += `
-                    <div class="skill">
-                        <div class="skill-header">
-                            <span>${name}</span>
-                            <strong>${value}/5</strong>
-                        </div>
-
-                        <div class="bar">
-                            <div class="fill" style="width:${percentage}%"></div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            document.getElementById("skills").innerHTML = skillsHTML;
-
-            const memoryBox = document.getElementById("memory");
-
-            if (memories.length > 0) {
-
-                const memory = memories[0];
-
-                memoryBox.innerHTML = `
-                    <div class="memory-item">
-                        <strong>Career</strong>
-                        <p>${memory.career || "-"}</p>
-                    </div>
-
-                    <div class="memory-item">
-                        <strong>Decision</strong>
-                        <p>${memory.decision || "-"}</p>
-                    </div>
-
-                    <div class="memory-item">
-                        <strong>Outcome</strong>
-                        <p>${memory.outcome || "-"}</p>
-                    </div>
-
-                    <div class="memory-item">
-                        <strong>Lesson Learned</strong>
-                        <p>${memory.lesson || "-"}</p>
-                    </div>
-                `;
-
-            } else {
-
-                memoryBox.innerHTML = `
-                    <p>No previous career decisions recorded yet.</p>
-                `;
-            }
-
-            loading.style.display = "none";
-            dashboard.style.display = "block";
-
-        } catch (error) {
-
-            loading.style.display = "none";
-            errorBox.style.display = "block";
-
-            errorBox.innerHTML =
-                "Unable to load dashboard. Make sure the FastAPI backend is running.";
-        }
+        return;
     }
 
-    loadDashboard();
+    try {
+
+        const response = await fetch(
+            `${API_BASE_URL}/api/dashboard/${profileId}`
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `Server returned ${response.status}`
+            );
+        }
+
+        const data = await response.json();
+
+        console.log("Dashboard data:", data);
+
+        const profile =
+            data.profile || {};
+
+        const skills =
+            data.skills || {};
+
+        const career =
+            data.career || {};
+
+        const memory =
+            data.memory || {};
+
+        const simulation =
+            data.simulation || {};
+
+
+        dashboard.innerHTML = `
+
+            <section>
+
+                <h2>👤 Profile</h2>
+
+                <p>
+                    <strong>Name:</strong>
+                    ${escapeHtml(profile.name || "Not available")}
+                </p>
+
+                <p>
+                    <strong>Education:</strong>
+                    ${escapeHtml(profile.education || "Not available")}
+                </p>
+
+                <p>
+                    <strong>Branch:</strong>
+                    ${escapeHtml(profile.branch || "Not available")}
+                </p>
+
+                <p>
+                    <strong>Year:</strong>
+                    ${escapeHtml(profile.year || "Not available")}
+                </p>
+
+                <p>
+                    <strong>Career Goal:</strong>
+                    ${escapeHtml(profile.goal || "Not available")}
+                </p>
+
+            </section>
+
+
+            <section>
+
+                <h2>💻 Skills</h2>
+
+                ${skillRow("Python", skills.python)}
+                ${skillRow("Java", skills.java)}
+                ${skillRow("SQL", skills.sql)}
+                ${skillRow("Statistics", skills.statistics)}
+                ${skillRow("Data Analysis", skills.data_analysis)}
+                ${skillRow("Web Development", skills.web_development)}
+                ${skillRow("Communication", skills.communication)}
+
+            </section>
+
+
+            <section>
+
+                <h2>🎯 Career Choice</h2>
+
+                <p>
+                    <strong>Target Career:</strong>
+                    ${escapeHtml(
+                        career.target_career ||
+                        "Not selected"
+                    )}
+                </p>
+
+                <p>
+                    <strong>Experience:</strong>
+                    ${escapeHtml(
+                        career.experience ||
+                        "Not selected"
+                    )}
+                </p>
+
+            </section>
+
+
+            <section>
+
+                <h2>📊 Simulation</h2>
+
+                <p>
+                    <strong>Readiness Score:</strong>
+                    ${
+                        simulation.readiness_score !== undefined
+                        ? simulation.readiness_score + "/100"
+                        : "Not available"
+                    }
+                </p>
+
+            </section>
+
+
+            <section>
+
+                <h2>🧠 Hindsight Memory</h2>
+
+                ${
+                    memory && memory.career
+                    ? `
+                        <p>
+                            <strong>Career:</strong>
+                            ${escapeHtml(memory.career)}
+                        </p>
+
+                        <p>
+                            <strong>Decision:</strong><br>
+                            ${escapeHtml(memory.decision || "")}
+                        </p>
+
+                        <p>
+                            <strong>Outcome:</strong><br>
+                            ${escapeHtml(memory.outcome || "")}
+                        </p>
+
+                        <p>
+                            <strong>Lesson:</strong><br>
+                            ${escapeHtml(memory.lesson || "")}
+                        </p>
+                    `
+                    :
+                    `<p>No hindsight memory recorded yet.</p>`
+                }
+
+            </section>
+
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+        dashboard.innerHTML = `
+            <p>
+                ❌ Unable to load dashboard.
+                Please try again after the backend is available.
+            </p>
+        `;
+    }
+}
+
+
+function skillRow(name, value) {
+
+    const level =
+        value !== undefined &&
+        value !== null
+        ? value
+        : "Not available";
+
+    return `
+        <p>
+            <strong>${name}:</strong>
+            ${level}/5
+        </p>
+    `;
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+loadDashboard();
+
 </script>
 
 </body>
 </html>
+```
