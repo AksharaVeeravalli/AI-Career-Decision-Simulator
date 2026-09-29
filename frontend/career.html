@@ -1,357 +1,184 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Career Selection | CareerSim AI</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    <title>Choose Your Career | AI Career Decision Simulator</title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #222;
-        }
-
-        .navbar {
-            background: #111827;
-            color: white;
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 650px;
-            margin: 70px auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-        }
-
-        .tagline {
-            color: #4f46e5;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        h1 {
-            font-size: 38px;
-            margin-bottom: 15px;
-        }
-
-        .description {
-            color: #666;
-            margin-bottom: 35px;
-            line-height: 1.6;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        select {
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-        }
-
-        #careerButton {
-            width: 100%;
-            padding: 16px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 8px;
-            background: #4f46e5;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-            cursor: pointer;
-            display: block;
-        }
-
-        #careerButton:hover {
-            background: #3730a3;
-        }
-
-        #careerMessage {
-            margin-top: 20px;
-            font-weight: bold;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+
     <nav class="navbar">
-        <div class="logo">CareerSim AI</div>
+
+        <div class="logo">
+            AI Career Decision Simulator
+        </div>
 
         <div class="nav-links">
             <a href="index.html">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="skills.html">Skills</a>
+            <a href="career.html" class="active">Career</a>
         </div>
+
     </nav>
 
 
-    <div class="container">
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
 
-        <p class="tagline">STEP 3 OF 3</p>
+    <main class="container">
 
-        <h1>Choose Your Career Path</h1>
+        <section class="page-header">
 
-        <p class="description">
-            Select a career you want to explore.
-            Our AI will simulate what your journey could look like.
-        </p>
+            <p>
+                STEP 3 OF 3
+            </p>
 
+            <h1>
+                Choose Your Career Path
+            </h1>
 
-        <div class="form-group">
+            <p>
+                Select a career you want to explore.
+                Our AI will simulate what your journey could look like.
+            </p>
 
-            <label for="career">
-                Select Your Target Career
-            </label>
+        </section>
 
-            <select id="career">
 
-                <option value="">
-                    Choose a career
-                </option>
+        <!-- =========================
+             CAREER FORM
+        ========================== -->
 
-                <option value="software developer">
-                    Software Developer
-                </option>
+        <section class="form-section">
 
-                <option value="data analyst">
-                    Data Analyst
-                </option>
+            <form id="careerForm">
 
-                <option value="data scientist">
-                    Data Scientist
-                </option>
+                <!-- Target Career -->
 
-                <option value="ai ml engineer">
-                    AI / ML Engineer
-                </option>
+                <div class="form-group">
 
-                <option value="web developer">
-                    Web Developer
-                </option>
+                    <label for="career">
+                        Select Your Target Career
+                    </label>
 
-                <option value="cloud engineer">
-                    Cloud Engineer
-                </option>
+                    <select
+                        id="career"
+                        name="career"
+                        required
+                    >
 
-            </select>
+                        <option value="">
+                            Choose a career
+                        </option>
 
-        </div>
+                        <option value="software-developer">
+                            Software Developer
+                        </option>
 
+                        <option value="data-analyst">
+                            Data Analyst
+                        </option>
 
-        <div class="form-group">
+                        <option value="data-scientist">
+                            Data Scientist
+                        </option>
 
-            <label for="experience">
-                Current Experience Level
-            </label>
+                        <option value="ai-ml-engineer">
+                            AI / ML Engineer
+                        </option>
 
-            <select id="experience">
+                        <option value="web-developer">
+                            Web Developer
+                        </option>
 
-                <option value="">
-                    Select experience
-                </option>
+                        <option value="cloud-engineer">
+                            Cloud Engineer
+                        </option>
 
-                <option value="beginner">
-                    Beginner
-                </option>
+                    </select>
 
-                <option value="student">
-                    Student with Projects
-                </option>
+                </div>
 
-                <option value="internship">
-                    Internship Experience
-                </option>
 
-                <option value="experienced">
-                    Working Professional
-                </option>
+                <!-- Experience Level -->
 
-            </select>
+                <div class="form-group">
 
-        </div>
+                    <label for="experience">
+                        Current Experience Level
+                    </label>
 
+                    <select
+                        id="experience"
+                        name="experience"
+                        required
+                    >
 
-        <button id="careerButton" type="button">
-            Start Career Simulation →
-        </button>
+                        <option value="">
+                            Select experience
+                        </option>
 
-        <p id="careerMessage"></p>
+                        <option value="beginner">
+                            Beginner
+                        </option>
 
-    </div>
+                        <option value="student-with-projects">
+                            Student with Projects
+                        </option>
 
+                        <option value="internship-experience">
+                            Internship Experience
+                        </option>
 
-    <script>
+                        <option value="working-professional">
+                            Working Professional
+                        </option>
 
-        const API_BASE_URL = "http://127.0.0.1:8000";
+                    </select>
 
+                </div>
 
-        document.getElementById("careerButton").onclick = async function () {
 
-            const career =
-                document.getElementById("career").value;
+                <!-- Submit Button -->
 
-            const experience =
-                document.getElementById("experience").value;
+                <div class="form-actions">
 
-            const message =
-                document.getElementById("careerMessage");
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Start Career Simulation →
+                    </button>
 
-            const profileId =
-                localStorage.getItem("profileId");
+                </div>
 
+            </form>
 
-            if (!profileId) {
+        </section>
 
-                message.textContent =
-                    "Profile not found. Please complete your profile first.";
+    </main>
 
-                return;
-            }
 
+    <!-- =========================
+         JAVASCRIPT
+         ONLY script.js
+    ========================== -->
 
-            if (!career) {
-
-                message.textContent =
-                    "Please select a career.";
-
-                return;
-            }
-
-
-            if (!experience) {
-
-                message.textContent =
-                    "Please select your experience level.";
-
-                return;
-            }
-
-
-            const button =
-                document.getElementById("careerButton");
-
-            button.textContent = "Saving...";
-            button.disabled = true;
-
-
-            try {
-
-                const response = await fetch(
-                    API_BASE_URL + "/api/career",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-
-                            profile_id: Number(profileId),
-
-                            target_career: career,
-
-                            experience: experience
-
-                        })
-                    }
-                );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Backend error: " + response.status
-                    );
-
-                }
-
-
-                const data = await response.json();
-
-
-                localStorage.setItem(
-                    "careerChoice",
-                    JSON.stringify(data)
-                );
-
-
-                localStorage.setItem(
-                    "selectedCareer",
-                    career
-                );
-
-
-                localStorage.setItem(
-                    "experienceLevel",
-                    experience
-                );
-
-
-                message.textContent =
-                    "Career saved successfully!";
-
-
-                window.location.href =
-                    "simulation.html";
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                message.textContent =
-                    "Backend connection failed. Check that FastAPI is running.";
-
-                button.disabled = false;
-
-                button.textContent =
-                    "Start Career Simulation →";
-            }
-
-        };
-
-    </script>
+    <script src="script.js"></script>
 
 </body>
 
 </html>
-```
